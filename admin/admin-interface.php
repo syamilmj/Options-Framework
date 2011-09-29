@@ -500,7 +500,7 @@ function of_admin_head() {
 		
 		var newNum = maxNum + 1;
 		
-		slidesContainer.append('<li><div class="slide_header"><strong>Slide ' + newNum + '</strong><input type="hidden" class="slide of-input order" name="' + sliderId + '[' + newNum + '][order]" id="' + sliderId + '_slide_order-' + newNum + '" value="' + newNum + '"><a class="slide_delete_button" href="#">Delete</a><a class="slide_edit_button" href="#">Edit</a></div><div class="slide_body" style="display: none; "><label>Title</label><input class="slide of-input" name="' + sliderId + '[' + newNum + '][title]" id="' + sliderId + '_' + newNum + '_slide_title" value=""><label>Image URL</label><input class="slide of-input" name="' + sliderId + '[' + newNum + '][url]" id="' + sliderId + '_' + newNum + '_slide_url" value=""><div class="upload_button_div"><span class="button image_upload_button" id="' + sliderId + '_' + newNum + '">Upload</span><span class="button image_reset_button hide" id="reset_' + sliderId + '_' + newNum + '" title="' + sliderId + '_' + newNum + '">Remove</span></div><div class="clear"></div><label>Link URL (optional)</label><input class="slide of-input" name="' + sliderId + '[' + newNum + '][link]" id="' + sliderId + '_' + newNum + '_slide_link" value=""><label>Description (optional)</label><textarea class="slide of-input" name="' + sliderId + '[' + newNum + '][description]" id="' + sliderId + '_' + newNum + '_slide_description" cols="8" rows="8"></textarea></div></li>');
+		slidesContainer.append('<li><div class="slide_header"><strong>Slide ' + newNum + '</strong><input type="hidden" class="slide of-input order" name="' + sliderId + '[' + newNum + '][order]" id="' + sliderId + '_slide_order-' + newNum + '" value="' + newNum + '"><a class="slide_edit_button" href="#">Edit</a></div><div class="slide_body" style="display: none; "><label>Title</label><input class="slide of-input" name="' + sliderId + '[' + newNum + '][title]" id="' + sliderId + '_' + newNum + '_slide_title" value=""><label>Image URL</label><input class="slide of-input" name="' + sliderId + '[' + newNum + '][url]" id="' + sliderId + '_' + newNum + '_slide_url" value=""><div class="upload_button_div"><span class="button image_upload_button" id="' + sliderId + '_' + newNum + '">Upload</span><span class="button image_reset_button hide" id="reset_' + sliderId + '_' + newNum + '" title="' + sliderId + '_' + newNum + '">Remove</span></div><div class="clear"></div><label>Link URL (optional)</label><input class="slide of-input" name="' + sliderId + '[' + newNum + '][link]" id="' + sliderId + '_' + newNum + '_slide_link" value=""><label>Description (optional)</label><textarea class="slide of-input" name="' + sliderId + '[' + newNum + '][description]" id="' + sliderId + '_' + newNum + '_slide_description" cols="8" rows="8"></textarea><a class="slide_delete_button" href="#">Delete</a><div class="clear"></div></div></li>');
 		of_image_upload(); // re-initialise upload image..
 		return false; //prevent jumps, as always..
 	});	
@@ -989,7 +989,7 @@ public static function optionsframework_slider_function($id,$std,$mod,$oldorder,
     $slider .= '<li><div class="slide_header"><strong>Slide '.$order.'</strong>';
 	}
 	$slider .= '<input type="hidden" class="slide of-input order" name="'. $id .'['.$order.'][order]" id="'. $id.'_'.$order .'_slide_order" value="'.$order.'" />';
-	$slider .= '<a class="slide_delete_button" href="#">Delete</a>';
+
 	$slider .= '<a class="slide_edit_button" href="#">Edit</a></div>';
 	
 	$slider .= '<div class="slide_body">';
@@ -1020,7 +1020,9 @@ public static function optionsframework_slider_function($id,$std,$mod,$oldorder,
 	$slider .= '<label>Description (optional)</label>';
 	$slider .= '<textarea class="slide of-input" name="'. $id .'['.$order.'][description]" id="'. $id .'_'.$order .'_slide_description" cols="8" rows="8">'.$val['description'].'</textarea>';
 
+	$slider .= '<a class="slide_delete_button" href="#">Delete</a>';
     $slider .= '<div class="clear"></div>' . "\n";
+
 	$slider .= '</div>';
 	$slider .= '</li>';
 
