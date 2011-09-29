@@ -489,8 +489,6 @@ function of_admin_head() {
 		
 		var sliderId = slidesContainer.attr('id');
 		
-		var num = jQuery('#'+sliderId +' li').size(); // dynamically find number of slides
-		
 		var numArr = $('#'+sliderId +' li').find('.order').map(function() { 
 			var str = this.id; 
 			str = str.replace(/\D/g,'');
