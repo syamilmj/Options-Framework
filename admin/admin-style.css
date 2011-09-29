@@ -534,6 +534,7 @@ margin-bottom: 9px !important;
 width: 340px;
 display: block;
 color: #888;
+position:relative;
 }
 
 #of_container .select_wrapper:hover {background-color:#f9f9f9;}
@@ -558,6 +559,7 @@ color: #888;
 	width: 345px;
 	border: 1px solid #dfdfdf;
 	background:#f9f9f9;
+	overflow:hidden;
 	-webkit-border-radius: 3px;
 	-moz-border-radius: 3px;
 	border-radius: 3px;
@@ -567,7 +569,9 @@ color: #888;
 }
 
 #of_container .slide_header {
-	padding: 10px 10px;
+	height:32px;
+	padding-left:10px;
+	line-height:32px;
 	background-color: #F1F1F1;
 	margin: 1px 0 -1px 0;
 	border-bottom: 1px solid #dfdfdf;
@@ -590,23 +594,31 @@ color: #888;
 	width:311px;
 }
 
-#of_container .slide_edit_button, #of_container .slide_delete_button {
+#of_container a.slide_edit_button, #of_container a.slide_delete_button {
 	float:right;
-	margin: 0 0 0 7px;
-	width:16px;
-	height:16px;
 	text-indent:-9999px;
 	font-size:0;
 }
-#of_container .slide_edit_button { background: url(images/icon-edit.png) no-repeat}
-#of_container .slide_delete_button { background: url(images/icon-delete.png) no-repeat}
+#of_container a.slide_edit_button { 
+	width:24px;
+	height:32px;
+	background: url(images/dropdown-arrow.png) no-repeat 0 -28px;}
+	#of_container a:hover.slide_edit_button {
+	background: url(images/dropdown-arrow.png) no-repeat 0 11px;}
+	
+#of_container a.slide_delete_button { 
+	margin: 0 0 0 7px;
+	width:16px;
+	height:16px;
+	background: url(images/icon-delete.png) no-repeat}
 
 #of_container .select_wrapper span {
 height: 26px;
 line-height: 26px;
-position: absolute;
 z-index: 2;
 padding-left: 6px;
+position:absolute;
+left:0;
 }
 
 #of_container .select_wrapper .select {

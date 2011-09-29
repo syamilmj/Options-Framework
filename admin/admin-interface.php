@@ -186,7 +186,7 @@ function of_admin_head() {
 	$('.group .collapsed input:checkbox').click(unhideHidden);
 				
 	function unhideHidden(){
-		event.preventDefault();
+		// event.preventDefault();
 		if ($(this).attr('checked')) {
 			$(this).parent().parent().parent().nextAll().removeClass('hidden');
 		} else {
@@ -205,7 +205,7 @@ function of_admin_head() {
 	//Current Menu Class
 	$('#of-nav li:first').addClass('current');
 	$('#of-nav li a').click(function(evt){
-	event.preventDefault();
+	// event.preventDefault();
 				
 	$('#of-nav li').removeClass('current');
 	$(this).parent().addClass('current');
@@ -215,6 +215,7 @@ function of_admin_head() {
 	$('.group').hide();
 						
 	$(clicked_group).fadeIn();
+	return false;
 						
 });
 
@@ -455,7 +456,7 @@ function of_admin_head() {
 	// Start Aquagraphite Slider MOD
 	//----------------------------------------------------------------*/
 
-	/* Slider Interface */
+	/* Slider Interface */	
 	
 		//Hide (Collapse) the toggle containers on load
 		$(".slide_body").hide(); 
@@ -470,7 +471,7 @@ function of_admin_head() {
 	/* Remove individual slide */
 	
 		$('.slide_delete_button').live('click', function(){
-		event.preventDefault();
+		// event.preventDefault();
 		var agree = confirm("Are you sure you wish to delete this slide?");
 			if (agree) {
 				var $trash = $(this).parents('li');
@@ -510,7 +511,7 @@ function of_admin_head() {
 		var id = jQuery(this).attr('id');
 		$('#'+ id).sortable();	
 	});
-		
+	
 	//----------------------------------------------------------------*/
 	// End Aquagraphite Slider MOD
 	//----------------------------------------------------------------*/
@@ -762,7 +763,7 @@ public static function optionsframework_machine($options) {
 			$output .= '<div class="slider"><ul id="'.$value['id'].'">';
 			$slides = $data[$value['id']];
 			$count = count($slides);
-			if ($count == 0) {
+			if ($count < 2) {
 				$oldorder = 1;
 				$order = 1;
 				$output .= Options_Machine::optionsframework_slider_function($value['id'],$value['std'],null,$oldorder,$order);
