@@ -445,6 +445,7 @@ color: #464646;
 	border-radius: 4px;
 }
 #of_container .reset-button {
+	font-family:Arial,Verdana,sans-serif;
 	float:left;
 	padding: 0 7px;
 	height: 23px;
@@ -475,6 +476,7 @@ color: #464646;
 }
 
 #of_save {
+	font-family: Arial,Verdana,sans-serif;
 	padding: 0 7px;
 	height: 23px;
 	line-height: 23px;
