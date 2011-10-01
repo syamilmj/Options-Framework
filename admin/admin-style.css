@@ -415,10 +415,6 @@ border-color: #bbb;
 color: #464646;
 }
 
-#of_container .image_reset_button:hover {
-	color:red;
-}
-
 #of_container .button_active {
     background:#eee url(../images/white-grad-active.png) repeat-x scroll left top;
 }
@@ -426,10 +422,15 @@ color: #464646;
 #of_container .upload_button_div .button {
 	padding:4px 7px;
 }
-#of_container .upload_button_div .image_reset_button {
+#of_container .image_reset_button, #of_container .mlu_remove_button {
 	margin-left:10px;
 	color:#ef521d;
 }
+
+#of_container .image_reset_button:hover, #of_container .mlu_remove_button:hover {
+	color:red;
+}
+
 #of_container .upload-error {
 	float:left;
 	color:#666;
@@ -570,6 +571,11 @@ position:relative;
 	box-shadow: inset 0 1px 0 #fff;
 }
 
+#of_container .slider li.placeholder {
+	border-width:1px;
+	border-style:dashed;
+	height:33px;}
+
 #of_container .slide_header {
 	height:32px;
 	padding-left:10px;
@@ -602,11 +608,11 @@ position:relative;
 	font-size:0;
 }
 #of_container a.slide_edit_button { 
-	width:24px;
+	width:32px;
 	height:32px;
-	background: url(images/dropdown-arrow.png) no-repeat 0 -28px;}
+	background: url(images/dropdown-arrow.png) no-repeat 9px -28px;}
 	#of_container a:hover.slide_edit_button {
-	background: url(images/dropdown-arrow.png) no-repeat 0 11px;}
+	background: url(images/dropdown-arrow.png) no-repeat 9px 11px;}
 	
 #of_container a.slide_delete_button { 
 	margin: 0 0 0 7px;

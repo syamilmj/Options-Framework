@@ -73,6 +73,18 @@ $of_options[] = array( "name" => "Homepage Slider",
 					"std" => "",
 					"type" => "slider");
 					
+$of_options[] = array( "name" => "Media Uploader",
+					"desc" => "Upload images using native media uploader, or define the URL directly",
+					"id" => "media_upload",
+					"std" => "",
+					"type" => "media");
+					
+$of_options[] = array( "name" => "Media Uploader 2",
+					"desc" => "Upload images using native media uploader, or define the URL directly",
+					"id" => "media_upload_2",
+					"std" => "",
+					"type" => "media");
+					
 $of_options[] = array( "name" => "Pingu Slider",
 					"desc" => "Upload images to your pingu slider, or define the URL directly",
 					"id" => "pingu_slider",

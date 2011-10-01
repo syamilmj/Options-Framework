@@ -50,6 +50,8 @@ function optionsframework_add_admin() {
 	// Add framework functionaily to the head individually
 	add_action("admin_print_scripts-$of_page", 'of_load_only');
 	add_action("admin_print_styles-$of_page",'of_style_only');
+	add_action( "admin_print_styles-$of_page", 'optionsframework_mlu_css', 0 );
+	add_action( "admin_print_scripts-$of_page", 'optionsframework_mlu_js', 0 );	
 } 
 
 add_action('admin_menu', 'optionsframework_add_admin');
@@ -109,10 +111,9 @@ global $options_machine;
     <img style="display:none" src="<?php echo ADMIN_DIR; ?>images/loading-bottom.gif" class="ajax-loading-img ajax-loading-img-bottom" alt="Working..." />
     <input type="hidden" id="security" name="security" value="<?php echo wp_create_nonce('of_ajax_nonce'); ?>" />
 	<input type="hidden" name="of_reset" value="reset" />
-
 	
 	<button id ="of_save" type="button" class="button-primary"><?php _e('Save All Changes');?></button>
-	<button id ="of_reset" type="submit" class="button submit-button reset-button" ><?php _e('Options Reset');?></button>
+	<button id ="of_reset" type="button" class="button submit-button reset-button" ><?php _e('Options Reset');?></button>
 	</div><!--.save_bar--> 
  
   </form>
@@ -148,6 +149,7 @@ function of_load_only() {
 	wp_enqueue_script('jquery-input-mask');
 	wp_enqueue_script('color-picker', ADMIN_DIR .'js/colorpicker.js', array('jquery'));
 	wp_enqueue_script('ajaxupload', ADMIN_DIR .'js/ajaxupload.js', array('jquery'));
+		// Registers custom scripts for the Media Library AJAX uploader.
 }
 
 
@@ -475,7 +477,7 @@ function of_admin_head() {
 		var agree = confirm("Are you sure you wish to delete this slide?");
 			if (agree) {
 				var $trash = $(this).parents('li');
-				// $trash.slideUp('slow', function(){ $trash.remove(); }); //slideUp currently not working...
+				//$trash.slideUp('slow', function(){ $trash.remove(); }); //chrome + confirm bug made slideUp not working...
 				$trash.remove();
 				return false; //Prevent the browser jump to the link anchor
 			} else {
@@ -487,8 +489,8 @@ function of_admin_head() {
 	
 	$(".slide_add_button").live('click', function(){		
 		var slidesContainer = $(this).prev();
-		
 		var sliderId = slidesContainer.attr('id');
+		var sliderInt = $('#'+sliderId).attr('rel');
 		
 		var numArr = $('#'+sliderId +' li').find('.order').map(function() { 
 			var str = this.id; 
@@ -501,7 +503,7 @@ function of_admin_head() {
 		
 		var newNum = maxNum + 1;
 		
-		slidesContainer.append('<li><div class="slide_header"><strong>Slide ' + newNum + '</strong><input type="hidden" class="slide of-input order" name="' + sliderId + '[' + newNum + '][order]" id="' + sliderId + '_slide_order-' + newNum + '" value="' + newNum + '"><a class="slide_edit_button" href="#">Edit</a></div><div class="slide_body" style="display: none; "><label>Title</label><input class="slide of-input" name="' + sliderId + '[' + newNum + '][title]" id="' + sliderId + '_' + newNum + '_slide_title" value=""><label>Image URL</label><input class="slide of-input" name="' + sliderId + '[' + newNum + '][url]" id="' + sliderId + '_' + newNum + '_slide_url" value=""><div class="upload_button_div"><span class="button image_upload_button" id="' + sliderId + '_' + newNum + '">Upload</span><span class="button image_reset_button hide" id="reset_' + sliderId + '_' + newNum + '" title="' + sliderId + '_' + newNum + '">Remove</span></div><div class="clear"></div><label>Link URL (optional)</label><input class="slide of-input" name="' + sliderId + '[' + newNum + '][link]" id="' + sliderId + '_' + newNum + '_slide_link" value=""><label>Description (optional)</label><textarea class="slide of-input" name="' + sliderId + '[' + newNum + '][description]" id="' + sliderId + '_' + newNum + '_slide_description" cols="8" rows="8"></textarea><a class="slide_delete_button" href="#">Delete</a><div class="clear"></div></div></li>');
+		slidesContainer.append('<li><div class="slide_header"><strong>Slide ' + newNum + '</strong><input type="hidden" class="slide of-input order" name="' + sliderId + '[' + newNum + '][order]" id="' + sliderId + '_slide_order-' + newNum + '" value="' + newNum + '"><a class="slide_edit_button" href="#">Edit</a></div><div class="slide_body" style="display: none; "><label>Title</label><input class="slide of-input" name="' + sliderId + '[' + newNum + '][title]" id="' + sliderId + '_' + newNum + '_slide_title" value=""><label>Image URL</label><input class="slide of-input" name="' + sliderId + '[' + newNum + '][url]" id="' + sliderId + '_' + newNum + '_slide_url" value=""><div class="upload_button_div"><span class="button media_upload_button" id="' + sliderId + '_' + newNum + '" rel="'+sliderInt+'">Upload</span><span class="button mlu_remove_button hide" id="reset_' + sliderId + '_' + newNum + '" title="' + sliderId + '_' + newNum + '">Remove</span></div><div class="screenshot"></div><label>Link URL (optional)</label><input class="slide of-input" name="' + sliderId + '[' + newNum + '][link]" id="' + sliderId + '_' + newNum + '_slide_link" value=""><label>Description (optional)</label><textarea class="slide of-input" name="' + sliderId + '[' + newNum + '][description]" id="' + sliderId + '_' + newNum + '_slide_description" cols="8" rows="8"></textarea><a class="slide_delete_button" href="#">Delete</a><div class="clear"></div></div></li>');
 		of_image_upload(); // re-initialise upload image..
 		return false; //prevent jumps, as always..
 	});	
@@ -509,7 +511,9 @@ function of_admin_head() {
 	// Sort Slides
 	jQuery('.slider').find('ul').each( function() {
 		var id = jQuery(this).attr('id');
-		$('#'+ id).sortable();	
+		$('#'+ id).sortable({
+			placeholder: "placeholder"
+		});	
 	});
 	
 	//----------------------------------------------------------------*/
@@ -759,21 +763,30 @@ public static function optionsframework_machine($options) {
 		case 'upload_min':			
 			$output .= Options_Machine::optionsframework_uploader_function($value['id'],$value['std'],'min');			
 		break;
+		case 'media':
+			$_id = strip_tags( strtolower($value['id']) );
+			$int = '';
+			$int = optionsframework_mlu_get_silentpost( $_id );
+			$output .= Options_Machine::optionsframework_media_uploader_function( $value['id'], $value['std'], $int ); // New AJAX Uploader using Media Library			
+		break;
 		case 'slider':
-			$output .= '<div class="slider"><ul id="'.$value['id'].'">';
+			$_id = strip_tags( strtolower($value['id']) );
+			$int = '';
+			$int = optionsframework_mlu_get_silentpost( $_id );
+			$output .= '<div class="slider"><ul id="'.$value['id'].'" rel="'.$int.'">';
 			$slides = $data[$value['id']];
 			$count = count($slides);
 			if ($count < 2) {
 				$oldorder = 1;
 				$order = 1;
-				$output .= Options_Machine::optionsframework_slider_function($value['id'],$value['std'],null,$oldorder,$order);
+				$output .= Options_Machine::optionsframework_slider_function($value['id'],$value['std'],$oldorder,$order,$int);
 			} else {			
 				$i = 0;
 				foreach ($slides as $slide) {
 					$oldorder = $slide['order'];
 					$i++;
 					$order = $i;
-					$output .= Options_Machine::optionsframework_slider_function($value['id'],$value['std'],null,$oldorder,$order);
+					$output .= Options_Machine::optionsframework_slider_function($value['id'],$value['std'],$oldorder,$order,$int);
 				}
 			}			
 			$output .= '</ul>';
@@ -948,9 +961,11 @@ public static function optionsframework_uploader_function($id,$std,$mod){
 	$uploader = '';
     $upload = $data[$id];
 	
+	if ($mod != "") {$hide ='hide';}
+	
     if ( $upload != "") { $val = $upload; } else {$val = $std;}
     
-	$uploader .= '<input class="upload of-input" name="'. $id .'" id="'. $id .'_upload" value="'. $val .'" />';	
+	$uploader .= '<input class="'.$hide.' upload of-input" name="'. $id .'" id="'. $id .'_upload" value="'. $val .'" />';	
 	
 	$uploader .= '<div class="upload_button_div"><span class="button image_upload_button" id="'.$id.'">Upload</span>';
 	
@@ -970,12 +985,44 @@ public static function optionsframework_uploader_function($id,$std,$mod){
 return $uploader;
 }
 
+/*-----------------------------------------------------------------------------------*/
+/* OptionsFramework Slider - optionsframework_media_uploader_function */
+/*-----------------------------------------------------------------------------------*/
+public static function optionsframework_media_uploader_function($id,$std,$int){
+
+    $data =get_option(OPTIONS);
+	
+	$uploader = '';
+    $upload = $data[$id];
+	
+	if ($mod != "") {$hide ='hide';}
+	
+    if ( $upload != "") { $val = $upload; } else {$val = $std;}
+    
+	$uploader .= '<input class="'.$hide.' upload of-input" name="'. $id .'" id="'. $id .'_upload" value="'. $val .'" />';	
+	
+	$uploader .= '<div class="upload_button_div"><span class="button media_upload_button" id="'.$id.'" rel="' . $int . '">Upload</span>';
+	
+	if(!empty($upload)) {$hide = '';} else { $hide = 'hide';}
+	$uploader .= '<span class="button mlu_remove_button '. $hide.'" id="reset_'. $id .'" title="' . $id . '">Remove</span>';
+	$uploader .='</div>' . "\n";
+	$uploader .= '<div class="screenshot">';
+	if(!empty($upload)){	
+    	$uploader .= '<a class="of-uploaded-image" href="'. $upload . '">';
+    	$uploader .= '<img class="of-option-image" id="image_'.$id.'" src="'.$upload.'" alt="" />';
+    	$uploader .= '</a>';			
+		}
+	$uploader .= '</div>';
+	$uploader .= '<div class="clear"></div>' . "\n"; 
+
+return $uploader;
+}
 
 /*-----------------------------------------------------------------------------------*/
-/* OptionsFramework Uploader - optionsframework_slider_function */
+/* OptionsFramework Slider - optionsframework_slider_function */
 /*-----------------------------------------------------------------------------------*/
 
-public static function optionsframework_slider_function($id,$std,$mod,$oldorder,$order){
+public static function optionsframework_slider_function($id,$std,$oldorder,$order,$int){
 
     $data =get_option(OPTIONS);
 	
@@ -1001,20 +1048,20 @@ public static function optionsframework_slider_function($id,$std,$mod,$oldorder,
 	$slider .= '<label>Image URL</label>';
 	$slider .= '<input class="slide of-input" name="'. $id .'['.$order.'][url]" id="'. $id .'_'.$order .'_slide_url" value="'. $val['url'] .'" />';
 	
-	$slider .= '<div class="upload_button_div"><span class="button image_upload_button" id="'.$id.'_'.$order .'">Upload</span>';
+	$slider .= '<div class="upload_button_div"><span class="button media_upload_button" id="'.$id.'_'.$order .'" rel="' . $int . '">Upload</span>';
 	
 	if(!empty($val['url'])) {$hide = '';} else { $hide = 'hide';}
-	$slider .= '<span class="button image_reset_button '. $hide.'" id="reset_'. $id .'_'.$order .'" title="' . $id . '_'.$order .'">Remove</span>';
+	$slider .= '<span class="button mlu_remove_button '. $hide.'" id="reset_'. $id .'_'.$order .'" title="' . $id . '_'.$order .'">Remove</span>';
 	$slider .='</div>' . "\n";
-
+	$slider .= '<div class="screenshot">';
 	if(!empty($val['url'])){
-		$slider .= '<div class="screenshot">';
+		
     	$slider .= '<a class="of-uploaded-image" href="'. $val['url'] . '">';
     	$slider .= '<img class="of-option-image" id="image_'.$id.'_'.$order .'" src="'.$val['url'].'" alt="" />';
     	$slider .= '</a>';
-		$slider .= '</div>';
+		
 		}
-	
+	$slider .= '</div>';	
 	$slider .= '<label>Link URL (optional)</label>';
 	$slider .= '<input class="slide of-input" name="'. $id .'['.$order.'][link]" id="'. $id .'_'.$order .'_slide_link" value="'. $val['link'] .'" />';
 	
@@ -1028,5 +1075,5 @@ public static function optionsframework_slider_function($id,$std,$mod,$oldorder,
 	$slider .= '</li>';
 
 return $slider;
-}
+}	
 }//end class
