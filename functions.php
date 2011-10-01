@@ -618,6 +618,7 @@ require_once (ADMIN_PATH . 'admin-interface.php');		// Admin Interfaces
 
 require_once (ADMIN_PATH . 'theme-options.php'); 		// Options panel settings and custom settings
 require_once (ADMIN_PATH . 'admin-functions.php'); 	// Theme actions based on options settings
+require_once (ADMIN_PATH . 'medialibrary-uploader.php'); // Media Library Uploader
 
 /* These files contain the custom theme functions */
 
