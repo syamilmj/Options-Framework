@@ -986,7 +986,7 @@ return $uploader;
 }
 
 /*-----------------------------------------------------------------------------------*/
-/* OptionsFramework Slider - optionsframework_media_uploader_function */
+/* OptionsFramework Media Uploader - optionsframework_media_uploader_function */
 /*-----------------------------------------------------------------------------------*/
 public static function optionsframework_media_uploader_function($id,$std,$int){
 
