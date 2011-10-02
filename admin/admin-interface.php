@@ -112,8 +112,8 @@ global $options_machine;
     <input type="hidden" id="security" name="security" value="<?php echo wp_create_nonce('of_ajax_nonce'); ?>" />
 	<input type="hidden" name="of_reset" value="reset" />
 	
-	<button id ="of_save" type="button" class="button-primary"><?php _e('Save All Changes');?></button>
-	<button id ="of_reset" type="button" class="button submit-button reset-button" ><?php _e('Options Reset');?></button>
+	<button id ="of_save" type="submit" class="button-primary"><?php _e('Save All Changes');?></button>
+	<button id ="of_reset" type="submit" class="button submit-button reset-button" ><?php _e('Options Reset');?></button>
 	</div><!--.save_bar--> 
  
   </form>
