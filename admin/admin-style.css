@@ -1,6 +1,6 @@
 /*-----------------------------------------------------------------------------------*/
 /* Title: OptionsFramework Admin Styles
-/* Modded by: sy4mil - http://aquagraphite.com
+/* Modded by: Syamil MJ - http://aquagraphite.com
 /* License: GPL
 /* Credits:	Thematic Options Panel http://wptheming.com/2010/11/thematic-options-panel-v2/
 			KIA Thematic Options Panel https://github.com/helgatheviking/thematic-options-KIA
@@ -110,6 +110,18 @@ border-radius: 2px;
 	moz-box-shadow: inset 0 1px 0 #f9f9f9;
 	-webkit-box-shadow: inset 0 1px 0 #f9f9f9;
 	box-shadow: inset 0 1px 0 #f9f9f9;
+	margin-right: 1px;
+	border-bottom: 1px solid #d8d8d8;
+}
+
+#of_container #of-nav li:last-child {
+	moz-box-shadow: inset 0 1px 0 #f9f9f9, 0 1px 0 #f9f9f9;
+	-webkit-box-shadow: inset 0 1px 0 #f9f9f9, 0 1px 0 #f9f9f9;
+	box-shadow: inset 0 1px 0 #f9f9f9, 0 1px 0 #f9f9f9;
+}
+
+#of_container #of-nav li.current {
+	margin-right: 0;
 }
 
 #of_container #of-nav li a, #of_container #of-nav ul li a:link, #of-nav ul li a:visited {
@@ -121,7 +133,6 @@ border-radius: 2px;
 	font-size: 12px;
 	text-decoration: none;
 	color: #555;
-	border-bottom: 1px solid #d8d8d8;
 	opacity: 0.5;
 }
 #of_container #of-nav ul li.current a {
@@ -140,6 +151,7 @@ border-radius: 2px;
 #of_container #of-nav li.generalsettings a{ background-image:url(images/icon-settings.png);}
 #of_container #of-nav li.stylingoptions a{ background-image:url(images/icon-paint.png);}
 #of_container #of-nav li.exampleoptions a{ background-image:url(images/icon-docs.png);}
+#of_container #of-nav li.homesettings a{ background-image:url(images/icon-home.png);}
 
 #of_container #content {
 	float: left;
@@ -178,8 +190,13 @@ border-radius: 2px;
 #of_container #content .section-checkbox .controls {
 	width:25px
 }
+
+#of_container #content .section-multicheck .controls input.checkbox {
+	margin-top:9px;
+}
+
 #of_container #content .section-checkbox .explain {
-	width:540px
+	max-width:93%;
 }
 #of_container #content .section-color .controls {
 	width:125px
@@ -188,28 +205,29 @@ border-radius: 2px;
 	width:440px
 }
 #of_container #content .section-info h3.heading {
-	font-size: 12px;
-	font-weight: 100;
-	border: 0;
-	margin-top: 20px;
-	letter-spacing: 1px;
-	border-top: 1px solid #FFF298;
-	margin-bottom: 0;
-	background:#EFE186;
-	padding: 10px 20px;
+	display:none;
 }
 #of_container #content .section-info .controls {
-	margin: 0 0 20px;
-	padding: 15px 20px;
+	margin: 20px 0 20px;
+	float:none;
 	width: auto;
-	line-height: 1.5em;
-	font-size: 14px;
-	font-style: italic;
-	font-family: Georgia, arial;
-	background: #FFF298;
-	border:1px solid #ECD852;
-	color:#424242;
 }
+#of_container #content .section-info .controls .of-info{
+	padding: 15px 10px;
+	line-height: 21px;
+	font-size: 12px;
+	background-color: #EFF9FF;
+	border: 1px solid #D6F0FF;
+	color:#777;
+}
+
+#of_container #content .section-info .controls .of-info ._icon-info { 
+	background : url(images/icon-info.png) no-repeat;
+	height:16px; width:16px;
+	margin: 0 10px 0 0;
+	float: left;
+}
+
 #of_container #content .section-info .controls small {
 	font-size: 12px
 }
@@ -223,6 +241,46 @@ border-radius: 2px;
 	-moz-border-radius: 0 0 3px 3px;
 	border-radius: 0 0 3px 3px;
 }
+
+
+#of_container  .sorter ul {
+	background:#f9f9f9;
+	border:1px dashed #e3e3e3;
+	padding:10px 10px 0;
+}
+#of_container  .sorter ul li {
+	border: 1px solid #DFDFDF;
+	cursor: move;
+	font-weight: bold;
+	margin-bottom:10px;
+	padding:0 10px;
+	height: 40px;
+	line-height: 40px;
+	background-color: #F1F1F1;
+	background-image: -ms-linear-gradient(top,#f9f9f9,#ececec);
+	background-image: -moz-linear-gradient(top,#f9f9f9,#ececec);
+	background-image: -o-linear-gradient(top,#f9f9f9,#ececec);
+	background-image: -webkit-gradient(linear,left top,left bottom,from(#f9f9f9),to(#ececec));
+	background-image: -webkit-linear-gradient(top,#f9f9f9,#ececec);
+	background-image: linear-gradient(top,#f9f9f9,#ececec);
+	overflow: hidden;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+	moz-box-shadow: inset 0 1px 0 #fff;
+	-webkit-box-shadow: inset 0 1px 0 #fff;
+	box-shadow: inset 0 1px 0 #fff;
+	text-align:center;
+}
+
+
+#of_container #content li.placeholder {
+	background:#f9f9f9;
+	border-width:1px;
+	border-style:dashed;
+	height:41px;}
+
+
 #of_container textarea, #of_container input, #of_container select, #of_container button{
 	-webkit-border-radius: 3px;
 	-moz-border-radius: 3px;
@@ -268,6 +326,7 @@ border-radius: 2px;
 }
 #of_container input.checkbox {
 	width: 30px;
+	margin-top:3px;
 }
 #of_container input.of-radio {
 	width: 30px;
@@ -328,7 +387,8 @@ border-radius: 2px;
 	float:left
 }
 #of_container .group {
-	padding-bottom:20px
+	display:none;
+	padding-bottom:20px;
 }
 #of_container .group h2 {
 	display:none;
@@ -392,6 +452,14 @@ border-radius: 2px;
 #of_container .of-save-fail {
 	background-image:url(images/stop.png);
 }
+
+#of_container .accept,
+#of_container .warning,
+#of_container .update_available,
+#of_container .of-save-popup {
+	z-index: 9999;
+}
+
 #of_container .upload_button_div {
 	margin-top:7px;
 	margin-bottom: 15px;
@@ -571,12 +639,8 @@ position:relative;
 	box-shadow: inset 0 1px 0 #fff;
 }
 
-#of_container .slider li.placeholder {
-	border-width:1px;
-	border-style:dashed;
-	height:33px;}
-
 #of_container .slide_header {
+	cursor:move;
 	height:32px;
 	padding-left:10px;
 	line-height:32px;
@@ -642,6 +706,20 @@ width: inherit;
 z-index: 4;	
 }
 
+#of_backup {
+	margin: 40px 20px;
+	width: 600px;
+}
+#of_backup textarea {
+	margin-bottom: 9px !important;
+	background-color: #F1F1F1;
+	border: 1px solid;
+	width: 100%;
+	padding: 4px;
+	font-family: "Lucida Grande", "Lucida Sans Unicode", Arial, Verdana, sans-serif;
+	font-size: 12px;
+	border-color: #CCC #E6E6E6 #E6E6E6 #CCC;
+}
 /*-------------------------------------------------------------------------------------------*/
 /* GENERAL STYLES */
 /*-------------------------------------------------------------------------------------------*/

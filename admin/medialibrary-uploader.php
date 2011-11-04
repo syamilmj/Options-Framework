@@ -72,8 +72,8 @@ if ( ! function_exists( 'optionsframework_mlu_js' ) ) {
 	function optionsframework_mlu_js () {
 	
 		// Registers custom scripts for the Media Library AJAX uploader.
-		wp_register_script( 'of-medialibrary-uploader', ADMIN_DIR .'js/of-medialibrary-uploader.js', array( 'jquery', 'thickbox' ) );
-		wp_enqueue_script( 'of-medialibrary-uploader' );
+		wp_register_script( 'aq-medialibrary-uploader', ADMIN_DIR .'js/aq-medialibrary-uploader.js', array( 'jquery', 'thickbox' ) );
+		wp_enqueue_script( 'aq-medialibrary-uploader' );
 		wp_enqueue_script( 'media-upload' );
 	}
 
@@ -86,10 +86,10 @@ if ( ! function_exists( 'optionsframework_mlu_js' ) ) {
  * Return: $_postid.
  *
  * If no "silent" post is present, one will be created with the type "optionsframework"
- * and the post_name of "of-$_token".
+ * and the post_name of "aq-$_token".
  *
  * Example Usage:
- * optionsframework_mlu_get_silentpost ( 'of_logo' );
+ * optionsframework_mlu_get_silentpost ( 'aq_logo' );
  */
 
 if ( ! function_exists( 'optionsframework_mlu_get_silentpost' ) ) {
@@ -100,7 +100,7 @@ if ( ! function_exists( 'optionsframework_mlu_get_silentpost' ) ) {
 		$_id = 0;
 	
 		// Check if the token is valid against a whitelist.
-		// $_whitelist = array( 'of_logo', 'of_custom_favicon', 'of_ad_top_image' );
+		// $_whitelist = array( 'aq_logo', 'aq_custom_favicon', 'aq_ad_top_image' );
 		// Sanitise the token.
 		
 		$_token = strtolower( str_replace( ' ', '_', $_token ) );
@@ -110,7 +110,7 @@ if ( ! function_exists( 'optionsframework_mlu_get_silentpost' ) ) {
 			
 			// Tell the function what to look for in a post.
 			
-			$_args = array( 'post_type' => 'optionsframework', 'post_name' => 'of-' . $_token, 'post_status' => 'draft', 'comment_status' => 'closed', 'ping_status' => 'closed' );
+			$_args = array( 'post_type' => 'optionsframework', 'post_name' => 'aq-' . $_token, 'post_status' => 'draft', 'comment_status' => 'closed', 'ping_status' => 'closed' );
 			
 			// Look in the database for a "silent" post that meets our criteria.
 			$query = 'SELECT ID FROM ' . $wpdb->posts . ' WHERE post_parent = 0';
@@ -160,8 +160,8 @@ if ( ! function_exists( 'optionsframework_mlu_js_popup' ) ) {
 
 	function optionsframework_mlu_js_popup () {
 
-		$_of_title = $_REQUEST['of_title'];
-		if ( ! $_of_title ) { $_of_title = 'file'; } // End IF Statement
+		$_aq_title = $_REQUEST['aq_title'];
+		if ( ! $_aq_title ) { $_aq_title = 'file'; } // End IF Statement
 ?>
 	<script type="text/javascript">
 	<!--
@@ -172,7 +172,7 @@ if ( ! function_exists( 'optionsframework_mlu_js_popup' ) ) {
 		// Change the title of each tab to use the custom title text instead of "Media File".
 		$( 'h3.media-title' ).each ( function () {
 			var current_title = $( this ).html();
-			var new_title = current_title.replace( 'media file', '<?php echo $_of_title; ?>' );
+			var new_title = current_title.replace( 'media file', '<?php echo $_aq_title; ?>' );
 			$( this ).html( new_title );
 		
 		} );

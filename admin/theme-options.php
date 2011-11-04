@@ -21,10 +21,17 @@ $of_pages_tmp = array_unshift($of_pages, "Select a page:");
 
 //Testing 
 $of_options_select = array("one","two","three","four","five"); 
-$of_options_radio = array("one" => "One","two" => "Two","three" => "Three","four" => "Four","five" => "Five"); 
+$of_options_radio = array("one" => "One","two" => "Two","three" => "Three","four" => "Four","five" => "Five");
+$of_options_homepage_blocks = array( 
+								"block_1" => "Block One",
+								"block_2" => "Block Two",
+								"block_3" => "Block Three",
+								"block_4" => "Block Four"
+);
+
 
 //Stylesheets Reader
-$alt_stylesheet_path = STYLES_PATH;
+$alt_stylesheet_path = LAYOUT_PATH;
 $alt_stylesheets = array();
 
 if ( is_dir($alt_stylesheet_path) ) {
@@ -64,41 +71,44 @@ $of_options_image_link_to = array("image" => "The Image","post" => "The Post");
 global $of_options;
 $of_options = array();
 
-$of_options[] = array( "name" => "Slider Options",
+$of_options[] = array( "name" => "Home Settings",
 					"type" => "heading");
 					
-$of_options[] = array( "name" => "Homepage Slider",
-					"desc" => "Upload images to your homepage slider, or define the URL directly",
-					"id" => "homepage_slider",
-					"std" => "",
-					"type" => "slider");
+$of_options[] = array( "name" => "Hello there!",
+					"desc" => "",
+					"id" => "introduction",
+					"std" => "<h3 style=\"margin: 0 0 10px;\">Welcome to the Options Framework demo.</h3>
+					This is a slightly modified version of the original options framework by Devin Price with a couple of aesthetical improvements on the interface and some cool additional features. If you want to learn how to setup these options or just need general help on using it feel free to visit my blog at <a href=\"http://aquagraphite.com/2011/09/29/slightly-modded-options-framework/\">AquaGraphite.com</a>",
+					"icon" => true,
+					"type" => "info");
 					
 $of_options[] = array( "name" => "Media Uploader",
-					"desc" => "Upload images using native media uploader, or define the URL directly",
+					"desc" => "Upload images using the native media uploader, or define the URL directly",
 					"id" => "media_upload",
 					"std" => "",
 					"type" => "media");
 					
-$of_options[] = array( "name" => "Media Uploader 2",
-					"desc" => "Upload images using native media uploader, or define the URL directly",
+$of_options[] = array( "name" => "Media Uploader Min",
+					"desc" => "Upload images using native media uploader. This is a min version, meaning it has no url to copy paste. Perfect for logo.",
 					"id" => "media_upload_2",
 					"std" => "",
+					"mod" => "min",
 					"type" => "media");
 					
-$of_options[] = array( "name" => "Pingu Slider",
-					"desc" => "Upload images to your pingu slider, or define the URL directly",
+$of_options[] = array( "name" => "Slider Options",
+					"desc" => "Unlimited slider with drag and drop ability.",
 					"id" => "pingu_slider",
 					"std" => "",
 					"type" => "slider");
+					
+$of_options[] = array( "name" => "Layout Manager",
+					"desc" => "Drag and drop layout manager, to quickly organize your contents.",
+					"id" => "homepage_block",
+					"std" => $of_options_homepage_blocks,
+				  	"type" => "sorter");
 
 $of_options[] = array( "name" => "General Settings",
                     "type" => "heading");
-					
-$of_options[] = array( "name" => "Custom Logo",
-					"desc" => "Upload a logo for your theme, or specify the image address of your online logo. (http://yoursite.com/logo.png)",
-					"id" => "logo",
-					"std" => "",
-					"type" => "upload");
 					
 $url =  ADMIN_DIR . 'images/';
 $of_options[] = array( "name" => "Main Layout",
@@ -199,16 +209,17 @@ $of_options[] = array( "name" => "Colorpicker (default #2098a8)",
 					"std" => "#2098a8",
 					"type" => "color");          
                   
-$of_options[] = array( "name" => "Upload Basic",
+$of_options[] = array( "name" => "Upload",
 					"desc" => "An image uploader without text input.",
 					"id" => "uploader",
 					"std" => "",
-					"type" => "upload_min");  
+					"type" => "upload");  
 					
-$of_options[] = array( "name" => "Upload",
+$of_options[] = array( "name" => "Upload Min",
 					"desc" => "An image uploader with text input.",
 					"id" => "uploader2",
 					"std" => "",
+					"mod" => "min",
 					"type" => "upload");     
                                 
 $of_options[] = array( "name" => "Input Text",
@@ -255,7 +266,7 @@ $url =  ADMIN_DIR . 'images/';
 $of_options[] = array( "name" => "Image Select",
 					"desc" => "Use radio buttons as images.",
 					"id" => "images",
-					"std" => "",
+					"std" => "warning.css",
 					"type" => "images",
 					"options" => array(
 						'warning.css' => $url . 'warning.png',
@@ -281,7 +292,6 @@ $of_options[] = array( "name" => "Select a Category",
 					"std" => "Select a category:",
 					"type" => "select",
 					"options" => $of_categories);
-					
 					
 	}
 }

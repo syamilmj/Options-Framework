@@ -1,7 +1,8 @@
 <?php
 /*-----------------------------------------------------------------------------------*/
-/* Title: Options Framework
-/* Modded by: sy4mil - http://aquagraphite.com
+/* Title: Aquagraphite Options Framework
+/* Author: Syamil MJ
+/* Author URI: http://aquagraphite.com
 /* License: GPL
 /* Credits:	Thematic Options Panel http://wptheming.com/2010/11/thematic-options-panel-v2/
 			KIA Thematic Options Panel https://github.com/helgatheviking/thematic-options-KIA
@@ -81,7 +82,7 @@ global $options_machine;
     <div class="of-save-fail">Error!</div>
   </div>
 
-  <form id="ofform" method="post" action="<?php echo esc_attr( $_SERVER['REQUEST_URI'] ) ?>" enctype="multipart/form-data" >
+  <form id="of_form" method="post" action="<?php echo esc_attr( $_SERVER['REQUEST_URI'] ) ?>" enctype="multipart/form-data" >
     <div id="header">
       <div class="logo">
         <h2><?php echo THEMENAME; ?></h2>
@@ -123,7 +124,16 @@ global $options_machine;
 <div style="clear:both;"></div>
 
 </div><!--wrap-->
+<div id="of_backup">
 <?php
+	$data = serialize(get_option(OPTIONS));
+	echo "<textarea cols=\"8\" rows=\"8\">";
+	print_r($data);
+	echo "</textarea>";
+?>
+</div>
+<?php
+
 }
 
 /*-----------------------------------------------------------------------------------*/
@@ -149,6 +159,7 @@ function of_load_only() {
 	wp_enqueue_script('jquery-input-mask');
 	wp_enqueue_script('color-picker', ADMIN_DIR .'js/colorpicker.js', array('jquery'));
 	wp_enqueue_script('ajaxupload', ADMIN_DIR .'js/ajaxupload.js', array('jquery'));
+	wp_enqueue_script('cookie', ADMIN_DIR . '/js/jquery.cookie.js', 'jquery');
 		// Registers custom scripts for the Media Library AJAX uploader.
 }
 
@@ -172,7 +183,35 @@ function of_admin_head() {
 	
 	//Tabify Options			
 	$('.group').hide();
-	$('.group:first').fadeIn();
+	
+	// Display last current tab	
+	if ($.cookie("of_current_opt") === null) {
+		$('.group:first').fadeIn();	
+		$('#of-nav li:first').addClass('current');
+	} else {
+	
+		var hooks = {<?php
+		
+		$h = 0;
+		$hooks = of_get_header_classes_array();
+	
+		foreach ($hooks as $hook) {
+			$h++;
+			echo '\''.$h.'\' : \''.$hook.'\',';
+		}
+		
+		?>};
+		
+		$.each(hooks, function(key, value) { 
+		
+			if ($.cookie("of_current_opt") == '#of-option-'+ value) {
+				$('.group#of-option-' + value).fadeIn();
+				$('#of-nav li.' + value).addClass('current');
+			}
+			
+		});
+	
+	}
 				
 	$('.group .collapsed').each(function(){
 		$(this).find('input:checked').parent().parent().parent().nextAll().each( 
@@ -205,21 +244,22 @@ function of_admin_head() {
 	}
 	
 	//Current Menu Class
-	$('#of-nav li:first').addClass('current');
 	$('#of-nav li a').click(function(evt){
 	// event.preventDefault();
 				
-	$('#of-nav li').removeClass('current');
-	$(this).parent().addClass('current');
+		$('#of-nav li').removeClass('current');
+		$(this).parent().addClass('current');
+							
+		var clicked_group = $(this).attr('href');
+		
+		$.cookie('of_current_opt', clicked_group, { expires: 7, path: '<?php global $current_blog; $blog_path = $current_blog->path; echo $blog_path; ?>' });
+			
+		$('.group').hide();
+							
+		$(clicked_group).fadeIn();
+		return false;
 						
-	var clicked_group = $(this).attr('href');
-		 
-	$('.group').hide();
-						
-	$(clicked_group).fadeIn();
-	return false;
-						
-});
+	});
 
 	//Expand Options 
 	var flip = 0;
@@ -520,6 +560,17 @@ function of_admin_head() {
 	// End Aquagraphite Slider MOD
 	//----------------------------------------------------------------*/
 	
+	/*----------------------------------------------------------------*/
+	/*	Sorter
+	/*----------------------------------------------------------------*/
+	jQuery('.sorter').each( function() {
+		var id = jQuery(this).attr('id');
+		$('#'+ id).find('ul').sortable({
+			placeholder: "placeholder",		
+		});	
+	});
+	
+	
 	/* save everything */
 	$('#of_save').live('click',function() {
 			
@@ -527,7 +578,7 @@ function of_admin_head() {
 					
 		$('.ajax-loading-img').fadeIn();
 										
-		var serializedReturn = $('#ofform :input[name][name!="security"][name!="of_reset"]').serialize();
+		var serializedReturn = $('#of_form :input[name][name!="security"][name!="of_reset"]').serialize();
 										
 		//alert(serializedReturn);
 						
@@ -708,7 +759,7 @@ public static function optionsframework_machine($options) {
 		switch ( $value['type'] ) {
 		
 		case 'text':
-			$output .= '<input class="of-input" name="'.$value['id'].'" id="'. $value['id'] .'" type="'. $value['type'] .'" value="'. $data[$value['id']] .'" />';
+			$output .= '<input class="of-input" name="'.$value['id'].'" id="'. $value['id'] .'" type="'. $value['type'] .'" value="'. stripslashes($data[$value['id']]) .'" />';
 		break;
 		case 'select':
 			$output .= '<div class="select_wrapper">';
@@ -746,7 +797,7 @@ public static function optionsframework_machine($options) {
 				$output .= '<input class="of-input of-radio" name="'.$value['id'].'" type="radio" value="'.$option.'" ' . checked($data[$value['id']], $option, false) . ' />'.$name.'<br/>';				
 			}	 
 		break;
-		case 'checkbox': 	
+		case 'checkbox':
 			$output .= '<input type="checkbox" class="checkbox of-input" name="'.$value['id'].'" id="'. $value['id'] .'" value="1" '. checked($data[$value['id']], true, false) .' />';			
 		break;
 		case 'multicheck': 			
@@ -758,16 +809,13 @@ public static function optionsframework_machine($options) {
 			}			 
 		break;
 		case 'upload':			
-			$output .= Options_Machine::optionsframework_uploader_function($value['id'],$value['std'],null);			
-		break;
-		case 'upload_min':			
-			$output .= Options_Machine::optionsframework_uploader_function($value['id'],$value['std'],'min');			
+			$output .= Options_Machine::optionsframework_uploader_function($value['id'],$value['std'],$value['mod']);			
 		break;
 		case 'media':
 			$_id = strip_tags( strtolower($value['id']) );
 			$int = '';
 			$int = optionsframework_mlu_get_silentpost( $_id );
-			$output .= Options_Machine::optionsframework_media_uploader_function( $value['id'], $value['std'], $int ); // New AJAX Uploader using Media Library			
+			$output .= Options_Machine::optionsframework_media_uploader_function( $value['id'], $value['std'], $int, $value['mod'] ); // New AJAX Uploader using Media Library			
 		break;
 		case 'slider':
 			$_id = strip_tags( strtolower($value['id']) );
@@ -780,7 +828,7 @@ public static function optionsframework_machine($options) {
 				$oldorder = 1;
 				$order = 1;
 				$output .= Options_Machine::optionsframework_slider_function($value['id'],$value['std'],$oldorder,$order,$int);
-			} else {			
+			} else {
 				$i = 0;
 				foreach ($slides as $slide) {
 					$oldorder = $slide['order'];
@@ -793,12 +841,33 @@ public static function optionsframework_machine($options) {
 			$output .= '<a href="#" class="button slide_add_button">Add New Slide</a></div>';
 			
 		break;
+		case 'sorter':
+		
+			$sortlist = $data[$value['id']];
+			
+			$output .= '<div id="'.$value['id'].'" class="sorter">';
+			$output .= '<ul id="sortlist_'.$value['id'].'" class="sortlist">';
+			
+			if ($sortlist) {
+				foreach ($sortlist as $key => $list) {
+					$output .= '<li class="sortee">';
+					$output .= '<input type="hidden" name="'.$value['id'].'['.$key.']" value="'.$list.'">';
+					$output .= $list;
+					$output .= '</li>';
+				}
+			}
+			
+			$output .= '</ul>';
+			$output .= '</div>';
+		break;
 		case 'color':		
 			$output .= '<div id="' . $value['id'] . '_picker" class="colorSelector"><div style="background-color: '.$data[$value['id']].'"></div></div>';
 			$output .= '<input class="of-color" name="'.$value['id'].'" id="'. $value['id'] .'" type="text" value="'. $data[$value['id']] .'" />';
 		break;   	
-		case 'typography':								
-			$typography_stored = $data[$value['id']];		
+		case 'typography':
+		
+			$typography_stored = $data[$value['id']];
+			
 			/* Font Size */
 			$output .= '<div class="select_wrapper typography-size">';
 			$output .= '<select class="of-typography of-typography-size select" name="'.$value['id'].'[size]" id="'. $value['id'].'_size">';
@@ -846,7 +915,7 @@ public static function optionsframework_machine($options) {
 			$output .= '<input class="of-color of-typography of-typography-color" name="'.$value['id'].'[color]" id="'. $value['id'] .'_color" type="text" value="'. $typography_stored['color'] .'" />';
 		break;  
 		case 'border':
-			$default = $value['std'];
+
 			$border_stored = array('width' => $data[$value['id'] . '_width'] ,
 									'style' => $data[$value['id'] . '_style'],
 									'color' => $data[$value['id'] . '_color'],
@@ -879,31 +948,40 @@ public static function optionsframework_machine($options) {
 			/* Border Color */		
 			$output .= '<div id="' . $value['id'] . '_color_picker" class="colorSelector"><div style="background-color: '.$border_stored['color'].'"></div></div>';
 			$output .= '<input class="of-color of-border of-border-color" name="'.$value['id'].'[color]" id="'. $value['id'] .'_color" type="text" value="'. $border_stored['color'] .'" />';
+			
 		break;   
 		case 'images':
+		
 			$i = 0;
+			
 			$select_value = $data[$value['id']];
-  
+			
 			foreach ($value['options'] as $key => $option) 
-			 { 
-			 $i++;
-
+			{ 
+			$i++;
+	
 				$checked = '';
 				$selected = '';
-				if(NULL!=checked($data[$value['id']], $key, false)) {
-					$checked = checked($data[$value['id']], $key, false);
+				if(NULL!=checked($select_value, $key, false)) {
+					$checked = checked($select_value, $key, false);
 					$selected = 'of-radio-img-selected';  
-				} 	
+				}
 				$output .= '<span>';
 				$output .= '<input type="radio" id="of-radio-img-' . $value['id'] . $i . '" class="checkbox of-radio-img-radio" value="'.$key.'" name="'.$value['id'].'" '.$checked.' />';
 				$output .= '<div class="of-radio-img-label">'. $key .'</div>';
 				$output .= '<img src="'.$option.'" alt="" class="of-radio-img-img '. $selected .'" onClick="document.getElementById(\'of-radio-img-'. $value['id'] . $i.'\').checked = true;" />';
 				$output .= '</span>';				
-			}		
+			}
+			
 		break; 	
 		case "info":
-			$default = $value['std'];
-			$output .= $default;
+			$info_text = $value['std'];
+			$icon = $value['icon'];
+			$output .= '<div class="of-info">';
+			if ($icon) {
+				$output .= '<span class="_icon-info"></span>';
+			}
+			$output .= $info_text.'</div>'."\n";
 		break;                                   	
 		case 'heading':
 			if($counter >= 2){
@@ -939,8 +1017,10 @@ public static function optionsframework_machine($options) {
 				{ 
 				$output .= '<br/>';
 				}
-			if(!isset($value['desc'])){ $explain_value = ''; } else{ $explain_value = $value['desc']; } 
-			$output .= '</div><div class="explain">'. $explain_value .'</div>'."\n";
+			if(!isset($value['desc'])){ $explain_value = ''; } else{ 
+				$explain_value = '<div class="explain">'. $value['desc'] .'</div>'."\n"; 
+			} 
+			$output .= '</div>'.$explain_value."\n";
 			$output .= '<div class="clear"> </div></div></div>'."\n";
 			}
 	   
@@ -951,7 +1031,7 @@ public static function optionsframework_machine($options) {
 
 
 /*-----------------------------------------------------------------------------------*/
-/* OptionsFramework Uploader - optionsframework_uploader_function */
+/* Aquagraphite Uploader - optionsframework_uploader_function */
 /*-----------------------------------------------------------------------------------*/
 
 public static function optionsframework_uploader_function($id,$std,$mod){
@@ -961,13 +1041,13 @@ public static function optionsframework_uploader_function($id,$std,$mod){
 	$uploader = '';
     $upload = $data[$id];
 	
-	if ($mod != "") {$hide ='hide';}
+	if ($mod == "min") {$hide ='hide';}
 	
     if ( $upload != "") { $val = $upload; } else {$val = $std;}
     
 	$uploader .= '<input class="'.$hide.' upload of-input" name="'. $id .'" id="'. $id .'_upload" value="'. $val .'" />';	
 	
-	$uploader .= '<div class="upload_button_div"><span class="button image_upload_button" id="'.$id.'">Upload</span>';
+	$uploader .= '<div class="upload_button_div"><span class="button image_upload_button" id="'.$id.'">'._('Upload').'</span>';
 	
 	if(!empty($upload)) {$hide = '';} else { $hide = 'hide';}
 	$uploader .= '<span class="button image_reset_button '. $hide.'" id="reset_'. $id .'" title="' . $id . '">Remove</span>';
@@ -986,16 +1066,16 @@ return $uploader;
 }
 
 /*-----------------------------------------------------------------------------------*/
-/* OptionsFramework Media Uploader - optionsframework_media_uploader_function */
+/* Aquagraphite Media Uploader - optionsframework_media_uploader_function */
 /*-----------------------------------------------------------------------------------*/
-public static function optionsframework_media_uploader_function($id,$std,$int){
+public static function optionsframework_media_uploader_function($id,$std,$int,$mod){
 
     $data =get_option(OPTIONS);
 	
 	$uploader = '';
     $upload = $data[$id];
 	
-	if ($mod != "") {$hide ='hide';}
+	if ($mod == "min") {$hide ='hide';}
 	
     if ( $upload != "") { $val = $upload; } else {$val = $std;}
     
@@ -1019,7 +1099,7 @@ return $uploader;
 }
 
 /*-----------------------------------------------------------------------------------*/
-/* OptionsFramework Slider - optionsframework_slider_function */
+/* Aquagraphite Slider - optionsframework_slider_function */
 /*-----------------------------------------------------------------------------------*/
 
 public static function optionsframework_slider_function($id,$std,$oldorder,$order,$int){
@@ -1032,7 +1112,7 @@ public static function optionsframework_slider_function($id,$std,$oldorder,$orde
     if ( $slide[$oldorder] != "") { $val = $slide[$oldorder]; } else {$val = $std;}
 	
 	if (!empty($val['title'])) {
-	$slider .= '<li><div class="slide_header"><strong>'.$val['title'].'</strong>';
+	$slider .= '<li><div class="slide_header"><strong>'.stripslashes($val['title']).'</strong>';
 	} else {
     $slider .= '<li><div class="slide_header"><strong>Slide '.$order.'</strong>';
 	}
@@ -1043,7 +1123,7 @@ public static function optionsframework_slider_function($id,$std,$oldorder,$orde
 	$slider .= '<div class="slide_body">';
 	
 	$slider .= '<label>Title</label>';
-	$slider .= '<input class="slide of-input" name="'. $id .'['.$order.'][title]" id="'. $id .'_'.$order .'_slide_title" value="'. $val['title'] .'" />';
+	$slider .= '<input class="slide of-input" name="'. $id .'['.$order.'][title]" id="'. $id .'_'.$order .'_slide_title" value="'. stripslashes($val['title']) .'" />';
 	
 	$slider .= '<label>Image URL</label>';
 	$slider .= '<input class="slide of-input" name="'. $id .'['.$order.'][url]" id="'. $id .'_'.$order .'_slide_url" value="'. $val['url'] .'" />';
@@ -1066,7 +1146,7 @@ public static function optionsframework_slider_function($id,$std,$oldorder,$orde
 	$slider .= '<input class="slide of-input" name="'. $id .'['.$order.'][link]" id="'. $id .'_'.$order .'_slide_link" value="'. $val['link'] .'" />';
 	
 	$slider .= '<label>Description (optional)</label>';
-	$slider .= '<textarea class="slide of-input" name="'. $id .'['.$order.'][description]" id="'. $id .'_'.$order .'_slide_description" cols="8" rows="8">'.$val['description'].'</textarea>';
+	$slider .= '<textarea class="slide of-input" name="'. $id .'['.$order.'][description]" id="'. $id .'_'.$order .'_slide_description" cols="8" rows="8">'.stripslashes($val['description']).'</textarea>';
 
 	$slider .= '<a class="slide_delete_button" href="#">Delete</a>';
     $slider .= '<div class="clear"></div>' . "\n";
@@ -1075,5 +1155,9 @@ public static function optionsframework_slider_function($id,$std,$oldorder,$orde
 	$slider .= '</li>';
 
 return $slider;
-}	
-}//end class
+}
+
+/*-----------------------------------------------------------------------------------*/
+/* End Class
+/*-----------------------------------------------------------------------------------*/	
+}	//end class

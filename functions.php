@@ -590,6 +590,16 @@ function twentyeleven_body_classes( $classes ) {
 }
 add_filter( 'body_class', 'twentyeleven_body_classes' );
 
+/* functions to get image ID */
+function get_attachment_id_from_src($image_src) {
+
+		global $wpdb;
+		$query = "SELECT ID FROM {$wpdb->posts} WHERE guid='$image_src'";
+		$id = $wpdb->get_var($query);
+		return $id;
+
+}// END get image id	
+
 //Start Admin Panel
 /*-----------------------------------------------------------------------------------*/
 /* Options Framework Functions
@@ -604,11 +614,12 @@ add_filter( 'body_class', 'twentyeleven_body_classes' );
 define('ADMIN_PATH', STYLESHEETPATH . '/admin/');
 define('ADMIN_DIR', get_bloginfo('stylesheet_directory') . '/admin/');
 define('STYLES_PATH', STYLESHEETPATH . '/css/');
+define('LAYOUT_PATH', ADMIN_PATH . '/layouts/');
 
 // You can mess with these 2 if you wish.
 $themedata = get_theme_data(STYLESHEETPATH . '/style.css');
 define('THEMENAME', $themedata['Name']);
-define('OPTIONS', 'aq_options'); //name of entry into database - will break DB if this has spaces!
+define('OPTIONS', 'of_options'); //name of entry into database - will break DB if this has spaces!
 
 
 /* These files build out the options interface.  Likely won't need to edit these. */
