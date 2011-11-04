@@ -124,14 +124,6 @@ global $options_machine;
 <div style="clear:both;"></div>
 
 </div><!--wrap-->
-<div id="of_backup">
-<?php
-	$data = serialize(get_option(OPTIONS));
-	echo "<textarea cols=\"8\" rows=\"8\">";
-	print_r($data);
-	echo "</textarea>";
-?>
-</div>
 <?php
 
 }
