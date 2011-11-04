@@ -122,7 +122,6 @@ global $options_machine;
  
 <?php  if (!empty($update_message)) echo $update_message; ?>
 <div style="clear:both;"></div>
-
 </div><!--wrap-->
 <?php
 
