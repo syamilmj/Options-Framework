@@ -826,9 +826,13 @@ public static function optionsframework_machine($options) {
 			}	 
 		break;
 		case 'checkbox':
-			if (isset($data[$value['id']])) {
-				$output .= '<input type="checkbox" class="checkbox of-input" name="'.$value['id'].'" id="'. $value['id'] .'" value="1" '. checked($data[$value['id']], true, false) .' />';	
+		
+			if (!isset($data[$value['id']])) {
+				$data[$value['id']] = '';
 			}
+			
+			$output .= '<input type="checkbox" class="checkbox of-input" name="'.$value['id'].'" id="'. $value['id'] .'" value="1" '. checked($data[$value['id']], true, false) .' />';
+			
 		break;
 		case 'multicheck': 			
 			$multi_stored = $data[$value['id']];
