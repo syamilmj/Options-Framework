@@ -1,6 +1,6 @@
 /*-----------------------------------------------------------------------------------*/
 /* Title: OptionsFramework Admin Styles
-/* Modded by: Syamil MJ - http://aquagraphite.com
+/* Modded by: sy4mil - http://aquagraphite.com
 /* License: GPL
 /* Credits:	Thematic Options Panel http://wptheming.com/2010/11/thematic-options-panel-v2/
 			KIA Thematic Options Panel https://github.com/helgatheviking/thematic-options-KIA
@@ -214,20 +214,18 @@ border-radius: 2px;
 }
 #of_container #content .section-info .controls .of-info{
 	padding: 15px 10px;
-	line-height: 21px;
+	line-height: 1.5em;
 	font-size: 12px;
 	background-color: #EFF9FF;
 	border: 1px solid #D6F0FF;
 	color:#777;
 }
 
-#of_container #content .section-info .controls .of-info ._icon-info { 
-	background : url(images/icon-info.png) no-repeat;
+#of_container #content .section-info .controls .of-info ._icon { 
 	height:16px; width:16px;
 	margin: 0 10px 0 0;
 	float: left;
 }
-
 #of_container #content .section-info .controls small {
 	font-size: 12px
 }
@@ -242,11 +240,32 @@ border-radius: 2px;
 	border-radius: 0 0 3px 3px;
 }
 
+#of_container #content .section-sorter .controls {
+	float: left;
+	width: 100%;
+	margin: 0;
+}
+
+#of_container #content .section-sorter .explain {
+	float: left;
+	width: 80%;
+	margin: 15px 0 0;
+}
 
 #of_container  .sorter ul {
 	background:#f9f9f9;
 	border:1px dashed #e3e3e3;
+	min-height: 40px;
 	padding:10px 10px 0;
+	width: 40%;
+	float: left;
+	margin: 0 35px 30px 0;
+}
+#of_container  .sorter ul h3 {
+	margin: 0 0 10px;
+	text-align: center;
+	color: #777;
+	text-transform: capitalize;
 }
 #of_container  .sorter ul li {
 	border: 1px solid #DFDFDF;
@@ -274,11 +293,17 @@ border-radius: 2px;
 }
 
 
-#of_container #content li.placeholder {
+#of_container #content .section-sorter li.placeholder {
 	background:#f9f9f9;
 	border-width:1px;
 	border-style:dashed;
-	height:41px;}
+	height:40px;}
+	
+#of_container #content .section-slider li.placeholder {
+	background:#f9f9f9;
+	border-width:1px;
+	border-style:dashed;
+	height:33px;}
 
 
 #of_container textarea, #of_container input, #of_container select, #of_container button{

@@ -122,7 +122,16 @@ global $options_machine;
  
 <?php  if (!empty($update_message)) echo $update_message; ?>
 <div style="clear:both;"></div>
+
 </div><!--wrap-->
+<div id="of_backup">
+<?php
+	$data = serialize(get_option(OPTIONS));
+	echo "<textarea cols=\"8\" rows=\"8\">";
+	print_r($data);
+	echo "</textarea>";
+?>
+</div>
 <?php
 
 }
@@ -157,7 +166,7 @@ function of_load_only() {
 
 function of_admin_head() { 
 			
-	$data = get_option(OPTIONS); ?>
+	global $data; ?>
 		
 	<script type="text/javascript" language="javascript">
 
@@ -286,7 +295,7 @@ function of_admin_head() {
 
 
 	// Reset Message Popup
-	var reset = "<?php echo $_REQUEST['reset'] ?>";
+	var reset = "<?php if(isset($_REQUEST['reset'])) echo $_REQUEST['reset']; ?>";
 				
 	if ( reset.length ){
 		if ( reset == 'true') {
@@ -333,7 +342,7 @@ function of_admin_head() {
 		var Othis = this; //cache a copy of the this variable for use inside nested function
 			
 		$(this).ColorPicker({
-				color: '<?php echo $color; ?>',
+				color: '<?php if(isset($color)) echo $color; ?>',
 				onShow: function (colpkr) {
 					$(colpkr).fadeIn(500);
 					return false;
@@ -486,7 +495,7 @@ function of_admin_head() {
 	
 	
 	//----------------------------------------------------------------*/
-	// Start Aquagraphite Slider MOD
+	// Aquagraphite Slider MOD
 	//----------------------------------------------------------------*/
 
 	/* Slider Interface */	
@@ -499,6 +508,22 @@ function of_admin_head() {
 			$(this).parent().toggleClass("active").next().slideToggle("fast");
 			return false; //Prevent the browser jump to the link anchor
 		});	
+		
+		// Update slide title upon typing		
+		function update_slider_title(e) {
+			var element = e;
+			if ( this.timer ) {
+				clearTimeout( element.timer );
+			}
+			this.timer = setTimeout( function() {
+				$(element).parent().prev().find('strong').text( element.value );
+			}, 100);
+			return true;
+		}
+		
+		$('.of-slider-title').live('keyup', function(){
+			update_slider_title(this);
+		});
 		
 	
 	/* Remove individual slide */
@@ -534,7 +559,7 @@ function of_admin_head() {
 		
 		var newNum = maxNum + 1;
 		
-		slidesContainer.append('<li><div class="slide_header"><strong>Slide ' + newNum + '</strong><input type="hidden" class="slide of-input order" name="' + sliderId + '[' + newNum + '][order]" id="' + sliderId + '_slide_order-' + newNum + '" value="' + newNum + '"><a class="slide_edit_button" href="#">Edit</a></div><div class="slide_body" style="display: none; "><label>Title</label><input class="slide of-input" name="' + sliderId + '[' + newNum + '][title]" id="' + sliderId + '_' + newNum + '_slide_title" value=""><label>Image URL</label><input class="slide of-input" name="' + sliderId + '[' + newNum + '][url]" id="' + sliderId + '_' + newNum + '_slide_url" value=""><div class="upload_button_div"><span class="button media_upload_button" id="' + sliderId + '_' + newNum + '" rel="'+sliderInt+'">Upload</span><span class="button mlu_remove_button hide" id="reset_' + sliderId + '_' + newNum + '" title="' + sliderId + '_' + newNum + '">Remove</span></div><div class="screenshot"></div><label>Link URL (optional)</label><input class="slide of-input" name="' + sliderId + '[' + newNum + '][link]" id="' + sliderId + '_' + newNum + '_slide_link" value=""><label>Description (optional)</label><textarea class="slide of-input" name="' + sliderId + '[' + newNum + '][description]" id="' + sliderId + '_' + newNum + '_slide_description" cols="8" rows="8"></textarea><a class="slide_delete_button" href="#">Delete</a><div class="clear"></div></div></li>');
+		slidesContainer.append('<li><div class="slide_header"><strong>Slide ' + newNum + '</strong><input type="hidden" class="slide of-input order" name="' + sliderId + '[' + newNum + '][order]" id="' + sliderId + '_slide_order-' + newNum + '" value="' + newNum + '"><a class="slide_edit_button" href="#">Edit</a></div><div class="slide_body" style="display: none; "><label>Title</label><input class="slide of-input of-slider-title" name="' + sliderId + '[' + newNum + '][title]" id="' + sliderId + '_' + newNum + '_slide_title" value=""><label>Image URL</label><input class="slide of-input" name="' + sliderId + '[' + newNum + '][url]" id="' + sliderId + '_' + newNum + '_slide_url" value=""><div class="upload_button_div"><span class="button media_upload_button" id="' + sliderId + '_' + newNum + '" rel="'+sliderInt+'">Upload</span><span class="button mlu_remove_button hide" id="reset_' + sliderId + '_' + newNum + '" title="' + sliderId + '_' + newNum + '">Remove</span></div><div class="screenshot"></div><label>Link URL (optional)</label><input class="slide of-input" name="' + sliderId + '[' + newNum + '][link]" id="' + sliderId + '_' + newNum + '_slide_link" value=""><label>Description (optional)</label><textarea class="slide of-input" name="' + sliderId + '[' + newNum + '][description]" id="' + sliderId + '_' + newNum + '_slide_description" cols="8" rows="8"></textarea><a class="slide_delete_button" href="#">Delete</a><div class="clear"></div></div></li>');
 		of_image_upload(); // re-initialise upload image..
 		return false; //prevent jumps, as always..
 	});	
@@ -547,20 +572,28 @@ function of_admin_head() {
 		});	
 	});
 	
-	//----------------------------------------------------------------*/
-	// End Aquagraphite Slider MOD
-	//----------------------------------------------------------------*/
-	
 	/*----------------------------------------------------------------*/
-	/*	Sorter
+	/*	Aquagraphite Sorter MOD
 	/*----------------------------------------------------------------*/
 	jQuery('.sorter').each( function() {
 		var id = jQuery(this).attr('id');
 		$('#'+ id).find('ul').sortable({
-			placeholder: "placeholder",		
+			items: 'li',
+			placeholder: "placeholder",
+			connectWith: '.sortlist_' + id,
+			update: function() {
+				$(this).find('.position').each( function() {
+				
+					var listID = $(this).parent().attr('id');
+					var parentID = $(this).parent().parent().attr('id');
+					parentID = parentID.replace(id + '_', '')
+					var optionID = $(this).parent().parent().parent().attr('id');
+					$(this).prop("name", optionID + '[' + parentID + '][' + listID + ']');
+					
+				});
+			}
 		});	
-	});
-	
+	});	
 	
 	/* save everything */
 	$('#of_save').live('click',function() {
@@ -711,6 +744,7 @@ function __construct($options) {
 /*-----------------------------------------------------------------------------------*/
 
 public static function optionsframework_machine($options) {
+
     $data = get_option(OPTIONS);
 	
 	$defaults = array();   
@@ -732,8 +766,11 @@ public static function optionsframework_machine($options) {
 					$defaults[$value['id']][$value['std']] = true;
 			}
 		} else {
-		$defaults[$value['id']] = $value['std'];
+			if (isset($value['id'])) {
+				$defaults[$value['id']] = $value['std'];
+			}
 		}
+		
 		
 		//Start Heading
 		 if ( $value['type'] != "heading" )
@@ -789,23 +826,28 @@ public static function optionsframework_machine($options) {
 			}	 
 		break;
 		case 'checkbox':
-			$output .= '<input type="checkbox" class="checkbox of-input" name="'.$value['id'].'" id="'. $value['id'] .'" value="1" '. checked($data[$value['id']], true, false) .' />';			
+			if (isset($data[$value['id']])) {
+				$output .= '<input type="checkbox" class="checkbox of-input" name="'.$value['id'].'" id="'. $value['id'] .'" value="1" '. checked($data[$value['id']], true, false) .' />';	
+			}
 		break;
 		case 'multicheck': 			
 			$multi_stored = $data[$value['id']];
 						
-			foreach ($value['options'] as $key => $option) {										 
+			foreach ($value['options'] as $key => $option) {
+				if (!isset($multi_stored[$key])) {$multi_stored[$key] = '';}
 				$of_key_string = $value['id'] . '_' . $key;
 				$output .= '<input type="checkbox" class="checkbox of-input" name="'.$value['id'].'['.$key.']'.'" id="'. $of_key_string .'" value="1" '. checked($multi_stored[$key], 1, false) .' /><label for="'. $of_key_string .'">'. $option .'</label><br />';								
 			}			 
 		break;
-		case 'upload':			
+		case 'upload':
+			if(!isset($value['mod'])) $value['mod'] = '';
 			$output .= Options_Machine::optionsframework_uploader_function($value['id'],$value['std'],$value['mod']);			
 		break;
 		case 'media':
 			$_id = strip_tags( strtolower($value['id']) );
 			$int = '';
 			$int = optionsframework_mlu_get_silentpost( $_id );
+			if(!isset($value['mod'])) $value['mod'] = '';
 			$output .= Options_Machine::optionsframework_media_uploader_function( $value['id'], $value['std'], $int, $value['mod'] ); // New AJAX Uploader using Media Library			
 		break;
 		case 'slider':
@@ -834,23 +876,35 @@ public static function optionsframework_machine($options) {
 		break;
 		case 'sorter':
 		
-			$sortlist = $data[$value['id']];
+			$sortlists = $data[$value['id']];
 			
 			$output .= '<div id="'.$value['id'].'" class="sorter">';
-			$output .= '<ul id="sortlist_'.$value['id'].'" class="sortlist">';
 			
-			if ($sortlist) {
-				foreach ($sortlist as $key => $list) {
-					$output .= '<li class="sortee">';
-					$output .= '<input type="hidden" name="'.$value['id'].'['.$key.']" value="'.$list.'">';
-					$output .= $list;
-					$output .= '</li>';
+			
+			if ($sortlists) {
+			
+				foreach ($sortlists as $group=>$sortlist) {
+				
+					$output .= '<ul id="'.$value['id'].'_'.$group.'" class="sortlist_'.$value['id'].'">';
+					$output .= '<h3>'.$group.'</h3>';
+					
+					foreach ($sortlist as $key => $list) {
+						if ($key == "placebo") {
+							$output .= '<input class="sorter-placebo" type="hidden" name="'.$value['id'].'['.$group.'][placebo]" value="placebo">';
+						} else {
+							$output .= '<li id="'.$key.'" class="sortee">';
+							$output .= '<input class="position" type="hidden" name="'.$value['id'].'['.$group.']['.$key.']" value="'.$list.'">';
+							$output .= $list;
+							$output .= '</li>';
+						}
+					}
+					
+					$output .= '</ul>';
 				}
 			}
 			
-			$output .= '</ul>';
 			$output .= '</div>';
-		break;
+		break;		
 		case 'color':		
 			$output .= '<div id="' . $value['id'] . '_picker" class="colorSelector"><div style="background-color: '.$data[$value['id']].'"></div></div>';
 			$output .= '<input class="of-color" name="'.$value['id'].'" id="'. $value['id'] .'" type="text" value="'. $data[$value['id']] .'" />';
@@ -906,7 +960,11 @@ public static function optionsframework_machine($options) {
 			$output .= '<input class="of-color of-typography of-typography-color" name="'.$value['id'].'[color]" id="'. $value['id'] .'_color" type="text" value="'. $typography_stored['color'] .'" />';
 		break;  
 		case 'border':
-
+			
+			if(!isset($data[$value['id'] . '_width'])) $data[$value['id'] . '_width'] ='';
+			if(!isset($data[$value['id'] . '_style'])) $data[$value['id'] . '_style'] ='';
+			if(!isset($data[$value['id'] . '_color'])) $data[$value['id'] . '_color'] ='';
+			
 			$border_stored = array('width' => $data[$value['id'] . '_width'] ,
 									'style' => $data[$value['id'] . '_style'],
 									'color' => $data[$value['id'] . '_color'],
@@ -967,12 +1025,7 @@ public static function optionsframework_machine($options) {
 		break; 	
 		case "info":
 			$info_text = $value['std'];
-			$icon = $value['icon'];
-			$output .= '<div class="of-info">';
-			if ($icon) {
-				$output .= '<span class="_icon-info"></span>';
-			}
-			$output .= $info_text.'</div>'."\n";
+			$output .= '<div class="of-info">'.$info_text.'</div>';
 		break;                                   	
 		case 'heading':
 			if($counter >= 2){
@@ -1031,6 +1084,7 @@ public static function optionsframework_uploader_function($id,$std,$mod){
 	
 	$uploader = '';
     $upload = $data[$id];
+	$hide = '';
 	
 	if ($mod == "min") {$hide ='hide';}
 	
@@ -1065,6 +1119,7 @@ public static function optionsframework_media_uploader_function($id,$std,$int,$m
 	
 	$uploader = '';
     $upload = $data[$id];
+	$hide = '';
 	
 	if ($mod == "min") {$hide ='hide';}
 	
@@ -1095,7 +1150,7 @@ return $uploader;
 
 public static function optionsframework_slider_function($id,$std,$oldorder,$order,$int){
 
-    $data =get_option(OPTIONS);
+    $data = get_option(OPTIONS);
 	
 	$slider = '';
     $slide = $data[$id];
@@ -1107,6 +1162,7 @@ public static function optionsframework_slider_function($id,$std,$oldorder,$orde
 	} else {
     $slider .= '<li><div class="slide_header"><strong>Slide '.$order.'</strong>';
 	}
+	
 	$slider .= '<input type="hidden" class="slide of-input order" name="'. $id .'['.$order.'][order]" id="'. $id.'_'.$order .'_slide_order" value="'.$order.'" />';
 
 	$slider .= '<a class="slide_edit_button" href="#">Edit</a></div>';
@@ -1114,7 +1170,7 @@ public static function optionsframework_slider_function($id,$std,$oldorder,$orde
 	$slider .= '<div class="slide_body">';
 	
 	$slider .= '<label>Title</label>';
-	$slider .= '<input class="slide of-input" name="'. $id .'['.$order.'][title]" id="'. $id .'_'.$order .'_slide_title" value="'. stripslashes($val['title']) .'" />';
+	$slider .= '<input class="slide of-input of-slider-title" name="'. $id .'['.$order.'][title]" id="'. $id .'_'.$order .'_slide_title" value="'. stripslashes($val['title']) .'" />';
 	
 	$slider .= '<label>Image URL</label>';
 	$slider .= '<input class="slide of-input" name="'. $id .'['.$order.'][url]" id="'. $id .'_'.$order .'_slide_url" value="'. $val['url'] .'" />';

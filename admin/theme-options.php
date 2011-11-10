@@ -23,10 +23,16 @@ $of_pages_tmp = array_unshift($of_pages, "Select a page:");
 $of_options_select = array("one","two","three","four","five"); 
 $of_options_radio = array("one" => "One","two" => "Two","three" => "Three","four" => "Four","five" => "Five");
 $of_options_homepage_blocks = array( 
-								"block_1" => "Block One",
-								"block_2" => "Block Two",
-								"block_3" => "Block Three",
-								"block_4" => "Block Four"
+	"disabled" => array (
+		"placebo" 		=> "placebo", //REQUIRED!
+		"block_one"		=> "Block One",
+		"block_two"		=> "Block Two",
+		"block_three"	=> "Block Three",
+	), 
+	"enabled" => array (
+		"placebo" => "placebo", //REQUIRED!
+		"block_four"	=> "Block Four",
+	),
 );
 
 
@@ -95,17 +101,17 @@ $of_options[] = array( "name" => "Media Uploader Min",
 					"mod" => "min",
 					"type" => "media");
 					
+$of_options[] = array( "name" => "Homepage Layout Manager",
+					"desc" => "Organize how you want the layout to appear on the homepage",
+					"id" => "homepage_blocks",
+					"std" => $of_options_homepage_blocks,
+					"type" => "sorter");
+					
 $of_options[] = array( "name" => "Slider Options",
-					"desc" => "Unlimited slider with drag and drop ability.",
+					"desc" => "Unlimited slider with drag and drop sortings.",
 					"id" => "pingu_slider",
 					"std" => "",
 					"type" => "slider");
-					
-$of_options[] = array( "name" => "Layout Manager",
-					"desc" => "Drag and drop layout manager, to quickly organize your contents.",
-					"id" => "homepage_block",
-					"std" => $of_options_homepage_blocks,
-				  	"type" => "sorter");
 
 $of_options[] = array( "name" => "General Settings",
                     "type" => "heading");
