@@ -568,7 +568,8 @@ function of_admin_head() {
 	jQuery('.slider').find('ul').each( function() {
 		var id = jQuery(this).attr('id');
 		$('#'+ id).sortable({
-			placeholder: "placeholder"
+			placeholder: "placeholder",
+			opacity: 0.6
 		});	
 	});
 	
@@ -581,6 +582,7 @@ function of_admin_head() {
 			items: 'li',
 			placeholder: "placeholder",
 			connectWith: '.sortlist_' + id,
+			opacity: 0.6,
 			update: function() {
 				$(this).find('.position').each( function() {
 				
