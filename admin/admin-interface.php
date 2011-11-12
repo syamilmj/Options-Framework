@@ -1161,12 +1161,16 @@ public static function optionsframework_slider_function($id,$std,$oldorder,$orde
 	$slider = '';
     $slide = $data[$id];
 	
-    if ( $slide[$oldorder] != "") { $val = $slide[$oldorder]; } else {$val = $std;}
+    if (isset($slide[$oldorder])) { $val = $slide[$oldorder]; } else {$val = $std;}
 	
 	if (!empty($val['title'])) {
 	$slider .= '<li><div class="slide_header"><strong>'.stripslashes($val['title']).'</strong>';
 	} else {
     $slider .= '<li><div class="slide_header"><strong>Slide '.$order.'</strong>';
+	$val['title'] = '';
+	$val['url'] = '';
+	$val['link'] = '';
+	$val['description'] = '';
 	}
 	
 	$slider .= '<input type="hidden" class="slide of-input order" name="'. $id .'['.$order.'][order]" id="'. $id.'_'.$order .'_slide_order" value="'.$order.'" />';
