@@ -403,6 +403,23 @@ border-radius: 2px;
 #of_container .controls .of-radio-img-img:hover {
 	opacity:.8;
 }
+
+#of_container .controls .of-radio-bg-img {
+	width:50px;
+	height:50px;
+	border:3px solid #f9f9f9;
+	margin:0 5px 10px 0;
+	display:none;
+	cursor:pointer;
+	float:left;
+}
+#of_container .controls .of-radio-bg-selected {
+	border:3px solid #ccc
+}
+#of_container .controls .of-radio-bg-img:hover {
+	opacity:.8;
+}
+
 #of_container .controls .of-border-width {
 	width:70px;
 	float:left

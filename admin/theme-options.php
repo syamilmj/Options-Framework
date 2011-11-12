@@ -50,6 +50,21 @@ if ( is_dir($alt_stylesheet_path) ) {
     }
 }
 
+//Background Images Reader
+$bg_images_path = STYLESHEETPATH. '/images/bg/'; // change this to where you store your bg images
+$bg_images_url = get_bloginfo('template_url').'/images/bg/'; // change this to where you store your bg images
+$bg_images = array();
+
+if ( is_dir($bg_images_path) ) {
+    if ($bg_images_dir = opendir($bg_images_path) ) { 
+        while ( ($bg_images_file = readdir($bg_images_dir)) !== false ) {
+            if(stristr($bg_images_file, ".png") !== false) {
+                $bg_images[] = $bg_images_url . $bg_images_file;
+            }
+        }    
+    }
+}
+
 /*-----------------------------------------------------------------------------------*/
 /* TO DO: Add options/functions that use these */
 /*-----------------------------------------------------------------------------------*/
@@ -112,6 +127,20 @@ $of_options[] = array( "name" => "Slider Options",
 					"id" => "pingu_slider",
 					"std" => "",
 					"type" => "slider");
+					
+$of_options[] = array( "name" => "Background Images",
+					"desc" => "Select a background pattern.",
+					"id" => "custom_bg",
+					"std" => $bg_images_url."bg0.png",
+					"type" => "background",
+					"options" => $bg_images,
+					);
+					
+$of_options[] = array( "name" => "Typography",
+					"desc" => "Typography option with each property can be called individually.",
+					"id" => "custom_type",
+					"std" => array('size' => '12px','style' => 'bold italic'),
+					"type" => "typography");
 
 $of_options[] = array( "name" => "General Settings",
                     "type" => "heading");

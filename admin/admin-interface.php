@@ -124,14 +124,6 @@ global $options_machine;
 <div style="clear:both;"></div>
 
 </div><!--wrap-->
-<div id="of_backup">
-<?php
-	$data = serialize(get_option(OPTIONS));
-	echo "<textarea cols=\"8\" rows=\"8\">";
-	print_r($data);
-	echo "</textarea>";
-?>
-</div>
 <?php
 
 }
@@ -336,6 +328,15 @@ function of_admin_head() {
 	$('.of-radio-img-label').hide();
 	$('.of-radio-img-img').show();
 	$('.of-radio-img-radio').hide();
+
+	//Masked Inputs (background images as radio buttons)
+	$('.of-radio-bg-img').click(function(){
+		$(this).parent().parent().find('.of-radio-bg-img').removeClass('of-radio-bg-selected');
+		$(this).addClass('of-radio-bg-selected');
+	});
+	$('.of-radio-bg-label').hide();
+	$('.of-radio-bg-img').show();
+	$('.of-radio-bg-radio').hide();	
 	
 	// COLOR Picker			
 	$('.colorSelector').each(function(){
@@ -920,51 +921,72 @@ public static function optionsframework_machine($options) {
 			$typography_stored = $data[$value['id']];
 			
 			/* Font Size */
-			$output .= '<div class="select_wrapper typography-size">';
-			$output .= '<select class="of-typography of-typography-size select" name="'.$value['id'].'[size]" id="'. $value['id'].'_size">';
-				for ($i = 9; $i < 20; $i++){ 
-					$test = $i.'px';
-					$output .= '<option value="'. $i .'px" ' . selected($typography_stored['size'], $test, false) . '>'. $i .'px</option>'; 
-					}
-	
-			$output .= '</select></div>';
+			
+			if(isset($typography_stored['size'])) {
+			
+				$output .= '<div class="select_wrapper typography-size">';
+				$output .= '<select class="of-typography of-typography-size select" name="'.$value['id'].'[size]" id="'. $value['id'].'_size">';
+					for ($i = 9; $i < 20; $i++){ 
+						$test = $i.'px';
+						$output .= '<option value="'. $i .'px" ' . selected($typography_stored['size'], $test, false) . '>'. $i .'px</option>'; 
+						}
+		
+				$output .= '</select></div>';
+			
+			}
 	
 			/* Font Face */
-			$output .= '<div class="select_wrapper typography-face">';
-			$output .= '<select class="of-typography of-typography-face select" name="'.$value['id'].'[face]" id="'. $value['id'].'_face">';
 			
-			$faces = array('arial'=>'Arial',
-							'verdana'=>'Verdana, Geneva',
-							'trebuchet'=>'Trebuchet',
-							'georgia' =>'Georgia',
-							'times'=>'Times New Roman',
-							'tahoma'=>'Tahoma, Geneva',
-							'palatino'=>'Palatino',
-							'helvetica'=>'Helvetica*' );			
-			foreach ($faces as $i=>$face) {
-				$output .= '<option value="'. $i .'" ' . selected($typography_stored['face'], $i, false) . '>'. $face .'</option>';
-			}			
-							
-			$output .= '</select></div>';	
+			if(isset($typography_stored['face'])) {
+			
+				$output .= '<div class="select_wrapper typography-face">';
+				$output .= '<select class="of-typography of-typography-face select" name="'.$value['id'].'[face]" id="'. $value['id'].'_face">';
+				
+				$faces = array('arial'=>'Arial',
+								'verdana'=>'Verdana, Geneva',
+								'trebuchet'=>'Trebuchet',
+								'georgia' =>'Georgia',
+								'times'=>'Times New Roman',
+								'tahoma'=>'Tahoma, Geneva',
+								'palatino'=>'Palatino',
+								'helvetica'=>'Helvetica*' );			
+				foreach ($faces as $i=>$face) {
+					$output .= '<option value="'. $i .'" ' . selected($typography_stored['face'], $i, false) . '>'. $face .'</option>';
+				}			
+								
+				$output .= '</select></div>';
+			
+			}
 			
 			/* Font Weight */
-			$output .= '<div class="select_wrapper typography-style">';
-			$output .= '<select class="of-typography of-typography-style select" name="'.$value['id'].'[style]" id="'. $value['id'].'_style">';
-			$styles = array('normal'=>'Normal',
-							'italic'=>'Italic',
-							'bold'=>'Bold',
-							'bold italic'=>'Bold Italic');
-							
-			foreach ($styles as $i=>$style){
 			
-				$output .= '<option value="'. $i .'" ' . selected($typography_stored['style'], $i, false) . '>'. $style .'</option>';		
+			if(isset($typography_stored['style'])) {
+			
+				$output .= '<div class="select_wrapper typography-style">';
+				$output .= '<select class="of-typography of-typography-style select" name="'.$value['id'].'[style]" id="'. $value['id'].'_style">';
+				$styles = array('normal'=>'Normal',
+								'italic'=>'Italic',
+								'bold'=>'Bold',
+								'bold italic'=>'Bold Italic');
+								
+				foreach ($styles as $i=>$style){
+				
+					$output .= '<option value="'. $i .'" ' . selected($typography_stored['style'], $i, false) . '>'. $style .'</option>';		
+				}
+				$output .= '</select></div>';
+			
 			}
-			$output .= '</select></div>';
 			
-			/* Font Color */			
-			$output .= '<div id="' . $value['id'] . '_color_picker" class="colorSelector"><div style="background-color: '.$typography_stored['color'].'"></div></div>';
-			$output .= '<input class="of-color of-typography of-typography-color" name="'.$value['id'].'[color]" id="'. $value['id'] .'_color" type="text" value="'. $typography_stored['color'] .'" />';
-		break;  
+			/* Font Color */
+
+			if(isset($typography_stored['color'])) {
+			
+				$output .= '<div id="' . $value['id'] . '_color_picker" class="colorSelector"><div style="background-color: '.$typography_stored['color'].'"></div></div>';
+				$output .= '<input class="of-color of-typography of-typography-color" name="'.$value['id'].'[color]" id="'. $value['id'] .'_color" type="text" value="'. $typography_stored['color'] .'" />';
+			
+			}
+			
+		break; 
 		case 'border':
 			
 			if(!isset($data[$value['id'] . '_width'])) $data[$value['id'] . '_width'] ='';
@@ -1028,7 +1050,31 @@ public static function optionsframework_machine($options) {
 				$output .= '</span>';				
 			}
 			
-		break; 	
+		break;
+		case 'background':
+		
+			$i = 0;
+			
+			$select_value = $data[$value['id']];
+			
+			foreach ($value['options'] as $key => $option) 
+			{ 
+			$i++;
+	
+				$checked = '';
+				$selected = '';
+				if(NULL!=checked($select_value, $option, false)) {
+					$checked = checked($select_value, $option, false);
+					$selected = 'of-radio-bg-selected';  
+				}
+				$output .= '<span>';
+				$output .= '<input type="radio" id="of-radio-bg-' . $value['id'] . $i . '" class="checkbox of-radio-bg-radio" value="'.$option.'" name="'.$value['id'].'" '.$checked.' />';
+				$output .= '<div class="of-radio-bg-label">'. $key .'</div>';
+				$output .= '<div class="of-radio-bg-img '. $selected .'" style="background: url('.$option.')" onClick="document.getElementById(\'of-radio-bg-'. $value['id'] . $i.'\').checked = true;"></div>';
+				$output .= '</span>';				
+			}
+			
+		break;		
 		case "info":
 			$info_text = $value['std'];
 			$output .= '<div class="of-info">'.$info_text.'</div>';

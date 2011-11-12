@@ -29,7 +29,12 @@ Website: http://aquagraphite.com
 
 CHANGELOG:
 
-Update 10 Nov 2011
+v1.0 10 Nov 2011
+- added version number
 - shaved off most if not all of the "undefined index" errors
 - disable/enable layout block by drag and drop
 - slider title will update upon typing
+
+v1.1 13 Nov 2011
+- added new option "background"
+- typography option may now be called individually
