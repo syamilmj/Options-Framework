@@ -11,6 +11,7 @@ Features:
 - Native Media Library Uploader
 - Customized & Unbranded Skin
 - Layout Manager
+- Tiles
 
 Future Plans:
 - Unlimited Sidebar Options
@@ -38,3 +39,7 @@ v1.0 10 Nov 2011
 v1.1 13 Nov 2011
 - added new option "background"
 - typography option may now be called individually
+
+v1.2
+- Changed "background" to "tiles"
+- Add support for jpg images for Tiles option

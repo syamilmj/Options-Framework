@@ -404,7 +404,7 @@ border-radius: 2px;
 	opacity:.8;
 }
 
-#of_container .controls .of-radio-bg-img {
+#of_container .controls .of-radio-tile-img {
 	width:50px;
 	height:50px;
 	border:3px solid #f9f9f9;
@@ -413,10 +413,10 @@ border-radius: 2px;
 	cursor:pointer;
 	float:left;
 }
-#of_container .controls .of-radio-bg-selected {
+#of_container .controls .of-radio-tile-selected {
 	border:3px solid #ccc
 }
-#of_container .controls .of-radio-bg-img:hover {
+#of_container .controls .of-radio-tile-img:hover {
 	opacity:.8;
 }
 

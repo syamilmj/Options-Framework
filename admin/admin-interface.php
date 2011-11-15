@@ -330,13 +330,13 @@ function of_admin_head() {
 	$('.of-radio-img-radio').hide();
 
 	//Masked Inputs (background images as radio buttons)
-	$('.of-radio-bg-img').click(function(){
-		$(this).parent().parent().find('.of-radio-bg-img').removeClass('of-radio-bg-selected');
-		$(this).addClass('of-radio-bg-selected');
+	$('.of-radio-tile-img').click(function(){
+		$(this).parent().parent().find('.of-radio-tile-img').removeClass('of-radio-tile-selected');
+		$(this).addClass('of-radio-tile-selected');
 	});
-	$('.of-radio-bg-label').hide();
-	$('.of-radio-bg-img').show();
-	$('.of-radio-bg-radio').hide();	
+	$('.of-radio-tile-label').hide();
+	$('.of-radio-tile-img').show();
+	$('.of-radio-tile-radio').hide();
 	
 	// COLOR Picker			
 	$('.colorSelector').each(function(){
@@ -1051,7 +1051,7 @@ public static function optionsframework_machine($options) {
 			}
 			
 		break;
-		case 'background':
+		case 'tiles':
 		
 			$i = 0;
 			
@@ -1065,16 +1065,15 @@ public static function optionsframework_machine($options) {
 				$selected = '';
 				if(NULL!=checked($select_value, $option, false)) {
 					$checked = checked($select_value, $option, false);
-					$selected = 'of-radio-bg-selected';  
+					$selected = 'of-radio-tile-selected';  
 				}
 				$output .= '<span>';
-				$output .= '<input type="radio" id="of-radio-bg-' . $value['id'] . $i . '" class="checkbox of-radio-bg-radio" value="'.$option.'" name="'.$value['id'].'" '.$checked.' />';
-				$output .= '<div class="of-radio-bg-label">'. $key .'</div>';
-				$output .= '<div class="of-radio-bg-img '. $selected .'" style="background: url('.$option.')" onClick="document.getElementById(\'of-radio-bg-'. $value['id'] . $i.'\').checked = true;"></div>';
+				$output .= '<input type="radio" id="of-radio-tile-' . $value['id'] . $i . '" class="checkbox of-radio-tile-radio" value="'.$option.'" name="'.$value['id'].'" '.$checked.' />';
+				$output .= '<div class="of-radio-tile-img '. $selected .'" style="background: url('.$option.')" onClick="document.getElementById(\'of-radio-tile-'. $value['id'] . $i.'\').checked = true;"></div>';
 				$output .= '</span>';				
 			}
 			
-		break;		
+		break;
 		case "info":
 			$info_text = $value['std'];
 			$output .= '<div class="of-info">'.$info_text.'</div>';
@@ -1209,14 +1208,20 @@ public static function optionsframework_slider_function($id,$std,$oldorder,$orde
 	
     if (isset($slide[$oldorder])) { $val = $slide[$oldorder]; } else {$val = $std;}
 	
+	//initialize all vars
+	$slidevars = array('title','url','link','description');
+	
+	foreach ($slidevars as $slidevar) {
+		if (!isset($val[$slidevar])) {
+			$val[$slidevar] = '';
+		}
+	}
+	
+	//begin slider interface	
 	if (!empty($val['title'])) {
-	$slider .= '<li><div class="slide_header"><strong>'.stripslashes($val['title']).'</strong>';
+		$slider .= '<li><div class="slide_header"><strong>'.stripslashes($val['title']).'</strong>';
 	} else {
-    $slider .= '<li><div class="slide_header"><strong>Slide '.$order.'</strong>';
-	$val['title'] = '';
-	$val['url'] = '';
-	$val['link'] = '';
-	$val['description'] = '';
+		$slider .= '<li><div class="slide_header"><strong>Slide '.$order.'</strong>';
 	}
 	
 	$slider .= '<input type="hidden" class="slide of-input order" name="'. $id .'['.$order.'][order]" id="'. $id.'_'.$order .'_slide_order" value="'.$order.'" />';
