@@ -707,7 +707,7 @@ function of_ajax_callback() {
 	}	
 	elseif ($save_type == 'save') {
 		
-		parse_str($_POST['data'], $data);
+		parse_str(stripslashes($_POST['data'], $data));
 		unset($data['security']);
 		unset($data['of_save']);
    

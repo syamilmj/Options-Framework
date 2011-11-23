@@ -105,6 +105,9 @@ border-radius: 2px;
 	z-index: 9999;
 	width: 160px;
 }
+#of_container #of-nav ul {
+	margin:0;
+}
 #of_container #of-nav li {
 	margin-bottom:0;
 	moz-box-shadow: inset 0 1px 0 #f9f9f9;
