@@ -15,8 +15,7 @@ Features:
 - Tiles
 
 Future Plans:
-- Unlimited Sidebar Options
-- XML export/import
+- Sanitization!
 
 Credits:
 Thematic Options Panel http://wptheming.com/2010/11/thematic-options-panel-v2/
@@ -44,3 +43,9 @@ v1.1 13 Nov 2011
 v1.2
 - Changed "background" to "tiles"
 - Add support for jpg images for Tiles option
+
+v1.2.1
+- actually introduced more errors due to some crazy file swapping (I think)
+
+v1.2.2
+- replaced admin-interface.php with current stable
