@@ -26,12 +26,16 @@ function optionsframework_admin_init() {
 			
 			$nonce=$_POST['security'];
 
-			if (!wp_verify_nonce($nonce, 'of_ajax_nonce') ) { 
+			if (!wp_verify_nonce($nonce, 'of_ajax_nonce') ) {
+			
 				header('Location: themes.php?page=optionsframework&reset=error');
 				die('Security Check'); 
-			} else {
+				
+			} else {	
+				
 				$defaults = (array) $options_machine->Defaults;
-				update_option(OPTIONS,$options_machine->Defaults);	
+				update_option(OPTIONS,$defaults);
+				
 				header('Location: themes.php?page=optionsframework&reset=true');
 				die($options_machine->Defaults);
 			} 
@@ -164,7 +168,10 @@ function of_admin_head() {
 
 	jQuery.noConflict();
 	jQuery(document).ready(function($){
-
+	
+	//hide hidden section on page load.
+	jQuery('#section-body_bg, #section-body_bg_custom, #section-body_bg_properties').hide();
+	
 	//delays until AjaxUpload is finished loading
 	//fixes bug in Safari and Mac Chrome
 	if (typeof AjaxUpload != 'function') { 
@@ -182,17 +189,10 @@ function of_admin_head() {
 		$('#of-nav li:first').addClass('current');
 	} else {
 	
-		var hooks = {<?php
-		
-		$h = 0;
+		var hooks = <?php
 		$hooks = of_get_header_classes_array();
-	
-		foreach ($hooks as $hook) {
-			$h++;
-			echo '\''.$h.'\' : \''.$hook.'\',';
-		}
-		
-		?>};
+		echo json_encode($hooks);		
+		?>;
 		
 		$.each(hooks, function(key, value) { 
 		
@@ -205,36 +205,6 @@ function of_admin_head() {
 	
 	}
 				
-	$('.group .collapsed').each(function(){
-		$(this).find('input:checked').parent().parent().parent().nextAll().each( 
-			function(){
-				if ($(this).hasClass('last')) {
-           			$(this).removeClass('hidden');
-           			return false;
-           		}
-				$(this).filter('.hidden').removeClass('hidden');
-		});
-    });
-           					
-	$('.group .collapsed input:checkbox').click(unhideHidden);
-				
-	function unhideHidden(){
-		// event.preventDefault();
-		if ($(this).attr('checked')) {
-			$(this).parent().parent().parent().nextAll().removeClass('hidden');
-		} else {
-			$(this).parent().parent().parent().nextAll().each( 
-				function(){
-           			if ($(this).filter('.last').length) {
-           				$(this).addClass('hidden');
-						return false;
-           			}
-           			$(this).addClass('hidden');
-           		});
-           					
-		}
-	}
-	
 	//Current Menu Class
 	$('#of-nav li a').click(function(evt){
 	// event.preventDefault();
@@ -244,7 +214,7 @@ function of_admin_head() {
 							
 		var clicked_group = $(this).attr('href');
 		
-		$.cookie('of_current_opt', clicked_group, { expires: 7, path: '<?php global $current_blog; $blog_path = $current_blog->path; echo $blog_path; ?>' });
+		$.cookie('of_current_opt', clicked_group, { expires: 7, path: '/' });
 			
 		$('.group').hide();
 							
@@ -328,7 +298,7 @@ function of_admin_head() {
 	$('.of-radio-img-label').hide();
 	$('.of-radio-img-img').show();
 	$('.of-radio-img-radio').hide();
-
+	
 	//Masked Inputs (background images as radio buttons)
 	$('.of-radio-tile-img').click(function(){
 		$(this).parent().parent().find('.of-radio-tile-img').removeClass('of-radio-tile-selected');
@@ -596,7 +566,104 @@ function of_admin_head() {
 				});
 			}
 		});	
-	});	
+	});
+	
+	/*----------------------------------------------------------------*/
+	/*	Aquagraphite Backup & Restore MOD
+	/*----------------------------------------------------------------*/
+	//backup button
+	$('#of_backup_button').live('click', function(){
+	
+		var answer = confirm("<?php _e('Click OK to backup your current saved options.');?>")
+		
+		if (answer){
+	
+			var clickedObject = $(this);
+			var clickedID = $(this).attr('id');
+					
+			var nonce = $('#security').val();
+		
+			var data = {
+				action: 'of_ajax_post_action',
+				type: 'backup_options',
+				security: nonce
+			};
+						
+			$.post(ajaxurl, data, function(response) {
+							
+				//check nonce
+				if(response==-1){ //failed
+								
+					var fail_popup = $('#of-popup-fail');
+					fail_popup.fadeIn();
+					window.setTimeout(function(){
+						fail_popup.fadeOut();                        
+					}, 2000);
+				}
+							
+				else {
+							
+					var success_popup = $('#of-popup-save');
+					success_popup.fadeIn();
+					window.setTimeout(function(){
+						location.reload();                        
+					}, 1000);
+				}
+							
+			});
+			
+		}
+		
+	return false;
+					
+	}); 
+	
+	//restore button
+	$('#of_restore_button').live('click', function(){
+	
+		var answer = confirm("<?php _e('Warning: All of your current options will be replaced with the data from your last backup! Proceed?');?>")
+		
+		if (answer){
+	
+			var clickedObject = $(this);
+			var clickedID = $(this).attr('id');
+					
+			var nonce = $('#security').val();
+		
+			var data = {
+				action: 'of_ajax_post_action',
+				type: 'restore_options',
+				security: nonce
+			};
+						
+			$.post(ajaxurl, data, function(response) {
+			
+				//check nonce
+				if(response==-1){ //failed
+								
+					var fail_popup = $('#of-popup-fail');
+					fail_popup.fadeIn();
+					window.setTimeout(function(){
+						fail_popup.fadeOut();                        
+					}, 2000);
+				}
+							
+				else {
+							
+					var success_popup = $('#of-popup-save');
+					success_popup.fadeIn();
+					window.setTimeout(function(){
+						location.reload();                        
+					}, 1000);
+				}	
+						
+			});
+	
+		}
+	
+	return false;
+					
+	});
 	
 	/* save everything */
 	$('#of_save').live('click',function() {
@@ -647,7 +714,15 @@ function of_admin_head() {
 		if (answer){ 	return true; } else { return false; }
 });
 			
-						
+	//custom js for checkbox hidden values	
+	jQuery('#background_image').click(function() {
+  		jQuery('#section-body_bg, #section-body_bg_custom, #section-body_bg_properties').fadeToggle(400);
+	});
+	
+	if (jQuery('#background_image:checked').val() !== undefined) {
+		jQuery('#section-body_bg, #section-body_bg_custom, #section-body_bg_properties').show();
+	}
+	
 	
 }); //end doc ready
 </script>
@@ -660,7 +735,7 @@ function of_admin_head() {
 add_action('wp_ajax_of_ajax_post_action', 'of_ajax_callback');
 
 function of_ajax_callback() {
-	global $options_machine;
+	global $options_machine, $of_options;
 
 	$nonce=$_POST['security'];
 	
@@ -704,18 +779,38 @@ function of_ajax_callback() {
 			$delete_image[$id] = ''; //update array key with empty value	 
 			update_option(OPTIONS, $delete_image ) ;
 	
-	}	
+	}
+	elseif($save_type == 'backup_options'){
+			
+		$backup = $all;
+		$backup['backup_log'] = date('r');
+		
+		update_option(BACKUPS, $backup ) ;
+			
+		die('1'); 
+	}
+	elseif($save_type == 'restore_options'){
+			
+		$data = get_option(BACKUPS);
+		
+		update_option(OPTIONS, $data);
+		
+		die('1'); 
+	}
+	
 	elseif ($save_type == 'save') {
 		
-		parse_str(stripslashes($_POST['data'], $data));
+		parse_str(stripslashes($_POST['data']), $data);
 		unset($data['security']);
 		unset($data['of_save']);
    
 		update_option(OPTIONS, $data);
+		
 		die('1'); 
 		
 	} elseif ($save_type == 'reset') {
 		update_option(OPTIONS,$options_machine->Defaults);
+		
         die(1); //options reset
         
 	}
@@ -780,7 +875,7 @@ public static function optionsframework_machine($options) {
 		 {
 		 	$class = ''; if(isset( $value['class'] )) { $class = $value['class']; }
 			
-			$output .= '<div class="section section-'.$value['type'].' '. $class .'">'."\n";
+			$output .= '<div id="section-'.$value['id'].'" class="section section-'.$value['type'].' '. $class .'">'."\n";
 			$output .= '<h3 class="heading">'. $value['name'] .'</h3>'."\n";
 			$output .= '<div class="option">'."\n" . '<div class="controls">'."\n";
 
@@ -790,21 +885,23 @@ public static function optionsframework_machine($options) {
 		switch ( $value['type'] ) {
 		
 		case 'text':
-			$output .= '<input class="of-input" name="'.$value['id'].'" id="'. $value['id'] .'" type="'. $value['type'] .'" value="'. stripslashes($data[$value['id']]) .'" />';
+			$t_value = '';
+			$t_value = stripslashes($data[$value['id']]);
+			
+			$mini ='';
+			if(!isset($value['mod'])) $value['mod'] = '';
+			if($value['mod'] == 'mini') { $mini = 'mini';}
+			
+			$output .= '<input class="of-input '.$mini.'" name="'.$value['id'].'" id="'. $value['id'] .'" type="'. $value['type'] .'" value="'. $t_value .'" />';
 		break;
 		case 'select':
-			$output .= '<div class="select_wrapper">';
+			$mini ='';
+			if(!isset($value['mod'])) $value['mod'] = '';
+			if($value['mod'] == 'mini') { $mini = 'mini';}
+			$output .= '<div class="select_wrapper ' . $mini . '">';
 			$output .= '<select class="select of-input" name="'.$value['id'].'" id="'. $value['id'] .'">';
-			foreach ($value['options'] as $option) {			
-				$output .= '<option value="'.$option.'" ' . selected($data[$value['id']], $option, false) . ' />'.$option.'</option>';	 
-			 } 
-			 $output .= '</select></div>';
-		break;
-		case 'select2':
-			$output .= '<div class="select_wrapper mini">';
-			$output .= '<select class="select of-input" name="'.$value['id'].'" id="'. $value['id'] .'">';
-			foreach ($value['options'] as $option=>$name) {
-				$output .= '<option value="'.$option.'" ' . selected($data[$value['id']], $option, false) . ' />'.$name.'</option>';
+			foreach ($value['options'] as $select_ID => $option) {			
+				$output .= '<option id="' . $select_ID . '" value="'.$option.'" ' . selected($data[$value['id']], $option, false) . ' />'.$option.'</option>';	 
 			 } 
 			$output .= '</select></div>';
 		break;
@@ -829,13 +926,11 @@ public static function optionsframework_machine($options) {
 			}	 
 		break;
 		case 'checkbox':
-		
 			if (!isset($data[$value['id']])) {
 				$data[$value['id']] = '';
 			}
 			
-			$output .= '<input type="checkbox" class="checkbox of-input" name="'.$value['id'].'" id="'. $value['id'] .'" value="1" '. checked($data[$value['id']], true, false) .' />';
-			
+			$output .= '<input type="checkbox" class="checkbox of-input" name="'.$value['id'].'" id="'. $value['id'] .'" value="1" '. checked($data[$value['id']], 1, false) .' />';
 		break;
 		case 'multicheck': 			
 			$multi_stored = $data[$value['id']];
@@ -856,62 +951,7 @@ public static function optionsframework_machine($options) {
 			$int = optionsframework_mlu_get_silentpost( $_id );
 			if(!isset($value['mod'])) $value['mod'] = '';
 			$output .= Options_Machine::optionsframework_media_uploader_function( $value['id'], $value['std'], $int, $value['mod'] ); // New AJAX Uploader using Media Library			
-		break;
-		case 'slider':
-			$_id = strip_tags( strtolower($value['id']) );
-			$int = '';
-			$int = optionsframework_mlu_get_silentpost( $_id );
-			$output .= '<div class="slider"><ul id="'.$value['id'].'" rel="'.$int.'">';
-			$slides = $data[$value['id']];
-			$count = count($slides);
-			if ($count < 2) {
-				$oldorder = 1;
-				$order = 1;
-				$output .= Options_Machine::optionsframework_slider_function($value['id'],$value['std'],$oldorder,$order,$int);
-			} else {
-				$i = 0;
-				foreach ($slides as $slide) {
-					$oldorder = $slide['order'];
-					$i++;
-					$order = $i;
-					$output .= Options_Machine::optionsframework_slider_function($value['id'],$value['std'],$oldorder,$order,$int);
-				}
-			}			
-			$output .= '</ul>';
-			$output .= '<a href="#" class="button slide_add_button">Add New Slide</a></div>';
-			
-		break;
-		case 'sorter':
-		
-			$sortlists = $data[$value['id']];
-			
-			$output .= '<div id="'.$value['id'].'" class="sorter">';
-			
-			
-			if ($sortlists) {
-			
-				foreach ($sortlists as $group=>$sortlist) {
-				
-					$output .= '<ul id="'.$value['id'].'_'.$group.'" class="sortlist_'.$value['id'].'">';
-					$output .= '<h3>'.$group.'</h3>';
-					
-					foreach ($sortlist as $key => $list) {
-						if ($key == "placebo") {
-							$output .= '<input class="sorter-placebo" type="hidden" name="'.$value['id'].'['.$group.'][placebo]" value="placebo">';
-						} else {
-							$output .= '<li id="'.$key.'" class="sortee">';
-							$output .= '<input class="position" type="hidden" name="'.$value['id'].'['.$group.']['.$key.']" value="'.$list.'">';
-							$output .= $list;
-							$output .= '</li>';
-						}
-					}
-					
-					$output .= '</ul>';
-				}
-			}
-			
-			$output .= '</div>';
-		break;		
+		break;	
 		case 'color':		
 			$output .= '<div id="' . $value['id'] . '_picker" class="colorSelector"><div style="background-color: '.$data[$value['id']].'"></div></div>';
 			$output .= '<input class="of-color" name="'.$value['id'].'" id="'. $value['id'] .'" type="text" value="'. $data[$value['id']] .'" />';
@@ -934,7 +974,22 @@ public static function optionsframework_machine($options) {
 				$output .= '</select></div>';
 			
 			}
-	
+			
+			/* Line Height */
+			
+			if(isset($typography_stored['height'])) {
+			
+				$output .= '<div class="select_wrapper typography-height">';
+				$output .= '<select class="of-typography of-typography-height select" name="'.$value['id'].'[height]" id="'. $value['id'].'_height">';
+					for ($i = 20; $i < 38; $i++){ 
+						$test = $i.'px';
+						$output .= '<option value="'. $i .'px" ' . selected($typography_stored['height'], $test, false) . '>'. $i .'px</option>'; 
+						}
+		
+				$output .= '</select></div>';
+			
+			}
+				
 			/* Font Face */
 			
 			if(isset($typography_stored['face'])) {
@@ -949,7 +1004,7 @@ public static function optionsframework_machine($options) {
 								'times'=>'Times New Roman',
 								'tahoma'=>'Tahoma, Geneva',
 								'palatino'=>'Palatino',
-								'helvetica'=>'Helvetica*' );			
+								'helvetica'=>'Helvetica' );			
 				foreach ($faces as $i=>$face) {
 					$output .= '<option value="'. $i .'" ' . selected($typography_stored['face'], $i, false) . '>'. $face .'</option>';
 				}			
@@ -986,17 +1041,8 @@ public static function optionsframework_machine($options) {
 			
 			}
 			
-		break; 
+		break;  
 		case 'border':
-			
-			if(!isset($data[$value['id'] . '_width'])) $data[$value['id'] . '_width'] ='';
-			if(!isset($data[$value['id'] . '_style'])) $data[$value['id'] . '_style'] ='';
-			if(!isset($data[$value['id'] . '_color'])) $data[$value['id'] . '_color'] ='';
-			
-			$border_stored = array('width' => $data[$value['id'] . '_width'] ,
-									'style' => $data[$value['id'] . '_style'],
-									'color' => $data[$value['id'] . '_color'],
-									);
 				
 			/* Border Width */
 			$border_stored = $data[$value['id']];
@@ -1050,11 +1096,84 @@ public static function optionsframework_machine($options) {
 				$output .= '</span>';				
 			}
 			
+		break;	
+		case "info":
+			$info_text = $value['std'];
+			$output .= '<div class="of-info">'.$info_text.'</div>';
+		break;                                   	
+		case 'heading':
+			if($counter >= 2){
+			   $output .= '</div>'."\n";
+			}
+			$header_class = ereg_replace("[^A-Za-z0-9]", "", strtolower($value['name']) );
+			$jquery_click_hook = ereg_replace("[^A-Za-z0-9]", "", strtolower($value['name']) );
+			$jquery_click_hook = "of-option-" . $jquery_click_hook;
+			$menu .= '<li class="'. $header_class .'"><a title="'.  $value['name'] .'" href="#'.  $jquery_click_hook  .'">'.  $value['name'] .'</a></li>';
+			$output .= '<div class="group" id="'. $jquery_click_hook  .'"><h2>'.$value['name'].'</h2>'."\n";
 		break;
-		case 'tiles':
-		
-			$i = 0;
+		case 'slider':
+			$_id = strip_tags( strtolower($value['id']) );
+			$int = '';
+			$int = optionsframework_mlu_get_silentpost( $_id );
+			$output .= '<div class="slider"><ul id="'.$value['id'].'" rel="'.$int.'">';
+			$slides = $data[$value['id']];
+			$count = count($slides);
+			if ($count < 2) {
+				$oldorder = 1;
+				$order = 1;
+				$output .= Options_Machine::optionsframework_slider_function($value['id'],$value['std'],$oldorder,$order,$int);
+			} else {
+				$i = 0;
+				foreach ($slides as $slide) {
+					$oldorder = $slide['order'];
+					$i++;
+					$order = $i;
+					$output .= Options_Machine::optionsframework_slider_function($value['id'],$value['std'],$oldorder,$order,$int);
+				}
+			}			
+			$output .= '</ul>';
+			$output .= '<a href="#" class="button slide_add_button">Add New Slide</a></div>';
 			
+		break;
+		case 'sorter':
+		
+			$sortlists = $data[$value['id']];
+			
+			$output .= '<div id="'.$value['id'].'" class="sorter">';
+			
+			
+			if ($sortlists) {
+			
+				foreach ($sortlists as $group=>$sortlist) {
+				
+					$output .= '<ul id="'.$value['id'].'_'.$group.'" class="sortlist_'.$value['id'].'">';
+					$output .= '<h3>'.$group.'</h3>';
+					
+					foreach ($sortlist as $key => $list) {
+					
+						$output .= '<input class="sorter-placebo" type="hidden" name="'.$value['id'].'['.$group.'][placebo]" value="placebo">';
+							
+						if ($key != "placebo") {
+						
+							$output .= '<li id="'.$key.'" class="sortee">';
+							$output .= '<input class="position" type="hidden" name="'.$value['id'].'['.$group.']['.$key.']" value="'.$list.'">';
+							$output .= $list;
+							$output .= '</li>';
+							
+						}
+						
+					}
+					
+					$output .= '</ul>';
+				}
+			}
+			
+			$output .= '</div>';
+		break;	
+		case 'tiles':
+			
+			$i = 0;
+			$select_value = '';
 			$select_value = $data[$value['id']];
 			
 			foreach ($value['options'] as $key => $option) 
@@ -1074,19 +1193,74 @@ public static function optionsframework_machine($options) {
 			}
 			
 		break;
-		case "info":
-			$info_text = $value['std'];
-			$output .= '<div class="of-info">'.$info_text.'</div>';
-		break;                                   	
-		case 'heading':
-			if($counter >= 2){
-			   $output .= '</div>'."\n";
+		// Background
+		case 'background':
+
+			$background = $data[$value['id']];
+
+			// Background Color		
+			$output .= '<div id="' . esc_attr( $value['id'] ) . '_color_picker" class="colorSelector"><div style="' . esc_attr( 'background-color:' . $background['color'] ) . '"></div></div>';
+			$output .= '<input class="of-color of-background of-background-color" name="' . esc_attr( $option_name . '[' . $value['id'] . '][color]' ) . '" id="' . esc_attr( $value['id'] . '_color' ) . '" type="text" value="' . esc_attr( $background['color'] ) . '" />';
+
+			// Background Image - New AJAX Uploader using Media Library
+			if (!isset($background['image'])) {
+				$background['image'] = '';
 			}
-			$header_class = ereg_replace("[^A-Za-z0-9]", "", strtolower($value['name']) );
-			$jquery_click_hook = ereg_replace("[^A-Za-z0-9]", "", strtolower($value['name']) );
-			$jquery_click_hook = "of-option-" . $jquery_click_hook;
-			$menu .= '<li class="'. $header_class .'"><a title="'.  $value['name'] .'" href="#'.  $jquery_click_hook  .'">'.  $value['name'] .'</a></li>';
-			$output .= '<div class="group" id="'. $jquery_click_hook  .'"><h2>'.$value['name'].'</h2>'."\n";
+
+			$output .= optionsframework_medialibrary_uploader( $value['id'], $background['image'], null, '',0,'image');
+			$class = 'of-background-properties';
+			if ( '' == $background['image'] ) {
+				$class .= ' hide';
+			}
+			$output .= '<div class="' . esc_attr( $class ) . '">';
+
+			// Background Repeat
+			$output .= '<select class="of-background of-background-repeat" name="' . esc_attr( $option_name . '[' . $value['id'] . '][repeat]'  ) . '" id="' . esc_attr( $value['id'] . '_repeat' ) . '">';
+			$repeats = of_recognized_background_repeat();
+
+			foreach ($repeats as $key => $repeat) {
+				$output .= '<option value="' . esc_attr( $key ) . '" ' . selected( $background['repeat'], $key, false ) . '>'. esc_html( $repeat ) . '</option>';
+			}
+			$output .= '</select>';
+
+			// Background Position
+			$output .= '<select class="of-background of-background-position" name="' . esc_attr( $option_name . '[' . $value['id'] . '][position]' ) . '" id="' . esc_attr( $value['id'] . '_position' ) . '">';
+			$positions = of_recognized_background_position();
+
+			foreach ($positions as $key=>$position) {
+				$output .= '<option value="' . esc_attr( $key ) . '" ' . selected( $background['position'], $key, false ) . '>'. esc_html( $position ) . '</option>';
+			}
+			$output .= '</select>';
+
+			// Background Attachment
+			$output .= '<select class="of-background of-background-attachment" name="' . esc_attr( $option_name . '[' . $value['id'] . '][attachment]' ) . '" id="' . esc_attr( $value['id'] . '_attachment' ) . '">';
+			$attachments = of_recognized_background_attachment();
+
+			foreach ($attachments as $key => $attachment) {
+				$output .= '<option value="' . esc_attr( $key ) . '" ' . selected( $background['attachment'], $key, false ) . '>' . esc_html( $attachment ) . '</option>';
+			}
+			$output .= '</select>';
+			$output .= '</div>';
+
+		break;  
+		case 'backup':
+		
+		$instructions = $value['options'];
+		$backup = get_option(BACKUPS);
+		
+		if(!isset($backup['backup_log'])) {
+			$log = 'No backups yet';
+		} else {
+			$log = $backup['backup_log'];
+		}
+		
+		$output .= '<div class="backup-box">';
+		$output .= '<div class="instructions">'.$instructions."\n";
+		$output .= '<p><strong>'. __('Last Backup : ').'<span class="backup-log">'.$log.'</span></strong></p></div>'."\n";
+		$output .= '<a href="#" id="of_backup_button" class="button" title="Backup Options">Backup Options</a>';
+		$output .= '<a href="#" id="of_restore_button" class="button" title="Restore Options">Restore Options</a>';
+		$output .= '</div>';
+		
 		break;
 		} 
 		
@@ -1108,10 +1282,6 @@ public static function optionsframework_machine($options) {
 				}
 		}
 		if ( $value['type'] != 'heading' ) { 
-			if ( $value['type'] != 'checkbox' ) 
-				{ 
-				$output .= '<br/>';
-				}
 			if(!isset($value['desc'])){ $explain_value = ''; } else{ 
 				$explain_value = '<div class="explain">'. $value['desc'] .'</div>'."\n"; 
 			} 
@@ -1204,6 +1374,7 @@ public static function optionsframework_slider_function($id,$std,$oldorder,$orde
     $data = get_option(OPTIONS);
 	
 	$slider = '';
+	$slide = array();
     $slide = $data[$id];
 	
     if (isset($slide[$oldorder])) { $val = $slide[$oldorder]; } else {$val = $std;}
