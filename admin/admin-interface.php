@@ -155,7 +155,7 @@ function of_load_only() {
 	wp_enqueue_script('jquery-input-mask');
 	wp_enqueue_script('color-picker', ADMIN_DIR .'js/colorpicker.js', array('jquery'));
 	wp_enqueue_script('ajaxupload', ADMIN_DIR .'js/ajaxupload.js', array('jquery'));
-	wp_enqueue_script('cookie', ADMIN_DIR . '/js/jquery.cookie.js', 'jquery');
+	wp_enqueue_script('cookie', ADMIN_DIR . '/js/cookie.js', 'jquery');
 		// Registers custom scripts for the Media Library AJAX uploader.
 }
 
