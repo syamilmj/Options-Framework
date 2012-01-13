@@ -765,6 +765,24 @@ z-index: 4;
 	font-size: 12px;
 	border-color: #CCC #E6E6E6 #E6E6E6 #CCC;
 }
+
+#of_container #content .section-backup .controls { width: 80%}
+#of_container #content .section-backup .explain {
+    display:none
+}
+#of_container #content .section-backup .backup-box {
+    margin: 0 0 20px;
+}
+
+#of_container #content .section-backup .instructions {
+    margin: 0 0 25px;
+    color: #777;
+}
+#of_container #content .section-backup .button {
+    padding: 5px;
+    margin: 0 25px 0 0;
+}
+
 /*-------------------------------------------------------------------------------------------*/
 /* GENERAL STYLES */
 /*-------------------------------------------------------------------------------------------*/

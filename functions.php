@@ -8,7 +8,7 @@
 
 // Paths to admin functions
 define('ADMIN_PATH', STYLESHEETPATH . '/admin/');
-define('ADMIN_DIR', get_bloginfo('stylesheet_directory') . '/admin/');
+define('ADMIN_DIR', get_template_directory_uri() . '/admin/');
 define('LAYOUT_PATH', ADMIN_PATH . '/layouts/');
 
 // You can mess with these 2 if you wish.
