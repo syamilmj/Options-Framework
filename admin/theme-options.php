@@ -266,13 +266,13 @@ $of_options[] = array( "name" => "Input Text",
 $of_options[] = array( "name" => "Input Checkbox (false)",
 					"desc" => "Example checkbox with false selected.",
 					"id" => "example_checkbox_false",
-					"std" => false,
+					"std" => 0,
 					"type" => "checkbox");    
                                         
 $of_options[] = array( "name" => "Input Checkbox (true)",
 					"desc" => "Example checkbox with true selected.",
 					"id" => "example_checkbox_true",
-					"std" => true,
+					"std" => 1,
 					"type" => "checkbox"); 
                                                                            
 $of_options[] = array( "name" => "Normal Select",
