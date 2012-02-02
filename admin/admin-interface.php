@@ -927,7 +927,7 @@ public static function optionsframework_machine($options) {
 		break;
 		case 'checkbox':
 			if (!isset($data[$value['id']])) {
-				$data[$value['id']] = '';
+				$data[$value['id']] = 0;
 			}
 			
 			$output .= '<input type="checkbox" class="checkbox of-input" name="'.$value['id'].'" id="'. $value['id'] .'" value="1" '. checked($data[$value['id']], 1, false) .' />';
