@@ -930,6 +930,7 @@ public static function optionsframework_machine($options) {
 				$data[$value['id']] = 0;
 			}
 			
+			$output .= '<input type="hidden" class="checkbox aq-input" name="'.$value['id'].'" id="'. $value['id'] .'" value="0"/>';
 			$output .= '<input type="checkbox" class="checkbox of-input" name="'.$value['id'].'" id="'. $value['id'] .'" value="1" '. checked($data[$value['id']], 1, false) .' />';
 		break;
 		case 'multicheck': 			
