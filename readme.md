@@ -36,7 +36,8 @@ Website: http://aquagraphite.com
 
 ## Changelog
 
-v1.3
+**v1.3**
+
 * add backup & restore options
 * simple tooltip for typography options
 * fix *really* long title on slide header
@@ -44,21 +45,26 @@ v1.3
 * smoother sliding animations when adding/deleting sliders
 * add template-debug for debugging
 
-v1.2.2
+**v1.2.2**
+
 * replace admin-interface.php with current stable
 
-v1.2.1
+**v1.2.1**
+
 * actually introduced more errors due to some crazy file swapping (I think)
 
-v1.2
+**v1.2**
+
 * Change "background" to "tiles"
 * Add support for jpg images for Tiles option
 
-v1.1 13 Nov 2011
+**v1.1 13 Nov 2011**
+
 * add new option "background"
 * typography option may now be called individually
 
-v1.0 10 Nov 2011
+**v1.0 10 Nov 2011**
+
 * add version number
 * shave off most if not all of the "undefined index" errors
 * disable/enable layout block by drag and drop
