@@ -328,6 +328,18 @@ $of_options[] = array( "name" => "Select a Category",
 					"type" => "select",
 					"options" => $of_categories);
 					
+// Backup Options
+$of_options[] = array( "name" => "Backup Options",
+					"type" => "heading");
+					
+$of_options[] = array( "name" => "Backup and Restore Options",
+                    "desc" => "lalala",
+                    "id" => "of_backup",
+                    "std" => "",
+                    "type" => "backup",
+					"options" => 'You can use the two buttons below to backup your current options, and then restore it back at a later time. This is useful if you want to experiment on the options but would like to keep the old settings in case you need it back.',
+					);
+					
 	}
 }
 ?>

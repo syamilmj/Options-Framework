@@ -4,5 +4,5 @@ All questions and setup instructions please go to http://aquagraphite.com/2011/0
 @author - URI http://aquagraphite.com
 @title  - Slightly Modded Options Framework SMOF
 @description - Options frameworks with improved aesthetics and added features
-@version - 1.2
-@license - GPLv2 (inherited) - free to use and abuse for either commercial or personal.
+@version - 1.3
+@license - WTFPL - http://sam.zoy.org/wtfpl/

@@ -1,11 +1,5 @@
 /*-----------------------------------------------------------------------------------*/
-/* Title: OptionsFramework Admin Styles
-/* Modded by: sy4mil - http://aquagraphite.com
-/* License: GPL
-/* Credits:	Thematic Options Panel http://wptheming.com/2010/11/thematic-options-panel-v2/
-			KIA Thematic Options Panel https://github.com/helgatheviking/thematic-options-KIA
-			Woo Themes http://woothemes.com/
-			Option Tree http://wordpress.org/extend/plugins/option-tree/
+/* Admin styles
 /*-----------------------------------------------------------------------------------*/ 
 
 .updated, .error {
@@ -155,6 +149,7 @@ border-radius: 2px;
 #of_container #of-nav li.stylingoptions a{ background-image:url(images/icon-paint.png);}
 #of_container #of-nav li.exampleoptions a{ background-image:url(images/icon-docs.png);}
 #of_container #of-nav li.homesettings a{ background-image:url(images/icon-home.png);}
+#of_container #of-nav li.backupoptions a {background: url(images/icon-backup.png) no-repeat;}
 
 #of_container #content {
 	float: left;
@@ -688,6 +683,7 @@ position:relative;
 	cursor:move;
 	height:32px;
 	padding-left:10px;
+	padding-right:20px;
 	line-height:32px;
 	background-color: #F1F1F1;
 	margin: 1px 0 -1px 0;
@@ -699,6 +695,7 @@ position:relative;
 	background-image: -webkit-linear-gradient(top,#f9f9f9,#ececec);
 	background-image: linear-gradient(top,#f9f9f9,#ececec);
 	overflow:hidden;
+	position: relative;
 }
 
 #of_container .slide_body {
@@ -712,22 +709,27 @@ position:relative;
 }
 
 #of_container a.slide_edit_button, #of_container a.slide_delete_button {
-	float:right;
 	text-indent:-9999px;
 	font-size:0;
 }
-#of_container a.slide_edit_button { 
+#of_container a.slide_edit_button {
+	position: absolute;
+	right: 0;
+	top: 0;
 	width:32px;
 	height:32px;
-	background: url(images/dropdown-arrow.png) no-repeat 9px -28px;}
+	background: url(images/dropdown-arrow.png) no-repeat 9px -28px;
+}
 	#of_container a:hover.slide_edit_button {
 	background: url(images/dropdown-arrow.png) no-repeat 9px 11px;}
 	
 #of_container a.slide_delete_button { 
+	float: right;
 	margin: 0 0 0 7px;
 	width:16px;
 	height:16px;
-	background: url(images/icon-delete.png) no-repeat}
+	background: url(images/icon-delete.png) no-repeat
+}
 
 #of_container .select_wrapper span {
 height: 26px;
@@ -783,6 +785,7 @@ z-index: 4;
     margin: 0 25px 0 0;
 }
 
+.temphide {display:none}
 /*-------------------------------------------------------------------------------------------*/
 /* GENERAL STYLES */
 /*-------------------------------------------------------------------------------------------*/
@@ -804,3 +807,33 @@ html body * span.clear, html body * div.clear, html body * li.clear, html body *
 	width: 0;
 	height: 0;
 }
+
+
+/*-------------------------------------------------------------------------------------------*/
+/* Tipsy
+/*-------------------------------------------------------------------------------------------*/
+.tipsy { font-size: 10px; position: absolute; padding: 5px; z-index: 100000; }
+  .tipsy-inner { background-color: #000; color: #FFF; max-width: 200px; padding: 5px 8px 4px 8px; text-align: center; }
+
+  /* Rounded corners */
+  .tipsy-inner { border-radius: 3px; -moz-border-radius: 3px; -webkit-border-radius: 3px; }
+  
+  /* Uncomment for shadow */
+  /*.tipsy-inner { box-shadow: 0 0 5px #000000; -webkit-box-shadow: 0 0 5px #000000; -moz-box-shadow: 0 0 5px #000000; }*/
+  
+  .tipsy-arrow { position: absolute; width: 0; height: 0; line-height: 0; border: 5px dashed #000; }
+  
+  /* Rules to colour arrows */
+  .tipsy-arrow-n { border-bottom-color: #000; }
+  .tipsy-arrow-s { border-top-color: #000; }
+  .tipsy-arrow-e { border-left-color: #000; }
+  .tipsy-arrow-w { border-right-color: #000; }
+  
+	.tipsy-n .tipsy-arrow { top: 0px; left: 50%; margin-left: -5px; border-bottom-style: solid; border-top: none; border-left-color: transparent; border-right-color: transparent; }
+    .tipsy-nw .tipsy-arrow { top: 0; left: 10px; border-bottom-style: solid; border-top: none; border-left-color: transparent; border-right-color: transparent;}
+    .tipsy-ne .tipsy-arrow { top: 0; right: 10px; border-bottom-style: solid; border-top: none;  border-left-color: transparent; border-right-color: transparent;}
+  .tipsy-s .tipsy-arrow { bottom: 0; left: 50%; margin-left: -5px; border-top-style: solid; border-bottom: none;  border-left-color: transparent; border-right-color: transparent; }
+    .tipsy-sw .tipsy-arrow { bottom: 0; left: 10px; border-top-style: solid; border-bottom: none;  border-left-color: transparent; border-right-color: transparent; }
+    .tipsy-se .tipsy-arrow { bottom: 0; right: 10px; border-top-style: solid; border-bottom: none; border-left-color: transparent; border-right-color: transparent; }
+  .tipsy-e .tipsy-arrow { right: 0; top: 50%; margin-top: -5px; border-left-style: solid; border-right: none; border-top-color: transparent; border-bottom-color: transparent; }
+  .tipsy-w .tipsy-arrow { left: 0; top: 50%; margin-top: -5px; border-right-style: solid; border-left: none; border-top-color: transparent; border-bottom-color: transparent; }

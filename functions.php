@@ -15,6 +15,7 @@ define('LAYOUT_PATH', ADMIN_PATH . '/layouts/');
 $themedata = get_theme_data(STYLESHEETPATH . '/style.css');
 define('THEMENAME', $themedata['Name']);
 define('OPTIONS', 'of_options'); // Name of the database row where your options are stored
+define('BACKUPS','of_backups'); // Name of the database row for options backup
 
 // Build Options
 require_once (ADMIN_PATH . 'admin-interface.php');		// Admin Interfaces 

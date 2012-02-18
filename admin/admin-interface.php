@@ -3,7 +3,8 @@
 /* Title: Aquagraphite Options Framework
 /* Author: Syamil MJ
 /* Author URI: http://aquagraphite.com
-/* License: GPL
+/* Version: 1.3
+/* License: WTFPL - http://sam.zoy.org/wtfpl/
 /* Credits:	Thematic Options Panel http://wptheming.com/2010/11/thematic-options-panel-v2/
 			KIA Thematic Options Panel https://github.com/helgatheviking/thematic-options-KIA
 			Woo Themes http://woothemes.com/
@@ -152,7 +153,9 @@ function of_load_only() {
 	wp_enqueue_script('jquery-ui-core');
 	wp_enqueue_script('jquery-ui-sortable');
 	wp_register_script('jquery-input-mask', ADMIN_DIR .'js/jquery.maskedinput-1.2.2.js', array( 'jquery' ));
+	wp_register_script('tipsy', ADMIN_DIR .'js/jquery.tipsy.js', array( 'jquery' ));
 	wp_enqueue_script('jquery-input-mask');
+	wp_enqueue_script('tipsy');
 	wp_enqueue_script('color-picker', ADMIN_DIR .'js/colorpicker.js', array('jquery'));
 	wp_enqueue_script('ajaxupload', ADMIN_DIR .'js/ajaxupload.js', array('jquery'));
 	wp_enqueue_script('cookie', ADMIN_DIR . '/js/cookie.js', 'jquery');
@@ -505,7 +508,12 @@ function of_admin_head() {
 			if (agree) {
 				var $trash = $(this).parents('li');
 				//$trash.slideUp('slow', function(){ $trash.remove(); }); //chrome + confirm bug made slideUp not working...
-				$trash.remove();
+				$trash.animate({
+						opacity: 0.25,
+						height: 0,
+					}, 500, function() {
+						$(this).remove();
+				});
 				return false; //Prevent the browser jump to the link anchor
 			} else {
 			return false;
@@ -527,11 +535,18 @@ function of_admin_head() {
 		}).get();
 		
 		var maxNum = Math.max.apply(Math, numArr);
-		
+		if (maxNum < 1 ) { maxNum = 0};
 		var newNum = maxNum + 1;
 		
-		slidesContainer.append('<li><div class="slide_header"><strong>Slide ' + newNum + '</strong><input type="hidden" class="slide of-input order" name="' + sliderId + '[' + newNum + '][order]" id="' + sliderId + '_slide_order-' + newNum + '" value="' + newNum + '"><a class="slide_edit_button" href="#">Edit</a></div><div class="slide_body" style="display: none; "><label>Title</label><input class="slide of-input of-slider-title" name="' + sliderId + '[' + newNum + '][title]" id="' + sliderId + '_' + newNum + '_slide_title" value=""><label>Image URL</label><input class="slide of-input" name="' + sliderId + '[' + newNum + '][url]" id="' + sliderId + '_' + newNum + '_slide_url" value=""><div class="upload_button_div"><span class="button media_upload_button" id="' + sliderId + '_' + newNum + '" rel="'+sliderInt+'">Upload</span><span class="button mlu_remove_button hide" id="reset_' + sliderId + '_' + newNum + '" title="' + sliderId + '_' + newNum + '">Remove</span></div><div class="screenshot"></div><label>Link URL (optional)</label><input class="slide of-input" name="' + sliderId + '[' + newNum + '][link]" id="' + sliderId + '_' + newNum + '_slide_link" value=""><label>Description (optional)</label><textarea class="slide of-input" name="' + sliderId + '[' + newNum + '][description]" id="' + sliderId + '_' + newNum + '_slide_description" cols="8" rows="8"></textarea><a class="slide_delete_button" href="#">Delete</a><div class="clear"></div></div></li>');
+		var newSlide = '<li class="temphide"><div class="slide_header"><strong>Slide ' + newNum + '</strong><input type="hidden" class="slide of-input order" name="' + sliderId + '[' + newNum + '][order]" id="' + sliderId + '_slide_order-' + newNum + '" value="' + newNum + '"><a class="slide_edit_button" href="#">Edit</a></div><div class="slide_body" style="display: none; "><label>Title</label><input class="slide of-input of-slider-title" name="' + sliderId + '[' + newNum + '][title]" id="' + sliderId + '_' + newNum + '_slide_title" value=""><label>Image URL</label><input class="slide of-input" name="' + sliderId + '[' + newNum + '][url]" id="' + sliderId + '_' + newNum + '_slide_url" value=""><div class="upload_button_div"><span class="button media_upload_button" id="' + sliderId + '_' + newNum + '" rel="'+sliderInt+'">Upload</span><span class="button mlu_remove_button hide" id="reset_' + sliderId + '_' + newNum + '" title="' + sliderId + '_' + newNum + '">Remove</span></div><div class="screenshot"></div><label>Link URL (optional)</label><input class="slide of-input" name="' + sliderId + '[' + newNum + '][link]" id="' + sliderId + '_' + newNum + '_slide_link" value=""><label>Description (optional)</label><textarea class="slide of-input" name="' + sliderId + '[' + newNum + '][description]" id="' + sliderId + '_' + newNum + '_slide_description" cols="8" rows="8"></textarea><a class="slide_delete_button" href="#">Delete</a><div class="clear"></div></div></li>';
+		
+		slidesContainer.append(newSlide);
+		$('.temphide').fadeIn('fast', function() {
+			$(this).removeClass('temphide');
+		});
+				
 		of_image_upload(); // re-initialise upload image..
+		
 		return false; //prevent jumps, as always..
 	});	
 	
@@ -723,6 +738,16 @@ function of_admin_head() {
 		jQuery('#section-body_bg, #section-body_bg_custom, #section-body_bg_properties').show();
 	}
 	
+	/*----------------------------------------------------------------*/
+	/*	Tipsy @since v1.3
+	/*----------------------------------------------------------------*/
+	if (jQuery().tipsy) {
+		$('.typography-size, .typography-height, .typography-face, .typography-style, .of-typography-color').tipsy({
+			fade: true,
+			gravity: 's',
+			opacity: 0.7,
+		});
+	}
 	
 }); //end doc ready
 </script>
@@ -800,7 +825,7 @@ function of_ajax_callback() {
 	
 	elseif ($save_type == 'save') {
 		
-		parse_str(stripslashes($_POST['data']), $data);
+		wp_parse_str(stripslashes($_POST['data']), $data);
 		unset($data['security']);
 		unset($data['of_save']);
    
@@ -964,8 +989,7 @@ public static function optionsframework_machine($options) {
 			/* Font Size */
 			
 			if(isset($typography_stored['size'])) {
-			
-				$output .= '<div class="select_wrapper typography-size">';
+				$output .= '<div class="select_wrapper typography-size" original-title="Font size">';
 				$output .= '<select class="of-typography of-typography-size select" name="'.$value['id'].'[size]" id="'. $value['id'].'_size">';
 					for ($i = 9; $i < 20; $i++){ 
 						$test = $i.'px';
@@ -980,7 +1004,7 @@ public static function optionsframework_machine($options) {
 			
 			if(isset($typography_stored['height'])) {
 			
-				$output .= '<div class="select_wrapper typography-height">';
+				$output .= '<div class="select_wrapper typography-height" original-title="Line height">';
 				$output .= '<select class="of-typography of-typography-height select" name="'.$value['id'].'[height]" id="'. $value['id'].'_height">';
 					for ($i = 20; $i < 38; $i++){ 
 						$test = $i.'px';
@@ -995,7 +1019,7 @@ public static function optionsframework_machine($options) {
 			
 			if(isset($typography_stored['face'])) {
 			
-				$output .= '<div class="select_wrapper typography-face">';
+				$output .= '<div class="select_wrapper typography-face" original-title="Font family">';
 				$output .= '<select class="of-typography of-typography-face select" name="'.$value['id'].'[face]" id="'. $value['id'].'_face">';
 				
 				$faces = array('arial'=>'Arial',
@@ -1018,7 +1042,7 @@ public static function optionsframework_machine($options) {
 			
 			if(isset($typography_stored['style'])) {
 			
-				$output .= '<div class="select_wrapper typography-style">';
+				$output .= '<div class="select_wrapper typography-style" original-title="Font style">';
 				$output .= '<select class="of-typography of-typography-style select" name="'.$value['id'].'[style]" id="'. $value['id'].'_style">';
 				$styles = array('normal'=>'Normal',
 								'italic'=>'Italic',
@@ -1037,8 +1061,8 @@ public static function optionsframework_machine($options) {
 
 			if(isset($typography_stored['color'])) {
 			
-				$output .= '<div id="' . $value['id'] . '_color_picker" class="colorSelector"><div style="background-color: '.$typography_stored['color'].'"></div></div>';
-				$output .= '<input class="of-color of-typography of-typography-color" name="'.$value['id'].'[color]" id="'. $value['id'] .'_color" type="text" value="'. $typography_stored['color'] .'" />';
+				$output .= '<div id="' . $value['id'] . '_color_picker" class="colorSelector typography-color"><div style="background-color: '.$typography_stored['color'].'"></div></div>';
+				$output .= '<input class="of-color of-typography of-typography-color" original-title="Font color" name="'.$value['id'].'[color]" id="'. $value['id'] .'_color" type="text" value="'. $typography_stored['color'] .'" />';
 			
 			}
 			
