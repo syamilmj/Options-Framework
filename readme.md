@@ -31,36 +31,38 @@ Do whatever you want with it. A linkback would be nice :)
 ## Contacts
 
 Twitter: http://twitter.com/syamilmj
+
 Website: http://aquagraphite.com
 
 ## Changelog
 
 v1.3
-- added backup & restore options
-- simple tooltip for typography options
-- fix for *really* long title on slide header
-- fix for when slider is empty (no longer returns NaN)
-- smoother sliding animations when adding/deleting sliders
+* add backup & restore options
+* simple tooltip for typography options
+* fix *really* long title on slide header
+* fix when slider is empty (no longer returns NaN)
+* smoother sliding animations when adding/deleting sliders
+* add template-debug for debugging
 
 v1.2.2
-- replaced admin-interface.php with current stable
+* replace admin-interface.php with current stable
 
 v1.2.1
-- actually introduced more errors due to some crazy file swapping (I think)
+* actually introduced more errors due to some crazy file swapping (I think)
 
 v1.2
-- Changed "background" to "tiles"
-- Add support for jpg images for Tiles option
+* Change "background" to "tiles"
+* Add support for jpg images for Tiles option
 
 v1.1 13 Nov 2011
-- added new option "background"
-- typography option may now be called individually
+* add new option "background"
+* typography option may now be called individually
 
 v1.0 10 Nov 2011
-- added version number
-- shaved off most if not all of the "undefined index" errors
-- disable/enable layout block by drag and drop
-- slider title will update upon typing
+* add version number
+* shave off most if not all of the "undefined index" errors
+* disable/enable layout block by drag and drop
+* slider title will update upon typing
 
 
 
