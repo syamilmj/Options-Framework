@@ -1125,7 +1125,11 @@ public static function optionsframework_machine($options) {
 		case "info":
 			$info_text = $value['std'];
 			$output .= '<div class="of-info">'.$info_text.'</div>';
-		break;                                   	
+		break;
+		case "image":
+			$src = $value['std'];
+			$output .= '<img src="'.$src.'">';
+		break;
 		case 'heading':
 			if($counter >= 2){
 			   $output .= '</div>'."\n";
