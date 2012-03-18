@@ -354,6 +354,10 @@ border-radius: 2px;
 #of_container input.of-radio {
 	width: 30px;
 }
+label.radio, label.multicheck {
+  position: relative;
+  bottom: 9px;
+}
 #of_container .controls .input-text-small {
 	width: 60px;
 	margin-right:10px

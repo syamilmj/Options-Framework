@@ -947,8 +947,8 @@ public static function optionsframework_machine($options) {
 		case "radio":
 			
 			 foreach($value['options'] as $option=>$name) {
-				$output .= '<input class="of-input of-radio" name="'.$value['id'].'" type="radio" value="'.$option.'" ' . checked($data[$value['id']], $option, false) . ' />'.$name.'<br/>';				
-			}	 
+				$output .= '<input class="of-input of-radio" name="'.$value['id'].'" type="radio" value="'.$option.'" ' . checked($data[$value['id']], $option, false) . ' /><label class="radio">'.$name.'</label><br/>';				
+			}
 		break;
 		case 'checkbox':
 			if (!isset($data[$value['id']])) {
@@ -964,7 +964,7 @@ public static function optionsframework_machine($options) {
 			foreach ($value['options'] as $key => $option) {
 				if (!isset($multi_stored[$key])) {$multi_stored[$key] = '';}
 				$of_key_string = $value['id'] . '_' . $key;
-				$output .= '<input type="checkbox" class="checkbox of-input" name="'.$value['id'].'['.$key.']'.'" id="'. $of_key_string .'" value="1" '. checked($multi_stored[$key], 1, false) .' /><label for="'. $of_key_string .'">'. $option .'</label><br />';								
+				$output .= '<input type="checkbox" class="checkbox of-input" name="'.$value['id'].'['.$key.']'.'" id="'. $of_key_string .'" value="1" '. checked($multi_stored[$key], 1, false) .' /><label class="multicheck" for="'. $of_key_string .'">'. $option .'</label><br />';								
 			}			 
 		break;
 		case 'upload':
