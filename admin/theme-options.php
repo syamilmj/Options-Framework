@@ -327,6 +327,24 @@ $of_options[] = array( "name" => "Select a Category",
 					"std" => "Select a category:",
 					"type" => "select",
 					"options" => $of_categories);
+
+// Backup Options
+$of_options[] = array( "name" => "Advanced Settings",
+					"type" => "heading");
+          
+$of_options[] = array( "name" => "Take Site Offline",
+					"desc" => "This will show an offline message. Except for administrators, nobody will be able to access the site",
+					"id" => "offline",
+					"std" => "0",
+          "folds" => "0",
+					"type" => "checkbox");    
+
+$of_options[] = array( "name" => "Offline Message",
+					"desc" => "This will be shown as offline message",
+					"id" => "offline_about",
+					"std" => "Sorry, we are offline",
+          "fold" => "offline",
+					"type" => "text");
 					
 // Backup Options
 $of_options[] = array( "name" => "Backup Options",

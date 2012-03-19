@@ -1,4 +1,4 @@
-/*-----------------------------------------------------------------------------------*/
+-----------------------------------------------------------------------------------
 /* Admin styles
 /*-----------------------------------------------------------------------------------*/ 
 
@@ -150,6 +150,7 @@ border-radius: 2px;
 #of_container #of-nav li.exampleoptions a{ background-image:url(images/icon-docs.png);}
 #of_container #of-nav li.homesettings a{ background-image:url(images/icon-home.png);}
 #of_container #of-nav li.backupoptions a {background: url(images/icon-backup.png) no-repeat;}
+#of_container #of-nav li.advancedsettings a {background: url(images/wrench16.png) no-repeat;}
 
 #of_container #content {
 	float: left;
