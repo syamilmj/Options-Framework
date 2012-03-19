@@ -166,6 +166,7 @@ border-radius: 2px;
 }
 #of_container #content .section {
 	margin-bottom: 10px;
+	overflow-x : hidden;
 }
 #of_container #content .section h3.heading {
 	font-family:;
