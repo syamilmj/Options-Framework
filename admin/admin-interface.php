@@ -1,4 +1,4 @@
-<?php
+17<?php
 /*-----------------------------------------------------------------------------------*/
 /* Title: Aquagraphite Options Framework
 /* Author: Syamil MJ
@@ -171,6 +171,12 @@ function of_admin_head() {
 
 	jQuery.noConflict();
 	jQuery(document).ready(function($){
+	
+	//(un)fold options in a checkbox-group
+  	jQuery('.fld').click(function() {
+    	var $fold='.f_'+this.id;
+    	$($fold).slideToggle('normal', "swing");
+  	});
 	
 	//hide hidden section on page load.
 	jQuery('#section-body_bg, #section-body_bg_custom, #section-body_bg_properties').hide();
@@ -900,7 +906,16 @@ public static function optionsframework_machine($options) {
 		 {
 		 	$class = ''; if(isset( $value['class'] )) { $class = $value['class']; }
 			
-			$output .= '<div id="section-'.$value['id'].'" class="section section-'.$value['type'].' '. $class .'">'."\n";
+			  //hide items in checkbox-group
+			  if (array_key_exists("fold",$value)) {
+				if ($data[$value['fold']]) {
+				  $fold="f_".$value['fold']." ";
+				} else {
+				  $fold="f_".$value['fold']." temphide ";
+				}
+			  }
+
+			$output .= '<div id="section-'.$value['id'].'" class="'.$fold.'section section-'.$value['type'].' '. $class .'">'."\n";
 			$output .= '<h3 class="heading">'. $value['name'] .'</h3>'."\n";
 			$output .= '<div class="option">'."\n" . '<div class="controls">'."\n";
 
@@ -955,8 +970,12 @@ public static function optionsframework_machine($options) {
 				$data[$value['id']] = 0;
 			}
 			
-			$output .= '<input type="hidden" class="checkbox aq-input" name="'.$value['id'].'" id="'. $value['id'] .'" value="0"/>';
-			$output .= '<input type="checkbox" class="checkbox of-input" name="'.$value['id'].'" id="'. $value['id'] .'" value="1" '. checked($data[$value['id']], 1, false) .' />';
+			  if (array_key_exists("folds",$value)) {
+				$fold="fld ";
+			  }
+
+			$output .= '<input type="hidden" class="'.$fold.'checkbox aq-input" name="'.$value['id'].'" id="'. $value['id'] .'" value="0"/>';
+			$output .= '<input type="checkbox" class="'.$fold.'checkbox of-input" name="'.$value['id'].'" id="'. $value['id'] .'" value="1" '. checked($data[$value['id']], 1, false) .' />';
 		break;
 		case 'multicheck': 			
 			$multi_stored = $data[$value['id']];
