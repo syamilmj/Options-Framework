@@ -1,4 +1,4 @@
-17<?php
+<?php
 /*-----------------------------------------------------------------------------------*/
 /* Title: Aquagraphite Options Framework
 /* Author: Syamil MJ
@@ -906,6 +906,7 @@ public static function optionsframework_machine($options) {
 		 {
 		 	$class = ''; if(isset( $value['class'] )) { $class = $value['class']; }
 			
+        $fold='';
 			  //hide items in checkbox-group
 			  if (array_key_exists("fold",$value)) {
 				if ($data[$value['fold']]) {

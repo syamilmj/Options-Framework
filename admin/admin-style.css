@@ -182,7 +182,7 @@ border-radius: 2px;
 }
 #of_container #content .section .explain {
 	float: left;
-	width: 225px;
+/*  width: 225px; */
 	padding: 0 10px 0 0;
 	font-size: 11px;
 	color: #999999;
