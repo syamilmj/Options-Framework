@@ -4,6 +4,8 @@
  * WooThemes Media Library-driven AJAX File Uploader Module (2010-11-05)
  *
  * Slightly modified for use in the Options Framework.
+ *
+ * @since 1.0.0
  */
 
 /**
@@ -72,7 +74,7 @@ if ( ! function_exists( 'optionsframework_mlu_js' ) ) {
 	function optionsframework_mlu_js () {
 	
 		// Registers custom scripts for the Media Library AJAX uploader.
-		wp_register_script( 'of-medialibrary-uploader', ADMIN_DIR .'js/of-medialibrary-uploader.js', array( 'jquery', 'thickbox' ) );
+		wp_register_script( 'of-medialibrary-uploader', ADMIN_DIR .'assets/js/of-medialibrary-uploader.js', array( 'jquery', 'thickbox' ) );
 		wp_enqueue_script( 'of-medialibrary-uploader' );
 		wp_enqueue_script( 'media-upload' );
 	}
@@ -164,7 +166,6 @@ if ( ! function_exists( 'optionsframework_mlu_js_popup' ) ) {
 		if ( ! $_of_title ) { $_of_title = 'file'; } // End IF Statement
 ?>
 	<script type="text/javascript">
-	<!--
 	jQuery(function($) {
 		
 		jQuery.noConflict();
@@ -194,7 +195,6 @@ if ( ! function_exists( 'optionsframework_mlu_js_popup' ) ) {
 		} );
 		
 	});
-	-->
 	</script>
 <?php
 	}

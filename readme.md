@@ -36,6 +36,22 @@ Website: http://aquagraphite.com
 
 ## Changelog
 
+**v1.4**
+
+* add folding checkbox group option (credits to plovs - https://github.com/plovs)
+* add sample grouped options
+* add transfer option
+* fix css quirks on some options
+* single call to admin/admin.php from functions.php
+* unique database name for options & backup
+* replaced ereg_replace function (deprecated in PHP 5.3)
+* uses add_theme_page() to replace add_submenu_page()
+* reorganized files, paths etc
+* delete background option
+* delete child types
+* everything a bit faster now
+* change reset method
+
 **v1.3**
 
 * add backup & restore options
