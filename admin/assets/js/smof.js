@@ -527,6 +527,11 @@ jQuery(document).ready(function($){
 					
 		$('.ajax-loading-img').fadeIn();
 		
+		//load all codemirrors text into the hidden textareas
+		for(i=0; i<codemirrors.length; i++) {
+			codemirrors[i].save();
+		}
+
 		//get serialized data from all our option fields			
 		var serializedReturn = $('#of_form :input[name][name!="security"][name!="of_reset"]').serialize();
 						
