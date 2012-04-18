@@ -361,10 +361,10 @@ label.radio, label.multicheck {
 	margin-left:5px; /* font-size:20px; height:34px;*/
 }
 #of_container #content .section-typography .controls {
-	width:440px
+	max-width:440px
 }
 #of_container #content .section-typography .explain {
-	width:130px
+	max-width:255px
 }
 #of_container .controls .of-typography-size {
 	width:70px;

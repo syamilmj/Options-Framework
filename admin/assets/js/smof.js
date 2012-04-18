@@ -100,7 +100,7 @@ jQuery(document).ready(function($){
 	
 	//Update Message popup
 	$.fn.center = function () {
-		this.animate({"top":( $(window).height() - this.height() - 200 ) / 2+$(window).scrollTop() + "px"},100);
+		this.animate({"top":( $(window).height() - this.height() - 200 ) / 2+$(window).scrollTop() + "px"},10);
 		this.css("left", 250 );
 		return this;
 	}
@@ -414,7 +414,7 @@ jQuery(document).ready(function($){
 					success_popup.fadeIn();
 					window.setTimeout(function(){
 						location.reload();                        
-					}, 1000);
+					}, 2000);
 				}
 							
 			});
@@ -461,7 +461,7 @@ jQuery(document).ready(function($){
 					success_popup.fadeIn();
 					window.setTimeout(function(){
 						location.reload();                        
-					}, 1000);
+					}, 2000);
 				}	
 						
 			});
@@ -509,7 +509,7 @@ jQuery(document).ready(function($){
 					success_popup.fadeIn();
 					window.setTimeout(function(){
 						location.reload();                        
-					}, 1000);
+					}, 2000);
 				}
 							
 			});
@@ -591,14 +591,11 @@ jQuery(document).ready(function($){
 					success.fadeIn();
 					window.setTimeout(function(){
 						location.reload();                        
-					}, 1000);
+					}, 2000);
 				} 
 				else 
 				{ 
 					fail.fadeIn();
-					window.setTimeout(function(){
-						fail.fadeOut();				
-					}, 2000);
 				}
 							
 
