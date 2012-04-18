@@ -468,6 +468,13 @@ class Options_Machine {
 					$output .= '<a href="#" id="of_import_button" class="button" title="Restore Options">Import Options</a>';
 				
 				break;
+
+				//codemirror editor
+				case 'code':
+					$ta_value = '';
+					$ta_value = stripslashes($data[$value['id']]);			
+					$output .= '<textarea class="of-input codemirror-editor" name="'.$value['id'].'" id="'. $value['id'] .'">'.$ta_value.'</textarea>';
+				break;
 			
 			}
 			

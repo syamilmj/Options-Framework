@@ -323,6 +323,12 @@ $of_options[] = array( "name" => "Textarea",
 					"id" => "example_textarea",
 					"std" => "Default Text",
 					"type" => "textarea"); 
+
+$of_options[] = array( "name" => "Code",
+					"desc" => "Codearea description.",
+					"id" => "example_code",
+					"std" => ".test-div{ display: none; }",
+					"type" => "code"); 
                                       
 $of_options[] = array( "name" => "Multicheck",
 					"desc" => "Multicheck description.",

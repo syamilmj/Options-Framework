@@ -74,6 +74,7 @@ function optionsframework_options_page(){
 function of_style_only(){
 	wp_enqueue_style('admin-style', ADMIN_DIR . 'assets/css/admin-style.css');
 	wp_enqueue_style('color-picker', ADMIN_DIR . 'assets/css/colorpicker.css');
+	wp_enqueue_style('codemirror-style', ADMIN_DIR . 'assets/css/codemirror.css');
 }	
 
 /**
@@ -96,6 +97,7 @@ function of_load_only()
 	wp_enqueue_script('ajaxupload', ADMIN_DIR .'assets/js/ajaxupload.js', array('jquery'));
 	wp_enqueue_script('cookie', ADMIN_DIR . 'assets/js/cookie.js', 'jquery');
 	wp_enqueue_script('smof', ADMIN_DIR .'assets/js/smof.js', array( 'jquery' ));
+	wp_enqueue_script('codemirror-js', ADMIN_DIR . 'assets/js/codemirror.js');
 }
 
 /**
@@ -107,6 +109,7 @@ function of_admin_head() { ?>
 		
 	<script type="text/javascript" language="javascript">
 
+	var codemirrors = new Array();
 	jQuery.noConflict();
 	jQuery(document).ready(function($){
 	
@@ -132,6 +135,30 @@ function of_admin_head() { ?>
 			});
 				  
 		}); //end color picker
+
+		// Codemirror
+		var i = 0;
+        $('.codemirror-editor').each(function(index) {
+        	var switched = false;
+        	var container = $(this).parent().parent().parent().parent();
+        	if(container.is(':hidden')){ // need to show the container, otherwise the editor is not created correctly
+        		container.css({ "display": "block" });
+        		switched = true;
+        	}
+        		
+        	var id = $(this).attr('id');
+
+            codemirrors[i] = CodeMirror.fromTextArea(document.getElementById(id), { // store the codemirrors to save the content back to the textarea on save
+            	lineNumbers: true,
+				smartIndent: true,
+				indentUnit:4,
+				indentWithTabs:true
+            });
+
+            if(switched)
+            	container.css({ "display": "none" });
+            i++;
+        }); // end codemirror
 
 	}); //end doc ready
 	
@@ -232,12 +259,18 @@ function of_ajax_callback()
 		unset($data['of_save']);
 		update_option(OPTIONS, $data);
 		
+		//Save new dynamic css
+		of_insert_css_with_markers();
+
 		die('1');
 	}
 	elseif ($save_type == 'reset')
 	{
 		update_option(OPTIONS,$options_machine->Defaults);
 		
+		//reset dynamic css
+		of_insert_css_with_markers();
+
         die('1'); //options reset
 	}
 
