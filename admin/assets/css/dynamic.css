@@ -1,0 +1,10 @@
+body{
+	background: {{body_background}};
+	{{body_font}}
+}
+
+a{
+	font-size:{{body_font|size}};
+}
+
+{{example_code}}
