@@ -5,12 +5,37 @@
  * inside SMOF
  */
 
+var codemirrors = new Array();
 jQuery.noConflict();
 
 /** Fire up jQuery - let's dance! 
  */
 jQuery(document).ready(function($){
 	
+	// Codemirror
+	var i = 0;
+    $('.codemirror-editor').each(function(index) {
+       	var switched = false;
+       	var container = $(this).parent().parent().parent().parent();
+       	if(container.is(':hidden')){ // need to show the container, otherwise the editor is not created correctly
+       		container.css({ "display": "block" });
+       		switched = true;
+       	}
+        		
+       	var id = $(this).attr('id');
+
+        codemirrors[i] = CodeMirror.fromTextArea(document.getElementById(id), { // store the codemirrors to save the content back to the textarea on save
+           	lineNumbers: true,
+			smartIndent: true,
+			indentUnit:4,
+			indentWithTabs:true
+        });
+
+        if(switched)
+           	container.css({ "display": "none" });
+    	i++;
+    }); // end codemirror
+
 	//(un)fold options in a checkbox-group
   	jQuery('.fld').click(function() {
     	var $fold='.f_'+this.id;
