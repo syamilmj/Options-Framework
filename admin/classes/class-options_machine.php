@@ -97,8 +97,7 @@ class Options_Machine {
 					$t_value = stripslashes($data[$value['id']]);
 					
 					$mini ='';
-					if(!isset($value['mod'])) $value['mod'] = '';
-					if($value['mod'] == 'mini') { $mini = 'mini';}
+					if(isset($value['mod'])) $mini = $value['mod'];
 					
 					$output .= '<input class="of-input '.$mini.'" name="'.$value['id'].'" id="'. $value['id'] .'" type="'. $value['type'] .'" value="'. $t_value .'" />';
 				break;
@@ -345,8 +344,7 @@ class Options_Machine {
 					   $output .= '</div>'."\n";
 					}
 					$header_class = str_replace(' ','',strtolower($value['name']));
-					$jquery_click_hook = str_replace(' ', '', strtolower($value['name']) );
-					$jquery_click_hook = "of-option-" . $jquery_click_hook;
+					$jquery_click_hook = "of-option-" . $header_class;
 					$menu .= '<li class="'. $header_class .'"><a title="'.  $value['name'] .'" href="#'.  $jquery_click_hook  .'">'.  $value['name'] .'</a></li>';
 					$output .= '<div class="group" id="'. $jquery_click_hook  .'"><h2>'.$value['name'].'</h2>'."\n";
 				break;
@@ -468,12 +466,25 @@ class Options_Machine {
 					$output .= '<a href="#" id="of_import_button" class="button" title="Restore Options">Import Options</a>';
 				
 				break;
-
-				//codemirror editor
-				case 'code':
-					$ta_value = '';
-					$ta_value = stripslashes($data[$value['id']]);			
-					$output .= '<textarea class="of-input codemirror-editor" name="'.$value['id'].'" id="'. $value['id'] .'">'.$ta_value.'</textarea>';
+				
+				//range slider @since 1.4.1 -- NOT YET READY!
+				case 'range':
+					
+					$args = array('min','max','rangetype','mod');
+					$rangeopts = array();
+					
+					foreach($args as $arg){
+						if(isset($value[$arg])) : 
+							$rangeopts[$arg] = $value[$arg]; 
+						else : 
+							$rangeopts[$arg] = ''; 
+						endif;
+					} 
+					
+					$output .= '<span class="range-tooltip">'.$value['std'].'</span>';
+					$output .= '<input type="text" id="of-range-'.$value['id'].'" class="of-range-input '.$rangeopts['mod'].'" name="'.$value['id'].'">';
+					$output .= '<input class="of-input '.$mini.'" name="'.$value['id'].'" id="'. $value['id'] .'" type="'. $value['type'] .'" value="'. $t_value .'" />';
+				
 				break;
 			
 			}

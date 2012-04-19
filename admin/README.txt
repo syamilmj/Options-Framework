@@ -4,10 +4,15 @@ All questions and setup instructions please go to http://aquagraphite.com/2011/0
 @author - URI http://aquagraphite.com
 @title  - Slightly Modded Options Framework SMOF
 @description - Options frameworks for WordPress Themes
-@version - 1.4.0
+@version - 1.4.1
 @license - WTFPL - http://sam.zoy.org/wtfpl/
 
 Changelog:
+
+V 1.4.1
+- change file naming structure
+- add codemirror editor option (credits to Larcos - https://github.com/Larcos)
+- add css generator (credits to Larcos - https://github.com/Larcos)
 
 V 1.4.0 - 16 APRIL 2012
 - add folding checkbox group option (credits to plovs - https://github.com/plovs)

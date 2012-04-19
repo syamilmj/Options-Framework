@@ -75,23 +75,7 @@ if (!function_exists('of_options'))
 		}
 		
 
-		/*-----------------------------------------------------------------------------------*/
-		/* TO DO: Add options/functions that use these */
-		/*-----------------------------------------------------------------------------------*/
-		
-		//More Options
-		$uploads_arr = wp_upload_dir();
-		$all_uploads_path = $uploads_arr['path'];
-		$all_uploads = get_option('of_uploads');
-		$other_entries = array("Select a number:","1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19");
-		$body_repeat = array("no-repeat","repeat-x","repeat-y","repeat");
-		$body_pos = array("top left","top center","top right","center left","center center","center right","bottom left","bottom center","bottom right");
-		
-		// Image Alignment radio box
-		$of_options_thumb_align = array("alignleft" => "Left","alignright" => "Right","aligncenter" => "Center"); 
-		
-		// Image Links to Options
-		$of_options_image_link_to = array("image" => "The Image","post" => "The Post"); 
+
 
 
 /*-----------------------------------------------------------------------------------*/

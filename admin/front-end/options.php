@@ -13,7 +13,6 @@
 	</div>
 	
 	<span style="display: none;" id="hooks"><?php echo json_encode(of_get_header_classes_array()); ?></span>
-	<input type="hidden" id="reset" value="<?php if(isset($_REQUEST['reset'])) echo $_REQUEST['reset']; ?>" />
 	<input type="hidden" id="security" name="security" value="<?php echo wp_create_nonce('of_ajax_nonce'); ?>" />
 
 	<form id="of_form" method="post" action="<?php echo esc_attr( $_SERVER['REQUEST_URI'] ) ?>" enctype="multipart/form-data" >
