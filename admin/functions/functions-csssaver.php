@@ -11,8 +11,9 @@
 function of_insert_css_with_markers() {
 
   /* path to the dynamic.css file */
-  $filepath = ADMIN_PATH . '/dynamic.css';
-  $outputfile = TEMPLATEPATH . '/smof.css';
+  $filepath = ADMIN_PATH . '/assets/css/dynamic.css';
+  $outputfolder = TEMPLATEPATH . '/css';
+  $outputfile = TEMPLATEPATH . '/css/options.css';
  
   /* Insert CSS into file */
   if ( file_exists( $filepath ) && (is_writeable( $outputfile ) || !file_exists($outputfile) )) {
@@ -94,6 +95,9 @@ file_put_contents(TEMPLATEPATH . "/test.txt",serialize($options));
       $insertion = stripslashes( str_replace( $option, $value, $insertion ) );
     }
     
+    if(!file_exists($outputfolder))
+      mkdir($outputfolder);
+
     /* can't write to the file return false */
     if ( !$f = @fopen( $outputfile, 'w' ) )
       return false;
