@@ -27,8 +27,6 @@ function of_insert_css_with_markers() {
     $regex       = "/{{([a-zA-Z0-9\_\-\#\|\=]+)}}/";
     $marker      = "dynamic css";
 
-file_put_contents(TEMPLATEPATH . "/test.txt",serialize($options));
-
     /* Match custom CSS */
     preg_match_all( $regex, $insertion, $matches );
 
