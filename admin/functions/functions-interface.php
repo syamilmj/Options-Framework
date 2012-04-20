@@ -74,6 +74,7 @@ function optionsframework_options_page(){
 function of_style_only(){
 	wp_enqueue_style('admin-style', ADMIN_DIR . 'assets/css/admin-style.css');
 	wp_enqueue_style('color-picker', ADMIN_DIR . 'assets/css/colorpicker.css');
+	wp_enqueue_style('codemirror-style', ADMIN_DIR . 'assets/css/codemirror.css');
 }	
 
 /**
@@ -96,6 +97,7 @@ function of_load_only()
 	wp_enqueue_script('ajaxupload', ADMIN_DIR .'assets/js/ajaxupload.js', array('jquery'));
 	wp_enqueue_script('cookie', ADMIN_DIR . 'assets/js/cookie.js', 'jquery');
 	wp_enqueue_script('smof', ADMIN_DIR .'assets/js/smof.js', array( 'jquery' ));
+	wp_enqueue_script('codemirror-js', ADMIN_DIR . 'assets/js/codemirror.js');
 }
 
 /**
@@ -214,6 +216,9 @@ function of_ajax_callback()
 		$data = get_option(BACKUPS);
 		
 		update_option(OPTIONS, $data);
+
+		//Save new dynamic css
+		of_insert_css_with_markers();
 		
 		die('1'); 
 	}
@@ -223,6 +228,9 @@ function of_ajax_callback()
 		$data = unserialize(base64_decode($data)); //100% safe - ignore theme check nag
 		update_option(OPTIONS, $data);
 		
+		//Save new dynamic css
+		of_insert_css_with_markers();
+
 		die('1'); 
 	}
 	elseif ($save_type == 'save')
@@ -232,12 +240,18 @@ function of_ajax_callback()
 		unset($data['of_save']);
 		update_option(OPTIONS, $data);
 		
+		//Save new dynamic css
+		of_insert_css_with_markers();
+
 		die('1');
 	}
 	elseif ($save_type == 'reset')
 	{
 		update_option(OPTIONS,$options_machine->Defaults);
 		
+		//reset dynamic css
+		of_insert_css_with_markers();
+
         die('1'); //options reset
 	}
 

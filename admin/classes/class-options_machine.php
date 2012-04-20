@@ -467,6 +467,13 @@ class Options_Machine {
 				
 				break;
 				
+				//codemirror editor
+				case 'code':
+					$ta_value = '';
+					$ta_value = stripslashes($data[$value['id']]);			
+					$output .= '<textarea class="of-input codemirror-editor" name="'.$value['id'].'" id="'. $value['id'] .'">'.$ta_value.'</textarea>';
+				break;
+				
 				//range slider @since 1.4.1 -- NOT YET READY!
 				case 'range':
 					
