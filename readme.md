@@ -34,6 +34,12 @@ Twitter: http://twitter.com/syamilmj
 
 Website: http://aquagraphite.com
 
+## Donations
+
+If you have some spare bucks, please seriously consider helping the World Food Programme to build world without hunger. Your donations will provide foods & shelters to those who needs them the most! - [Fill the Cup!](https://www.wfp.org/donate/fillthecup_getinvolved)
+
+Or, [buy me a coffee](http://goo.gl/tsbK5) :)
+
 ## Changelog
 
 **v1.4**
