@@ -188,7 +188,7 @@ class Options_Machine {
 				//typography option	
 				case 'typography':
 				
-					$typography_stored = $data[$value['id']];
+					$typography_stored = isset($data[$value['id']]) ? $data[$value['id']] : $value['std'];
 					
 					/* Font Size */
 					
