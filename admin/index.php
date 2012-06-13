@@ -38,6 +38,7 @@ if (is_admin() && isset($_GET['activated'] ) && $pagenow == "themes.php" ) add_a
 add_action('admin_head', 'optionsframework_admin_message');
 add_action('admin_init','optionsframework_admin_init');
 add_action('admin_menu', 'optionsframework_add_admin');
+add_action( 'init', 'optionsframework_mlu_init');
 
 /**
  * Required Files
