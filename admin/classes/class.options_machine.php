@@ -115,22 +115,6 @@ class Options_Machine {
 					 } 
 					$output .= '</select></div>';
 				break;
-				
-				// Sidebar Select
-				case 'sidebar_select':
-				       $options = '';
-				       $sidebars = $GLOBALS['wp_registered_sidebars'];
-					    $output .= '<div class="select_wrapper ' . $options . '">';
-					    $new ='';
-	                               $output .= '<select class="select of-input" name="'. $value['id']. '" id="'. $value['id']. '">';
-	                                    if ( !array_key_exists( $new, (array)$sidebars ) ) $new ='';
-	                               foreach ($sidebars as $option) {
-	                                    $output .= '<option value="'. $option['name'] . '"' . selected($data[$value['id']], $value['id'], false) . '/>'. $option['name'] .'</option>';
-	                               }
-	                               $output .= '</select></div>';
-	                               $output .= $new;
-				break;
-				
                                 //textarea option
 				case 'textarea':	
 					$cols = '8';
