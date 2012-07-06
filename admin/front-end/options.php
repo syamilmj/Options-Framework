@@ -22,7 +22,7 @@
 		
 			<div class="logo">
 				<h2><?php echo THEMENAME; ?></h2>
-				<span><?php echo THEMEVERSION; ?></h2>
+				<span><?php echo ('v'. THEMEVERSION); ?></span>
 			</div>
 		
 			<div id="js-warning">Warning- This options panel will not work properly without javascript!</div>
