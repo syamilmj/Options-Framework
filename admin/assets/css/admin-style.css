@@ -44,7 +44,12 @@
  }
 
 #of_container #header .logo h2 {
+	display:inline-block;
 	font-style:normal;
+	padding-right:5px;
+}
+#of_container #header .logo span {
+	color:#888888;
 }
 #of_container #header .icon-option {
 	float: right;
