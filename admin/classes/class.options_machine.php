@@ -380,7 +380,7 @@ class Options_Machine {
 				//drag & drop block manager
 				case 'sorter':
 				
-					$sortlists = $data[$value['id']];
+					$sortlists = isset($data[$value['id']]) && !empty($data[$value['id']]) ? $data[$value['id']] : $value['std'];
 					
 					$output .= '<div id="'.$value['id'].'" class="sorter">';
 					
