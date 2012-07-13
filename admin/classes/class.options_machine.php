@@ -418,8 +418,7 @@ class Options_Machine {
 				case 'tiles':
 					
 					$i = 0;
-					$select_value = '';
-					$select_value = $data[$value['id']];
+					$select_value = isset($data[$value['id']]) && !empty($data[$value['id']]) ? $data[$value['id']] : '';
 					
 					foreach ($value['options'] as $key => $option) 
 					{ 
