@@ -298,7 +298,13 @@ $of_options[] = array( "name" => "Mini Select",
 					"std" => "two",
 					"type" => "select2",
 					"class" => "mini", //mini, tiny, small
-					"options" => $of_options_radio);    
+					"options" => $of_options_radio);   
+					
+$of_options[] = array( "name" => "Sidebar Select Example",
+		           	        "desc" => "Select your registered sidebar of choice.",
+			                "id" => "alt-sidebar",
+			                "std" => "",
+			                "type" => "sidebar_select");
 
 $of_options[] = array( "name" => "Input Radio (one)",
 					"desc" => "Radio select with default of 'one'.",

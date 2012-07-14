@@ -115,8 +115,7 @@ class Options_Machine {
 					 } 
 					$output .= '</select></div>';
 				break;
-				
-				//textarea option
+                                //textarea option
 				case 'textarea':	
 					$cols = '8';
 					$ta_value = '';
