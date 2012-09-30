@@ -15,9 +15,9 @@ class Options_Machine {
 	 *
 	 * @since 1.0.0
 	 */
-	function __construct($options) {
+	function __construct($options,$data = array()) {
 		
-		$return = $this->optionsframework_machine($options);
+		$return = $this->optionsframework_machine($options,$data);
 		
 		$this->Inputs = $return[0];
 		$this->Menu = $return[1];
@@ -36,9 +36,13 @@ class Options_Machine {
 	 *
 	 * @return array
 	 */
-	public static function optionsframework_machine($options) {
+	public static function optionsframework_machine($options,$data =array()) {
 	
-	    $data = get_option(OPTIONS);
+		if(empty($data)){
+			$data = get_option(OPTIONS);
+		}
+	
+	    //$data = get_option(OPTIONS);
 		
 		$defaults = array();   
 	    $counter = 0;
@@ -111,7 +115,7 @@ class Options_Machine {
 					$output .= '<div class="select_wrapper ' . $mini . '">';
 					$output .= '<select class="select of-input" name="'.$value['id'].'" id="'. $value['id'] .'">';
 					foreach ($value['options'] as $select_ID => $option) {			
-						$output .= '<option id="' . $select_ID . '" value="'.$option.'" ' . selected($data[$value['id']], $option, false) . ' />'.$option.'</option>';	 
+						$output .= '<option id="' . $select_ID . '" value="'.$option.'" ' . selected($data[$value['id']], $option, false) . '>'.$option.'</option>';	 
 					 } 
 					$output .= '</select></div>';
 				break;
