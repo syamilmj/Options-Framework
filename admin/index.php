@@ -5,7 +5,7 @@ Description	: Slightly Modified Options Framework
 Version		: 1.4.0
 Author		: Syamil MJ
 Author URI	: http://aquagraphite.com
-License		: WTFPL - http://sam.zoy.org/wtfpl/
+License		: GPLv3 - http://www.gnu.org/copyleft/gpl.html
 Credits		: Thematic Options Panel - http://wptheming.com/2010/11/thematic-options-panel-v2/
 		 	  KIA Thematic Options Panel - https://github.com/helgatheviking/thematic-options-KIA
 		 	  Woo Themes - http://woothemes.com/
