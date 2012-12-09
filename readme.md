@@ -23,24 +23,20 @@ SMOF is heavily based on some of these available frameworks.
 * [Woo Themes](http://woothemes.com/)
 * [Option Tree](http://wordpress.org/extend/plugins/option-tree/)
 
-## License
-[WTFPL](http://sam.zoy.org/wtfpl/)
+### License
 
-Do whatever you want with it. A linkback would be nice :)
+SMOF is released under GPLv3 - [http://www.gnu.org/copyleft/gpl.html](http://www.gnu.org/copyleft/gpl.html). You are free to redistribute & modify copies of the plugin under the following conditions:
 
-## Contacts
+* All links & credits must be kept intact
+* For commercial usage (e.g in themes you're selling on any marketplace, or a commercial website), you are required to link to my [Themeforest Profile Page](http://themeforest.net/user/SyamilMJ) using the following text: [Slightly Modified Options Framework](https://github.com/sy4mil/Options-Framework) by [Syamil MJ]((http://themeforest.net/user/SyamilMJ)
+
+### Contacts
 
 Twitter: http://twitter.com/syamilmj
 
 Website: http://aquagraphite.com
 
-## Donations
-
-If you have some spare bucks, please seriously consider helping the World Food Programme to build world without hunger. Your donations will provide foods & shelters to those who needs them the most! - [Fill the Cup!](https://www.wfp.org/donate/fillthecup_getinvolved)
-
-Or, [buy me a coffee](http://goo.gl/tsbK5) :)
-
-## Changelog
+### Changelog
 
 **v1.4**
 
