@@ -526,9 +526,6 @@ color: #464646;
     background:#eee url(../../images/white-grad-active.png) repeat-x scroll left top;
 }
 
-#of_container .upload_button_div .button {
-	padding:4px 7px;
-}
 #of_container .image_reset_button, #of_container .mlu_remove_button {
 	margin-left:10px;
 	color:#ef521d;
@@ -784,7 +781,6 @@ z-index: 4;
     color: #777;
 }
 #of_container #content .section-backup .button, #of_container #content .section-transfer .button {
-    padding: 5px;
     margin: 0 25px 0 0;
     line-height: 30px
 }
