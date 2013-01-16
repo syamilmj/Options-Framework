@@ -351,7 +351,6 @@ border-radius: 2px;
 }
 label.radio, label.multicheck {
   position: relative;
-  bottom: 9px;
 }
 #of_container .controls .input-text-small {
 	width: 60px;
@@ -552,9 +551,6 @@ color: #464646;
 #of_container .reset-button {
 	font-family:Arial,Verdana,sans-serif;
 	float:left;
-	padding: 0 7px;
-	height: 23px;
-	line-height: 23px;
 	margin:0 ;
 	color: #ef521d;
 	border-color: #bbb;
@@ -582,10 +578,6 @@ color: #464646;
 
 #of_save {
 	font-family: Arial,Verdana,sans-serif;
-	padding: 0 7px;
-	height: 23px;
-	line-height: 23px;
-	border:1px solid #0a6d9b !important;
 	float:right;
 }
 
