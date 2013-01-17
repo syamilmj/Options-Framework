@@ -197,7 +197,6 @@ border-radius: 2px;
 }
 
 #of_container #content .section-multicheck .controls input.checkbox {
-	margin-top:9px;
 }
 
 #of_container #content .section-checkbox .explain {
@@ -344,7 +343,6 @@ border-radius: 2px;
 }
 #of_container input.checkbox {
 	width: 30px;
-	margin-top:3px;
 }
 #of_container input.of-radio {
 	width: 30px;
