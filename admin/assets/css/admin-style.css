@@ -774,7 +774,6 @@ z-index: 4;
 }
 #of_container #content .section-backup .button, #of_container #content .section-transfer .button {
     margin: 0 25px 0 0;
-    line-height: 30px
 }
 
 .temphide {display:none;}
