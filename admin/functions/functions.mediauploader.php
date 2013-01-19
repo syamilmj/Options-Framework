@@ -12,7 +12,7 @@
  * Sets up a custom post type to attach image to.  This allows us to have
  * individual galleries for different uploaders.
  */
-
+add_action('init', 'optionsframework_mlu_init');
 if ( ! function_exists( 'optionsframework_mlu_init' ) ) {
 	function optionsframework_mlu_init () {
 		register_post_type( 'options', array(
