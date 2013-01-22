@@ -13,8 +13,6 @@ Some of these are:
 * Tiles
 * Backup and Restore
 
-SMOF works with the latest version of WordPress (currently at 3.3.1) and is being actively developed for further improvements.
-
 ## Credits
 SMOF is heavily based on some of these available frameworks.
 
@@ -28,7 +26,7 @@ SMOF is heavily based on some of these available frameworks.
 SMOF is released under GPLv3 - [http://www.gnu.org/copyleft/gpl.html](http://www.gnu.org/copyleft/gpl.html). You are free to redistribute & modify copies of the plugin under the following conditions:
 
 * All links & credits must be kept intact
-* For commercial usage (e.g in themes you're selling on any marketplace, or a commercial website), you are required to link to my [Themeforest Profile Page](http://themeforest.net/user/SyamilMJ) using the following text: [Slightly Modified Options Framework](https://github.com/sy4mil/Options-Framework) by [Syamil MJ](http://themeforest.net/user/SyamilMJ)
+* For commercial usage (e.g in themes you're selling on any marketplace, or a commercial website), you are **strongly recommended** to link back to my [Themeforest Profile Page](http://themeforest.net/user/SyamilMJ) using the following text: [Slightly Modified Options Framework](https://github.com/sy4mil/Options-Framework) by [Syamil MJ](http://themeforest.net/user/SyamilMJ)
 
 ### Contacts
 
