@@ -773,6 +773,16 @@ z-index: 4;
     margin: 0 25px 0 0;
 }
 
+/* google fonts previewer field style */
+#of_container p.google_font_preview{
+	display: block;
+	border: 1px dotted lightgray;
+	float: left;
+	padding: 10px;
+	font-size: 10pt;
+	width: 318px;
+}
+
 .temphide {display:none;}
 /*-------------------------------------------------------------------------------------------*/
 /* GENERAL STYLES */
