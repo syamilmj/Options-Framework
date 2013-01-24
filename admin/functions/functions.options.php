@@ -298,7 +298,14 @@ $of_options[] = array( "name" => "Mini Select",
 					"std" => "two",
 					"type" => "select2",
 					"class" => "mini", //mini, tiny, small
-					"options" => $of_options_radio);    
+					"options" => $of_options_radio); 
+
+$of_options[] = array( "name" => "Google Font Select",
+					"desc" => "Some description.",
+					"id" => "g_select",
+					"std" => "three",
+					"type" => "select_google_font",
+					"options" => array("Select a font"=>"Select a font","Lato"=>"Lato","Loved+by+the+King"=>"Loved By the King","Tangerine"=>"Tangerine","Terminal+Dosis"=>"Terminal Dosis"));   
 
 $of_options[] = array( "name" => "Input Radio (one)",
 					"desc" => "Radio select with default of 'one'.",
