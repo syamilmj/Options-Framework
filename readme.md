@@ -36,6 +36,11 @@ Website: http://aquagraphite.com
 
 ### Changelog
 
+**v1.4.1**
+* new Google Fonts field was added (by https://github.com/partnuz)
+* removed some ui glitches (by https://github.com/partnuz)
+* added multicheck field to check if db option exists (by https://github.com/partnuz)
+
 **v1.4**
 
 * add folding checkbox group option (credits to plovs - https://github.com/plovs)
