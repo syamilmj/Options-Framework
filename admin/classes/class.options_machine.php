@@ -155,7 +155,7 @@ class Options_Machine {
 				
 				//multiple checkbox option
 				case 'multicheck': 			
-					$multi_stored = $data[$value['id']];
+					(isset($data[$value['id']]))? $multi_stored = $data[$value['id']] : $multi_stored="";
 								
 					foreach ($value['options'] as $key => $option) {
 						if (!isset($multi_stored[$key])) {$multi_stored[$key] = '';}
