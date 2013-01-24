@@ -468,6 +468,16 @@ class Options_Machine {
 				
 				break;
 				
+				// google font field
+				case 'select_google_font':
+					$output .= '<div class="select_wrapper">';
+					$output .= '<select class="select of-input google_font_select" name="'.$value['id'].'" id="'. $value['id'] .'">';
+					foreach ($value['options'] as $select_key => $option) {      
+						$output .= '<option value="'.$select_key.'" ' . selected((isset($data[$value['id']]))? $data[$value['id']] : "", $option, false) . ' />'.$option.'</option>';   
+					} 
+					$output .= '</select></div>';
+					$output .= '<p class="google_font_preview">0123456789 ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz</p>';
+				break;
 			
 			}
 			
