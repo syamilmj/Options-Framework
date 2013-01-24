@@ -303,7 +303,7 @@ $of_options[] = array( "name" => "Mini Select",
 $of_options[] = array( "name" => "Google Font Select",
 					"desc" => "Some description.",
 					"id" => "g_select",
-					"std" => "three",
+					"std" => "Select a font",
 					"type" => "select_google_font",
 					"options" => array("Select a font"=>"Select a font","Lato"=>"Lato","Loved by the King"=>"Loved By the King","Tangerine"=>"Tangerine","Terminal Dosis"=>"Terminal Dosis"));   
 
