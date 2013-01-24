@@ -305,7 +305,7 @@ $of_options[] = array( "name" => "Google Font Select",
 					"id" => "g_select",
 					"std" => "three",
 					"type" => "select_google_font",
-					"options" => array("Select a font"=>"Select a font","Lato"=>"Lato","Loved+by+the+King"=>"Loved By the King","Tangerine"=>"Tangerine","Terminal+Dosis"=>"Terminal Dosis"));   
+					"options" => array("Select a font"=>"Select a font","Lato"=>"Lato","Loved by the King"=>"Loved By the King","Tangerine"=>"Tangerine","Terminal Dosis"=>"Terminal Dosis"));   
 
 $of_options[] = array( "name" => "Input Radio (one)",
 					"desc" => "Radio select with default of 'one'.",
