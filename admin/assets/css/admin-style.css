@@ -1,4 +1,4 @@
------------------------------------------------------------------------------------
+/*-----------------------------------------------------------------------------------
 /* Admin styles
 /*-----------------------------------------------------------------------------------*/ 
 
@@ -623,7 +623,7 @@ border-radius: 4px;
 font-family: "Lucida Grande","Lucida Sans Unicode",Arial,Verdana,sans-serif;
 font-size: 12px;
 background: #F1F1F1 url(../images/select.png) no-repeat right center;
-border-color: #CCC #E6E6E6 #E6E6E6 #CCC;;
+border-color: #CCC #E6E6E6 #E6E6E6 #CCC;
 border-style: solid;
 border-width: 1px;
 float: left;
