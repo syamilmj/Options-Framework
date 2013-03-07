@@ -6,6 +6,7 @@
  * @subpackage  SMOF
  * @since       1.4.0
  * @author      Syamil MJ
+ * @author      Jonah Dahlquist
  */
  
 
@@ -26,9 +27,9 @@ function of_option_setup()
 	global $of_options, $options_machine;
 	$options_machine = new Options_Machine($of_options);
 		
-	if (!get_option(OPTIONS))
+	if (!of_get_options())
 	{
-		update_option(OPTIONS,$options_machine->Defaults);
+		of_save_options($options_machine->Defaults);
 	}
 }
 
@@ -71,10 +72,38 @@ function of_get_header_classes_array()
 	return $hooks;
 }
 
+/**
+ * Get options from the database.
+ *
+ * @author Jonah Dahlquist
+ * @since 1.4.0
+ * @return array
+ */
+function of_get_options()
+{
+	$data = get_option(OPTIONS);
+
+	return $data;
+}
+
+/**
+ * Save options to the database.
+ *
+ * @param $data Options array to save
+ * @author Jonah Dahlquist
+ * @since 1.4.0
+ * @uses update_option()
+ * @return void
+ */
+function of_save_options($data)
+{
+	update_option(OPTIONS, $data);
+}
+
 
 /**
  * For use in themes
  *
  * @since forever
  */
-$data = get_option(OPTIONS);
+$data = of_get_options();

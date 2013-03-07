@@ -38,7 +38,7 @@ class Options_Machine {
 	 */
 	public static function optionsframework_machine($options) {
 	
-	    $data = get_option(OPTIONS);
+	    $data = of_get_options();
 		
 		$defaults = array();   
 	    $counter = 0;
@@ -511,7 +511,7 @@ class Options_Machine {
 	 */
 	public static function optionsframework_uploader_function($id,$std,$mod){
 	
-	    $data =get_option(OPTIONS);
+	    $data = of_get_options();
 		
 		$uploader = '';
 	    $upload = $data[$id];
@@ -554,7 +554,7 @@ class Options_Machine {
 	 */
 	public static function optionsframework_media_uploader_function($id,$std,$int,$mod){
 	
-	    $data =get_option(OPTIONS);
+	    $data = of_get_options();
 		
 		$uploader = '';
 	    $upload = $data[$id];
@@ -596,7 +596,7 @@ class Options_Machine {
 	 */
 	public static function optionsframework_slider_function($id,$std,$oldorder,$order,$int){
 	
-	    $data = get_option(OPTIONS);
+	    $data = of_get_options();
 		
 		$slider = '';
 		$slide = array();
