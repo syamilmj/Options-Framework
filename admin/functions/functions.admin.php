@@ -73,7 +73,7 @@ function of_get_header_classes_array()
 }
 
 /**
- * Get options from the database.
+ * Get options from the database and process them with the load filter hook.
  *
  * @author Jonah Dahlquist
  * @since 1.4.0
@@ -82,12 +82,13 @@ function of_get_header_classes_array()
 function of_get_options()
 {
 	$data = get_option(OPTIONS);
+	$data = apply_filters('of_after_options_load', $data);
 
 	return $data;
 }
 
 /**
- * Save options to the database.
+ * Save options to the database after processing them
  *
  * @param $data Options array to save
  * @author Jonah Dahlquist
@@ -97,6 +98,7 @@ function of_get_options()
  */
 function of_save_options($data)
 {
+	$data = apply_filters('of_before_options_save', $data);
 	update_option(OPTIONS, $data);
 }
 
