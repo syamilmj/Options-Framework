@@ -202,7 +202,7 @@ function of_ajax_callback()
 		$backup = $all;
 		$backup['backup_log'] = date('r');
 		
-		of_save_options($backup ) ;
+		of_save_options($backup, BACKUPS) ;
 			
 		die('1'); 
 	}
