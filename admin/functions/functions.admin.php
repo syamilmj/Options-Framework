@@ -79,9 +79,9 @@ function of_get_header_classes_array()
  * @since 1.4.0
  * @return array
  */
-function of_get_options()
+function of_get_options($key=OPTIONS)
 {
-	$data = get_option(OPTIONS);
+	$data = get_option($key);
 	$data = apply_filters('of_after_options_load', $data);
 
 	return $data;
@@ -96,10 +96,10 @@ function of_get_options()
  * @uses update_option()
  * @return void
  */
-function of_save_options($data)
+function of_save_options($data, $key=OPTIONS)
 {
 	$data = apply_filters('of_before_options_save', $data);
-	update_option(OPTIONS, $data);
+	update_option($key, $data);
 }
 
 
