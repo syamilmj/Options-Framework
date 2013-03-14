@@ -82,7 +82,7 @@ function of_get_header_classes_array()
 function of_get_options($key=OPTIONS)
 {
 	$data = get_option($key);
-	$data = apply_filters('of_after_options_load', $data);
+	$data = apply_filters('of_options_after_load', $data);
 
 	return $data;
 }
@@ -98,7 +98,7 @@ function of_get_options($key=OPTIONS)
  */
 function of_save_options($data, $key=OPTIONS)
 {
-	$data = apply_filters('of_before_options_save', $data);
+	$data = apply_filters('of_options_before_save', $data);
 	update_option($key, $data);
 }
 
