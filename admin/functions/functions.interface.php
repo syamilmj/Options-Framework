@@ -14,7 +14,6 @@
  *
  * @uses wp_verify_nonce()
  * @uses header()
- * @uses update_option()
  *
  * @since 1.0.0
  */
@@ -56,7 +55,7 @@ function optionsframework_options_page(){
 	global $options_machine;
 	/*
 	//for debugging
-	$data = get_option(OPTIONS);
+	$data = of_get_options();
 	print_r($data);
 	*/	
 	
@@ -143,7 +142,6 @@ function of_admin_head() { ?>
  * Ajax Save Options
  *
  * @uses get_option()
- * @uses update_option()
  *
  * @since 1.0.0
  */
@@ -156,7 +154,7 @@ function of_ajax_callback()
 	if (! wp_verify_nonce($nonce, 'of_ajax_nonce') ) die('-1'); 
 			
 	//get options array from db
-	$all = get_option(OPTIONS);
+	$all = of_get_options();
 	
 	$save_type = $_POST['type'];
 	
@@ -181,7 +179,7 @@ function of_ajax_callback()
 			
 			$upload_image[$clickedID] = $uploaded_file['url'];
 			
-			update_option(OPTIONS, $upload_image ) ;
+			of_save_options($upload_image);
 		
 				
 		 if(!empty($uploaded_file['error'])) {echo 'Upload Error: ' . $uploaded_file['error']; }	
@@ -195,7 +193,7 @@ function of_ajax_callback()
 			
 			$delete_image = $all; //preserve rest of data
 			$delete_image[$id] = ''; //update array key with empty value	 
-			update_option(OPTIONS, $delete_image ) ;
+			of_save_options($delete_image ) ;
 	
 	}
 	elseif($save_type == 'backup_options')
@@ -204,7 +202,7 @@ function of_ajax_callback()
 		$backup = $all;
 		$backup['backup_log'] = date('r');
 		
-		update_option(BACKUPS, $backup ) ;
+		of_save_options($backup, BACKUPS) ;
 			
 		die('1'); 
 	}
@@ -213,7 +211,7 @@ function of_ajax_callback()
 			
 		$data = get_option(BACKUPS);
 		
-		update_option(OPTIONS, $data);
+		of_save_options($data);
 		
 		die('1'); 
 	}
@@ -221,7 +219,7 @@ function of_ajax_callback()
 			
 		$data = $_POST['data'];
 		$data = unserialize(base64_decode($data)); //100% safe - ignore theme check nag
-		update_option(OPTIONS, $data);
+		of_save_options($data);
 		
 		die('1'); 
 	}
@@ -230,13 +228,13 @@ function of_ajax_callback()
 		wp_parse_str(stripslashes($_POST['data']), $data);
 		unset($data['security']);
 		unset($data['of_save']);
-		update_option(OPTIONS, $data);
+		of_save_options($data);
 		
 		die('1');
 	}
 	elseif ($save_type == 'reset')
 	{
-		update_option(OPTIONS,$options_machine->Defaults);
+		of_save_options($options_machine->Defaults);
 		
         die('1'); //options reset
 	}
