@@ -74,6 +74,7 @@ function optionsframework_options_page(){
 function of_style_only(){
 	wp_enqueue_style('admin-style', ADMIN_DIR . 'assets/css/admin-style.css');
 	wp_enqueue_style('color-picker', ADMIN_DIR . 'assets/css/colorpicker.css');
+	wp_enqueue_style('jquery-ui-custom-admin', ADMIN_DIR .'assets/css/jquery-ui-custom.css');
 }	
 
 /**
@@ -90,6 +91,7 @@ function of_load_only()
 	
 	wp_enqueue_script('jquery-ui-core');
 	wp_enqueue_script('jquery-ui-sortable');
+	wp_enqueue_script('jquery-ui-slider');
 	wp_enqueue_script('jquery-input-mask', ADMIN_DIR .'assets/js/jquery.maskedinput-1.2.2.js', array( 'jquery' ));
 	wp_enqueue_script('tipsy', ADMIN_DIR .'assets/js/jquery.tipsy.js', array( 'jquery' ));
 	wp_enqueue_script('color-picker', ADMIN_DIR .'assets/js/colorpicker.js', array('jquery'));
@@ -132,7 +134,7 @@ function of_admin_head() { ?>
 			});
 				  
 		}); //end color picker
-
+		
 	}); //end doc ready
 	
 	</script>
