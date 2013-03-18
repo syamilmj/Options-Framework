@@ -45,6 +45,7 @@ class Options_Machine {
 		$menu = '';
 		$output = '';
 		
+		
 		foreach ($options as $value) {
 		
 			$counter++;
@@ -472,17 +473,104 @@ class Options_Machine {
 				case 'select_google_font':
 					$output .= '<div class="select_wrapper">';
 					$output .= '<select class="select of-input google_font_select" name="'.$value['id'].'" id="'. $value['id'] .'">';
-					foreach ($value['options'] as $select_key => $option) {      
-						$output .= '<option value="'.$select_key.'" ' . selected((isset($data[$value['id']]))? $data[$value['id']] : "", $option, false) . ' />'.$option.'</option>';   
+					foreach ($value['options'] as $select_key => $option) {
+						$output .= '<option value="'.$select_key.'" ' . selected((isset($data[$value['id']]))? $data[$value['id']] : "", $option, false) . ' />'.$option.'</option>';
 					} 
 					$output .= '</select></div>';
-					$output .= '<p class="google_font_preview">0123456789 ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz</p>';
+					
+					if(isset($value['preview']['text'])){
+						$g_text = $value['preview']['text'];
+					} else {
+						$g_text = '0123456789 ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz';
+					}
+					if(isset($value['preview']['size'])) {
+						$g_size = 'style="font-size: '. $value['preview']['size'] .';"';
+					} else { 
+						$g_size = '';
+					}
+					
+					$output .= '<p class="'.$value['id'].'_ggf_previewer google_font_preview" '. $g_size .'>'. $g_text .'</p>';
 				break;
-			
+				
+				//JQuery UI Slider
+				case 'sliderui':
+					$s_val = $s_min = $s_max = $s_step = $s_edit = '';//no errors, please
+					
+					$s_val  = stripslashes($data[$value['id']]);
+					
+					if(!isset($value['min'])){ $s_min  = '0'; }else{ $s_min = $value['min']; }
+					if(!isset($value['max'])){ $s_max  = $s_min + 1; }else{ $s_max = $value['max']; }
+					if(!isset($value['step'])){ $s_step  = '1'; }else{ $s_step = $value['step']; }
+					
+					if(!isset($value['edit'])){ 
+						$s_edit  = ' readonly="readonly"'; 
+					}
+					else
+					{
+						$s_edit  = '';
+					}
+					
+					if ($s_val == '') $s_val = $s_min;
+					
+					//values
+					$s_data = 'data-id="'.$value['id'].'" data-val="'.$s_val.'" data-min="'.$s_min.'" data-max="'.$s_max.'" data-step="'.$s_step.'"';
+					
+					//html output
+					$output .= '<input type="text" name="'.$value['id'].'" id="'.$value['id'].'" value="'. $s_val .'" class="mini" '. $s_edit .' />';
+					$output .= '<div id="'.$value['id'].'-slider" class="smof_sliderui" style="margin-left: 7px;" '. $s_data .'></div>';
+					
+				break;
+				
+				
+				//Switch option
+				case 'switch':
+					if (!isset($data[$value['id']])) {
+						$data[$value['id']] = 0;
+					}
+					
+					$fold = '';
+					if (array_key_exists("folds",$value)) $fold="s_fld ";
+					
+					$cb_enabled = $cb_disabled = '';//no errors, please
+					
+					//Get selected
+					if ($data[$value['id']] == 1){
+						$cb_enabled = ' selected';
+						$cb_disabled = '';
+					}else{
+						$cb_enabled = '';
+						$cb_disabled = ' selected';
+					}
+					
+					//Label ON
+					if(!isset($value['on'])){
+						$on = "On";
+					}else{
+						$on = $value['on'];
+					}
+					
+					//Label OFF
+					if(!isset($value['off'])){
+						$off = "Off";
+					}else{
+						$off = $value['off'];
+					}
+					
+					$output .= '<p class="switch-options">';
+						$output .= '<label class="'.$fold.'cb-enable'. $cb_enabled .'" data-id="'.$value['id'].'"><span>'. $on .'</span></label>';
+						$output .= '<label class="'.$fold.'cb-disable'. $cb_disabled .'" data-id="'.$value['id'].'"><span>'. $off .'</span></label>';
+						
+						$output .= '<input type="hidden" class="'.$fold.'checkbox of-input" name="'.$value['id'].'" id="'. $value['id'] .'" value="0"/>';
+						$output .= '<input type="checkbox" id="'.$value['id'].'" class="'.$fold.'checkbox of-input main_checkbox" name="'.$value['id'].'"  value="1" '. checked($data[$value['id']], 1, false) .' />';
+						
+					$output .= '</p>';
+					
+				break;
+				
 			}
 			
 			//description of each option
-			if ( $value['type'] != 'heading' ) { 
+			if ( $value['type'] != 'heading') { 
 				if(!isset($value['desc'])){ $explain_value = ''; } else{ 
 					$explain_value = '<div class="explain">'. $value['desc'] .'</div>'."\n"; 
 				} 
