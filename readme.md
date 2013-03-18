@@ -37,8 +37,8 @@ Website: http://aquagraphite.com
 ### Changelog
 
 **v1.4.2**
-* Added JQueryUI Slider option( by [Smartik](https://github.com/Smartik89) )
-* Added Switch option(with "folds" support, see demo options for examples)( by [Smartik](https://github.com/Smartik89) )
+* Added JQueryUI Slider option( by [Smartik](https://github.com/Smartik89) ) - [Screenshot](http://i.imgur.com/e9Fh5Ar.jpg)
+* Added Switch option(with "folds" support, see demo options for examples)( by [Smartik](https://github.com/Smartik89) ) - [Screenshot](http://i.imgur.com/LwVQkk1.jpg)
 * Changed Google Fonts option, added some new settings and fixed 400 Bad error( by [Smartik](https://github.com/Smartik89) )
 * Other small changes
 
