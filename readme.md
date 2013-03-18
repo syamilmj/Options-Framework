@@ -36,6 +36,12 @@ Website: http://aquagraphite.com
 
 ### Changelog
 
+**v1.4.2**
+* Added JQueryUI Slider option( by @Smartik89 )
+* Added Switch option(with "folds" support, see demo options for examples)( by @Smartik89 )
+* Changed Google Fonts option, added some new settings and fixed 400 Bad error( by @Smartik89 )
+* Other small changes
+
 **v1.4.1**
 * new Google Fonts field was added (by https://github.com/partnuz)
 * removed some ui glitches (by https://github.com/partnuz)
