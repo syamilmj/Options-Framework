@@ -135,7 +135,7 @@ class Options_Machine {
 				
 				//radiobox option
 				case "radio":
-					
+					$checked = (isset($data[$value['id']])) ? checked($data[$value['id']], $option, false) : '';
 					 foreach($value['options'] as $option=>$name) {
 						$output .= '<input class="of-input of-radio" name="'.$value['id'].'" type="radio" value="'.$option.'" ' . checked($data[$value['id']], $option, false) . ' /><label class="radio">'.$name.'</label><br/>';				
 					}
@@ -307,7 +307,7 @@ class Options_Machine {
 				
 					$i = 0;
 					
-					$select_value = $data[$value['id']];
+					$select_value = (isset($data[$value['id']])) ? $data[$value['id']] : '';
 					
 					foreach ($value['options'] as $key => $option) 
 					{ 
