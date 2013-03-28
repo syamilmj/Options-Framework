@@ -37,6 +37,7 @@ Website: http://aquagraphite.com
 ### Changelog
 **v1.4.3**
 * Replaced variable `$data` with `$smof_data`. [Click here to read what you have to do to update your themes.](https://github.com/sy4mil/Options-Framework/wiki/Update-to-v1.4.3)
+* class.options_machine.php updated [Details](https://github.com/sy4mil/Options-Framework/pull/196)
 
 **v1.4.2**
 * Added JQueryUI Slider option( by [Smartik](https://github.com/Smartik89) ) - [Screenshot](http://i.imgur.com/e9Fh5Ar.jpg)
