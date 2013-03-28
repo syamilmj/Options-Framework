@@ -38,7 +38,7 @@ class Options_Machine {
 	 */
 	public static function optionsframework_machine($options) {
 	
-	    $data = get_option(OPTIONS);
+	    $smof_data = get_option(OPTIONS);
 		
 		$defaults = array();   
 	    $counter = 0;
@@ -72,7 +72,7 @@ class Options_Machine {
 				//hide items in checkbox group
 				$fold='';
 				if (array_key_exists("fold",$value)) {
-					if ($data[$value['fold']]) {
+					if ($smof_data[$value['fold']]) {
 						$fold="f_".$value['fold']." ";
 					} else {
 						$fold="f_".$value['fold']." temphide ";
@@ -95,7 +95,7 @@ class Options_Machine {
 				//text input
 				case 'text':
 					$t_value = '';
-					$t_value = stripslashes($data[$value['id']]);
+					$t_value = stripslashes($smof_data[$value['id']]);
 					
 					$mini ='';
 					if(!isset($value['mod'])) $value['mod'] = '';
@@ -112,7 +112,7 @@ class Options_Machine {
 					$output .= '<div class="select_wrapper ' . $mini . '">';
 					$output .= '<select class="select of-input" name="'.$value['id'].'" id="'. $value['id'] .'">';
 					foreach ($value['options'] as $select_ID => $option) {			
-						$output .= '<option id="' . $select_ID . '" value="'.$option.'" ' . selected($data[$value['id']], $option, false) . ' />'.$option.'</option>';	 
+						$output .= '<option id="' . $select_ID . '" value="'.$option.'" ' . selected($smof_data[$value['id']], $option, false) . ' />'.$option.'</option>';	 
 					 } 
 					$output .= '</select></div>';
 				break;
@@ -129,34 +129,34 @@ class Options_Machine {
 							} 
 						}
 						
-						$ta_value = stripslashes($data[$value['id']]);			
+						$ta_value = stripslashes($smof_data[$value['id']]);			
 						$output .= '<textarea class="of-input" name="'.$value['id'].'" id="'. $value['id'] .'" cols="'. $cols .'" rows="8">'.$ta_value.'</textarea>';		
 				break;
 				
 				//radiobox option
 				case "radio":
-					$checked = (isset($data[$value['id']])) ? checked($data[$value['id']], $option, false) : '';
+					$checked = (isset($smof_data[$value['id']])) ? checked($smof_data[$value['id']], $option, false) : '';
 					 foreach($value['options'] as $option=>$name) {
-						$output .= '<input class="of-input of-radio" name="'.$value['id'].'" type="radio" value="'.$option.'" ' . checked($data[$value['id']], $option, false) . ' /><label class="radio">'.$name.'</label><br/>';				
+						$output .= '<input class="of-input of-radio" name="'.$value['id'].'" type="radio" value="'.$option.'" ' . checked($smof_data[$value['id']], $option, false) . ' /><label class="radio">'.$name.'</label><br/>';				
 					}
 				break;
 				
 				//checkbox option
 				case 'checkbox':
-					if (!isset($data[$value['id']])) {
-						$data[$value['id']] = 0;
+					if (!isset($smof_data[$value['id']])) {
+						$smof_data[$value['id']] = 0;
 					}
 					
 					$fold = '';
 					if (array_key_exists("folds",$value)) $fold="fld ";
 		
 					$output .= '<input type="hidden" class="'.$fold.'checkbox of-input" name="'.$value['id'].'" id="'. $value['id'] .'" value="0"/>';
-					$output .= '<input type="checkbox" class="'.$fold.'checkbox of-input" name="'.$value['id'].'" id="'. $value['id'] .'" value="1" '. checked($data[$value['id']], 1, false) .' />';
+					$output .= '<input type="checkbox" class="'.$fold.'checkbox of-input" name="'.$value['id'].'" id="'. $value['id'] .'" value="1" '. checked($smof_data[$value['id']], 1, false) .' />';
 				break;
 				
 				//multiple checkbox option
 				case 'multicheck': 			
-					(isset($data[$value['id']]))? $multi_stored = $data[$value['id']] : $multi_stored="";
+					(isset($smof_data[$value['id']]))? $multi_stored = $smof_data[$value['id']] : $multi_stored="";
 								
 					foreach ($value['options'] as $key => $option) {
 						if (!isset($multi_stored[$key])) {$multi_stored[$key] = '';}
@@ -182,14 +182,14 @@ class Options_Machine {
 				
 				//colorpicker option
 				case 'color':		
-					$output .= '<div id="' . $value['id'] . '_picker" class="colorSelector"><div style="background-color: '.$data[$value['id']].'"></div></div>';
-					$output .= '<input class="of-color" name="'.$value['id'].'" id="'. $value['id'] .'" type="text" value="'. $data[$value['id']] .'" />';
+					$output .= '<div id="' . $value['id'] . '_picker" class="colorSelector"><div style="background-color: '.$smof_data[$value['id']].'"></div></div>';
+					$output .= '<input class="of-color" name="'.$value['id'].'" id="'. $value['id'] .'" type="text" value="'. $smof_data[$value['id']] .'" />';
 				break;
 				
 				//typography option	
 				case 'typography':
 				
-					$typography_stored = isset($data[$value['id']]) ? $data[$value['id']] : $value['std'];
+					$typography_stored = isset($smof_data[$value['id']]) ? $smof_data[$value['id']] : $value['std'];
 					
 					/* Font Size */
 					
@@ -273,7 +273,7 @@ class Options_Machine {
 				case 'border':
 						
 					/* Border Width */
-					$border_stored = $data[$value['id']];
+					$border_stored = $smof_data[$value['id']];
 					
 					$output .= '<div class="select_wrapper border-width">';
 					$output .= '<select class="of-border of-border-width select" name="'.$value['id'].'[width]" id="'. $value['id'].'_width">';
@@ -307,7 +307,7 @@ class Options_Machine {
 				
 					$i = 0;
 					
-					$select_value = (isset($data[$value['id']])) ? $data[$value['id']] : '';
+					$select_value = (isset($smof_data[$value['id']])) ? $smof_data[$value['id']] : '';
 					
 					foreach ($value['options'] as $key => $option) 
 					{ 
@@ -358,7 +358,7 @@ class Options_Machine {
 					$int = '';
 					$int = optionsframework_mlu_get_silentpost( $_id );
 					$output .= '<div class="slider"><ul id="'.$value['id'].'" rel="'.$int.'">';
-					$slides = $data[$value['id']];
+					$slides = $smof_data[$value['id']];
 					$count = count($slides);
 					if ($count < 2) {
 						$oldorder = 1;
@@ -381,7 +381,7 @@ class Options_Machine {
 				//drag & drop block manager
 				case 'sorter':
 				
-					$sortlists = isset($data[$value['id']]) && !empty($data[$value['id']]) ? $data[$value['id']] : $value['std'];
+					$sortlists = isset($smof_data[$value['id']]) && !empty($smof_data[$value['id']]) ? $smof_data[$value['id']] : $value['std'];
 					
 					$output .= '<div id="'.$value['id'].'" class="sorter">';
 					
@@ -419,7 +419,7 @@ class Options_Machine {
 				case 'tiles':
 					
 					$i = 0;
-					$select_value = isset($data[$value['id']]) && !empty($data[$value['id']]) ? $data[$value['id']] : '';
+					$select_value = isset($smof_data[$value['id']]) && !empty($smof_data[$value['id']]) ? $smof_data[$value['id']] : '';
 					
 					foreach ($value['options'] as $key => $option) 
 					{ 
@@ -464,7 +464,7 @@ class Options_Machine {
 				case 'transfer':
 				
 					$instructions = $value['desc'];
-					$output .= '<textarea id="export_data" rows="8">'.base64_encode(serialize($data)) /* 100% safe - ignore theme check nag */ .'</textarea>'."\n";
+					$output .= '<textarea id="export_data" rows="8">'.base64_encode(serialize($smof_data)) /* 100% safe - ignore theme check nag */ .'</textarea>'."\n";
 					$output .= '<a href="#" id="of_import_button" class="button" title="Restore Options">Import Options</a>';
 				
 				break;
@@ -474,7 +474,7 @@ class Options_Machine {
 					$output .= '<div class="select_wrapper">';
 					$output .= '<select class="select of-input google_font_select" name="'.$value['id'].'" id="'. $value['id'] .'">';
 					foreach ($value['options'] as $select_key => $option) {
-						$output .= '<option value="'.$select_key.'" ' . selected((isset($data[$value['id']]))? $data[$value['id']] : "", $option, false) . ' />'.$option.'</option>';
+						$output .= '<option value="'.$select_key.'" ' . selected((isset($smof_data[$value['id']]))? $smof_data[$value['id']] : "", $option, false) . ' />'.$option.'</option>';
 					} 
 					$output .= '</select></div>';
 					
@@ -496,7 +496,7 @@ class Options_Machine {
 				case 'sliderui':
 					$s_val = $s_min = $s_max = $s_step = $s_edit = '';//no errors, please
 					
-					$s_val  = stripslashes($data[$value['id']]);
+					$s_val  = stripslashes($smof_data[$value['id']]);
 					
 					if(!isset($value['min'])){ $s_min  = '0'; }else{ $s_min = $value['min']; }
 					if(!isset($value['max'])){ $s_max  = $s_min + 1; }else{ $s_max = $value['max']; }
@@ -524,8 +524,8 @@ class Options_Machine {
 				
 				//Switch option
 				case 'switch':
-					if (!isset($data[$value['id']])) {
-						$data[$value['id']] = 0;
+					if (!isset($smof_data[$value['id']])) {
+						$smof_data[$value['id']] = 0;
 					}
 					
 					$fold = '';
@@ -534,7 +534,7 @@ class Options_Machine {
 					$cb_enabled = $cb_disabled = '';//no errors, please
 					
 					//Get selected
-					if ($data[$value['id']] == 1){
+					if ($smof_data[$value['id']] == 1){
 						$cb_enabled = ' selected';
 						$cb_disabled = '';
 					}else{
@@ -561,7 +561,7 @@ class Options_Machine {
 						$output .= '<label class="'.$fold.'cb-disable'. $cb_disabled .'" data-id="'.$value['id'].'"><span>'. $off .'</span></label>';
 						
 						$output .= '<input type="hidden" class="'.$fold.'checkbox of-input" name="'.$value['id'].'" id="'. $value['id'] .'" value="0"/>';
-						$output .= '<input type="checkbox" id="'.$value['id'].'" class="'.$fold.'checkbox of-input main_checkbox" name="'.$value['id'].'"  value="1" '. checked($data[$value['id']], 1, false) .' />';
+						$output .= '<input type="checkbox" id="'.$value['id'].'" class="'.$fold.'checkbox of-input main_checkbox" name="'.$value['id'].'"  value="1" '. checked($smof_data[$value['id']], 1, false) .' />';
 						
 					$output .= '</p>';
 					
@@ -599,10 +599,10 @@ class Options_Machine {
 	 */
 	public static function optionsframework_uploader_function($id,$std,$mod){
 	
-	    $data =get_option(OPTIONS);
+	    $smof_data =get_option(OPTIONS);
 		
 		$uploader = '';
-	    $upload = $data[$id];
+	    $upload = $smof_data[$id];
 		$hide = '';
 		
 		if ($mod == "min") {$hide ='hide';}
@@ -642,10 +642,10 @@ class Options_Machine {
 	 */
 	public static function optionsframework_media_uploader_function($id,$std,$int,$mod){
 	
-	    $data =get_option(OPTIONS);
+	    $smof_data =get_option(OPTIONS);
 		
 		$uploader = '';
-	    $upload = $data[$id];
+	    $upload = $smof_data[$id];
 		$hide = '';
 		
 		if ($mod == "min") {$hide ='hide';}
@@ -684,11 +684,11 @@ class Options_Machine {
 	 */
 	public static function optionsframework_slider_function($id,$std,$oldorder,$order,$int){
 	
-	    $data = get_option(OPTIONS);
+	    $smof_data = get_option(OPTIONS);
 		
 		$slider = '';
 		$slide = array();
-	    $slide = $data[$id];
+	    $slide = $smof_data[$id];
 		
 	    if (isset($slide[$oldorder])) { $val = $slide[$oldorder]; } else {$val = $std;}
 		

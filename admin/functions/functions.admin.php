@@ -77,4 +77,4 @@ function of_get_header_classes_array()
  *
  * @since forever
  */
-$data = get_option(OPTIONS);
+$smof_data = get_option(OPTIONS);

@@ -56,8 +56,8 @@ function optionsframework_options_page(){
 	global $options_machine;
 	/*
 	//for debugging
-	$data = get_option(OPTIONS);
-	print_r($data);
+	$smof_data = get_option(OPTIONS);
+	print_r($smof_data);
 	*/	
 	
 	include_once( ADMIN_PATH . 'front-end/options.php' );
@@ -213,26 +213,26 @@ function of_ajax_callback()
 	elseif($save_type == 'restore_options')
 	{
 			
-		$data = get_option(BACKUPS);
+		$smof_data = get_option(BACKUPS);
 		
-		update_option(OPTIONS, $data);
+		update_option(OPTIONS, $smof_data);
 		
 		die('1'); 
 	}
 	elseif($save_type == 'import_options'){
 			
-		$data = $_POST['data'];
-		$data = unserialize(base64_decode($data)); //100% safe - ignore theme check nag
-		update_option(OPTIONS, $data);
+		$smof_data = $_POST['data'];
+		$smof_data = unserialize(base64_decode($smof_data)); //100% safe - ignore theme check nag
+		update_option(OPTIONS, $smof_data);
 		
 		die('1'); 
 	}
 	elseif ($save_type == 'save')
 	{
-		wp_parse_str(stripslashes($_POST['data']), $data);
-		unset($data['security']);
-		unset($data['of_save']);
-		update_option(OPTIONS, $data);
+		wp_parse_str(stripslashes($_POST['data']), $smof_data);
+		unset($smof_data['security']);
+		unset($smof_data['of_save']);
+		update_option(OPTIONS, $smof_data);
 		
 		die('1');
 	}
