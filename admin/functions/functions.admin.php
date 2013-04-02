@@ -26,9 +26,9 @@ function of_option_setup()
 	global $of_options, $options_machine;
 	$options_machine = new Options_Machine($of_options);
 		
-	if (!get_option(OPTIONS))
+	if (!of_get_options())
 	{
-		update_option(OPTIONS,$options_machine->Defaults);
+		of_save_options($options_machine->Defaults);
 	}
 }
 
@@ -71,10 +71,45 @@ function of_get_header_classes_array()
 	return $hooks;
 }
 
+/**
+ * Get options from the database and process them with the load filter hook.
+ *
+ * @author Jonah Dahlquist
+ * @since 1.4.0
+ * @return array
+ */
+function of_get_options($key = OPTIONS) {
+
+	$data = get_option($key);
+	$data = apply_filters('of_after_options_load', $data);
+
+	return $data;
+
+}
+
+/**
+ * Save options to the database after processing them
+ *
+ * @param $data Options array to save
+ * @author Jonah Dahlquist
+ * @since 1.4.0
+ * @uses update_option()
+ * @return void
+ */
+function of_save_options($data, $key=OPTIONS)
+{
+	$data = apply_filters('of_before_options_save', $data);
+	update_option($key, $data);
+}
+
 
 /**
  * For use in themes
  *
  * @since forever
  */
+<<<<<<< HEAD
 $smof_data = get_option(OPTIONS);
+=======
+$data = of_get_options();
+>>>>>>> f144c82675292cb82292414d233bba87dabb51a5
