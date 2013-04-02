@@ -1,5 +1,5 @@
 # [SMOF - Slightly Modded Options Framework](http://aquagraphite.com/2011/09/slightly-modded-options-framework/)
-# Version 1.4
+# Version 1.4.3
 
 SMOF is a back-end framework for creating and managing options inside WordPress themes. It cuts off the process of developing your own admin framework and give you more time to actually focus on building your theme. SMOF comes bundled with plentiful of options that should serve most of the needs of any modern theme authors.
 
@@ -35,6 +35,15 @@ Twitter: http://twitter.com/syamilmj
 Website: http://aquagraphite.com
 
 ### Changelog
+**v1.4.3**
+* Replaced variable `$data` with `$smof_data`. [Click here to read what you have to do to update your themes.](https://github.com/sy4mil/Options-Framework/wiki/Update-to-v1.4.3)
+* class.options_machine.php updated [Details](https://github.com/sy4mil/Options-Framework/pull/196)
+
+**v1.4.2**
+* Added JQueryUI Slider option( by [Smartik](https://github.com/Smartik89) ) - [Screenshot](http://i.imgur.com/e9Fh5Ar.jpg)
+* Added Switch option(with "folds" support, see demo options for examples)( by [Smartik](https://github.com/Smartik89) ) - [Screenshot](http://i.imgur.com/LwVQkk1.jpg)
+* Changed Google Fonts option, added some new settings and fixed 400 Bad error( by [Smartik](https://github.com/Smartik89) )
+* Other small changes
 
 **v1.4.1**
 * new Google Fonts field was added (by https://github.com/partnuz)

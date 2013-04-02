@@ -620,147 +620,122 @@ jQuery(document).ready(function($){
 		});
 	}
 	
+	
+	/**
+	  * JQuery UI Slider function
+	  * Dependencies 	 : jquery, jquery-ui-slider
+	  * Feature added by : Smartik - http://smartik.ws/
+	  * Date 			 : 03.17.2013
+	  */
+	jQuery('.smof_sliderui').each(function() {
+		
+		var obj   = jQuery(this);
+		var sId   = "#" + obj.data('id');
+		var val   = parseInt(obj.data('val'));
+		var min   = parseInt(obj.data('min'));
+		var max   = parseInt(obj.data('max'));
+		var step  = parseInt(obj.data('step'));
+		
+		//slider init
+		obj.slider({
+			value: val,
+			min: min,
+			max: max,
+			step: step,
+			slide: function( event, ui ) {
+				jQuery(sId).val( ui.value );
+			}
+		});
+		
+	});
+	
+	
+	/**
+	  * Switch
+	  * Dependencies 	 : jquery
+	  * Feature added by : Smartik - http://smartik.ws/
+	  * Date 			 : 03.17.2013
+	  */
+	jQuery(".cb-enable").click(function(){
+		var parent = $(this).parents('.switch-options');
+		jQuery('.cb-disable',parent).removeClass('selected');
+		jQuery(this).addClass('selected');
+		jQuery('.main_checkbox',parent).attr('checked', true);
+		
+		//fold/unfold related options
+		var obj = jQuery(this);
+		var $fold='.f_'+obj.data('id');
+		jQuery($fold).slideDown('normal', "swing");
+	});
+	jQuery(".cb-disable").click(function(){
+		var parent = $(this).parents('.switch-options');
+		jQuery('.cb-enable',parent).removeClass('selected');
+		jQuery(this).addClass('selected');
+		jQuery('.main_checkbox',parent).attr('checked', false);
+		
+		//fold/unfold related options
+		var obj = jQuery(this);
+		var $fold='.f_'+obj.data('id');
+		jQuery($fold).slideUp('normal', "swing");
+	});
+	//disable text select(for modern chrome, safari and firefox is done via CSS)
+	if (($.browser.msie && $.browser.version < 10) || $.browser.opera) { 
+		$('.cb-enable span, .cb-disable span').find().attr('unselectable', 'on');
+	}
+	
+	
+	/**
+	  * Google Fonts
+	  * Dependencies 	 : google.com, jquery
+	  * Feature added by : Smartik - http://smartik.ws/
+	  * Date 			 : 03.17.2013
+	  */
+	function GoogleFontSelect( slctr, mainID ){
+		
+		var _selected = $(slctr).val(); 						//get current value - selected and saved
+		var _linkclass = 'style_link_'+ mainID;
+		var _previewer = mainID +'_ggf_previewer';
+		
+		if( _selected ){ //if var exists and isset
+			
+			//Check if selected is not equal with "Select a font" and execute the script.
+			if ( _selected !== 'none' && _selected !== 'Select a font' ) {
+				
+				//remove other elements crested in <head>
+				$( '.'+ _linkclass ).remove();
+				
+				//replace spaces with "+" sign
+				var the_font = _selected.replace(/\s+/g, '+');
+				
+				//add reference to google font family
+				$('head').append('<link href="http://fonts.googleapis.com/css?family='+ the_font +'" rel="stylesheet" type="text/css" class="'+ _linkclass +'">');
+				
+				//show in the preview box the font
+				$('.'+ _previewer ).css('font-family', _selected +', sans-serif' );
+				
+			}else{
+				
+				//if selected is not a font remove style "font-family" at preview box
+				$('.'+ _previewer ).css('font-family', '' );
+				
+			}
+		
+		}
+	
+	}
+	
+	//init for each element
+	jQuery( '.google_font_select' ).each(function(){ 
+		var mainID = jQuery(this).attr('id');
+		GoogleFontSelect( this, mainID );
+	});
+	
+	//init when value is changed
+	jQuery( '.google_font_select' ).change(function(){ 
+		var mainID = jQuery(this).attr('id');
+		GoogleFontSelect( this, mainID );
+	});
+	
+	
+
 }); //end doc ready
-
-// google font field script by partnuz (http://themeforest.net/user/partnuz/) under GPL
-function googleFontPreviewer(excludePreviewer, excludeStyle, previewer, selector){
-
-	// previewer class
-	(previewer==null || previewer==undefined) ? this.fontPreviewerName="p.google_font_preview" : this.fontPreviewerName=excludePreviewer;
-	
-	// select form class
-	(selector==null || excludePreviewer==undefined) ? this.fontSelectorName=".google_font_select" : this.fontSelectorName=selector;
-	
-	// must be the same through all instances of class
-	this.fontStyleName=".google_font_style";
-	
-	// exclude from loading css style from google
-	(excludeStyle==null || excludeStyle==undefined) ? 	this.excludeFromAddStyle=new Array("Select a font","Arial","Helvetica","Arial Black", "Comic Sans MS", "Courier New","Georgia", "Impact", "Lucida Console", "Lucida Sans Unicode", "Lucida Grande", "Palatino Linotype", "Palatino", "Tahoma", "Geneva", "Times New Roman", "Trebuchet MS", "Verdana", "Symbol","Webdings") : this.excludeFromAddStylee=excludeStyle;
-	
-	// exclude from loading in previewer field
-	(excludePreviewer==null || excludePreviewer==undefined) ? this.excludeFromPreviewer=new Array("Select a font") : this.excludeFromPreviewer=excludePreviewer;
-	
-	// reference
-	var obj=this;
-	
-	this.previewer=function(selectNode){
-
-		var viewerNode=selectNode.parentNode.parentNode.querySelector(this.fontPreviewerName);
-
-		// line below used to get rid of opera rendering  glitch
-		var viewerValue=viewerNode.childNodes[0].nodeValue;
-		
-		viewerNode.innerHTML=viewerValue;
-		
-		var fontValue = selectNode.value.replace(/\+/g, ' ');
-		
-		// sets style font family
-		if(!this.arrayCheck(this.excludeFromPreviewer, fontValue)){
-		
-			viewerNode.style.fontFamily=fontValue;
-		}
-		
-		
-	}
-	
-	this.createStyle=function(currentFont){
-	
-		var newNode=document.createElement('link');
-		newNode.setAttribute('href', 'http://fonts.googleapis.com/css?family='+currentFont);
-		newNode.setAttribute('rel', 'stylesheet');
-		newNode.setAttribute('type', 'text/css');
-		newNode.setAttribute('class', 'google_font_style');
-		document.getElementsByTagName('head')[0].appendChild(newNode);
-		
-	}
-	
-	this.addStyle=function(currentFont){
-	
-		// search for styles with class google_font_style;
-		var styles=document.querySelectorAll(this.fontStyleName);
-		var stylesCount=styles.length;
-		var currentFontPlain=null;
-		
-		var action=false;
-		
-		for(var i=0; i<stylesCount; i++){
-			var url=styles[i].getAttribute('href');
-			
-			currentFontPlain=currentFont.replace(/\+/g, ' ');
-			
-			regCurrentFont=currentFont.replace(/\+/g, '\\+');
-			regCurrentFont=new RegExp(regCurrentFont);
-			
-			// search through style list 
-			if(regCurrentFont.test(url)){
-				action=true;
-				
-			}
-		}
-		
-		if(action==false || stylesCount==0){
-			if(!this.arrayCheck(this.excludeFromAddStyle, currentFontPlain)){
-				this.createStyle(currentFont);
-			}
-			
-		}
-		
-	}
-	
-	this.arrayCheck=function(array, check){
-		var length=array.length;
-		for(var i=0; i<length; i++){
-			if(array[i]==check){
-				return true;
-			}
-		}
-		return false;
-	};
-	
-	this.init=function(){
-		var selectNodes=document.querySelectorAll(this.fontSelectorName);
-		var selectCount=selectNodes.length;
-		
-		for(var i=0; i<selectCount; i++){
-			
-			if(window.addEventListener){
-			
-				// first time
-				this.addStyle(selectNodes[i].value);
-				this.previewer(selectNodes[i]);
-				
-				// onchange
-				selectNodes[i].addEventListener("change", function(){
-				
-					obj.addStyle(this.value);
-					obj.previewer(this);
-					
-				}, false);
-				
-			}else if(window.attachEvent){
-			
-				this.addStyle(selectNodes[i].value);
-				this.previewer(selectNodes[i]);
-				
-				selectNodes[i].attachEvent("onchange", function(){
-				
-					obj.addStyle(window.event.srcElement.value);
-					obj.previewer(window.event.srcElement);
-
-				});
-				
-			}
-			
-		}
-		
-	}
-	
-	if(window.addEventListener){
-		window.addEventListener("load", function(){obj.init();}, false);
-	}else if(window.attachEvent){
-		window.attachEvent("onload", function(){obj.init();});
-	}
-	
-}
-
-var googleFontObj=new googleFontPreviewer();

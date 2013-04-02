@@ -108,4 +108,4 @@ function of_save_options($data, $key=OPTIONS)
  *
  * @since forever
  */
-$data = of_get_options();
+$smof_data = of_get_options();

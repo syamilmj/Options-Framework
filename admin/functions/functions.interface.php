@@ -55,8 +55,8 @@ function optionsframework_options_page(){
 	global $options_machine;
 	/*
 	//for debugging
-	$data = of_get_options();
-	print_r($data);
+	$smof_data = of_get_options();
+	print_r($smof_data);
 	*/	
 	
 	include_once( ADMIN_PATH . 'front-end/options.php' );
@@ -73,6 +73,7 @@ function optionsframework_options_page(){
 function of_style_only(){
 	wp_enqueue_style('admin-style', ADMIN_DIR . 'assets/css/admin-style.css');
 	wp_enqueue_style('color-picker', ADMIN_DIR . 'assets/css/colorpicker.css');
+	wp_enqueue_style('jquery-ui-custom-admin', ADMIN_DIR .'assets/css/jquery-ui-custom.css');
 }	
 
 /**
@@ -89,6 +90,7 @@ function of_load_only()
 	
 	wp_enqueue_script('jquery-ui-core');
 	wp_enqueue_script('jquery-ui-sortable');
+	wp_enqueue_script('jquery-ui-slider');
 	wp_enqueue_script('jquery-input-mask', ADMIN_DIR .'assets/js/jquery.maskedinput-1.2.2.js', array( 'jquery' ));
 	wp_enqueue_script('tipsy', ADMIN_DIR .'assets/js/jquery.tipsy.js', array( 'jquery' ));
 	wp_enqueue_script('color-picker', ADMIN_DIR .'assets/js/colorpicker.js', array('jquery'));
@@ -131,7 +133,7 @@ function of_admin_head() { ?>
 			});
 				  
 		}); //end color picker
-
+		
 	}); //end doc ready
 	
 	</script>
@@ -209,26 +211,26 @@ function of_ajax_callback()
 	elseif($save_type == 'restore_options')
 	{
 			
-		$data = get_option(BACKUPS);
+		$smof_data = get_option(BACKUPS);
 		
-		of_save_options($data);
+		of_save_options($smof_data);
 		
 		die('1'); 
 	}
 	elseif($save_type == 'import_options'){
 			
 		$data = $_POST['data'];
-		$data = unserialize(base64_decode($data)); //100% safe - ignore theme check nag
-		of_save_options($data);
+		$smof_data = unserialize(base64_decode($smof_data)); //100% safe - ignore theme check nag
+		of_save_options($smof_data);
 		
 		die('1'); 
 	}
 	elseif ($save_type == 'save')
 	{
-		wp_parse_str(stripslashes($_POST['data']), $data);
-		unset($data['security']);
-		unset($data['of_save']);
-		of_save_options($data);
+		wp_parse_str(stripslashes($_POST['data']), $smof_data);
+		unset($smof_data['security']);
+		unset($smof_data['of_save']);
+		of_save_options($smof_data);
 		
 		die('1');
 	}
