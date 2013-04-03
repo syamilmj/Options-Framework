@@ -114,23 +114,7 @@ $of_options[] = array( 	"name" 		=> "Hello there!",
 						"icon" 		=> true,
 						"type" 		=> "info"
 				);
-					
-<<<<<<< HEAD
-$of_options[] = array( 	"name" 		=> "Media Uploader",
-						"desc" 		=> "Upload images using the native media uploader, or define the URL directly",
-						"id" 		=> "media_upload",
-						"std" 		=> "",
-						"type" 		=> "media"
-				);
-					
-$of_options[] = array( 	"name" 		=> "Media Uploader Min",
-						"desc" 		=> "Upload images using native media uploader. This is a min version, meaning it has no url to copy paste. Perfect for logo.",
-						"id" 		=> "media_upload_2",
-						"std" 		=> "",
-						"mod" 		=> "min",
-						"type" 		=> "media"
-				);
-=======
+
 $of_options[] = array( "name" => "Media Uploader",
 					"desc" => "Upload images using the native media uploader, or define the URL directly.  The framework will make sure the actual site URL is not stored in the setting, to make migrating WordPress installations easier.",
 					"id" => "media_upload",
@@ -145,7 +129,6 @@ $of_options[] = array( "name" => "Media Uploader Min",
 					"std" => "",
 					"mod" => "min",
 					"type" => "media");
->>>>>>> f144c82675292cb82292414d233bba87dabb51a5
 					
 $of_options[] = array( 	"name" 		=> "JQuery UI Slider example 1",
 						"desc" 		=> "JQuery UI slider description.<br /> Min: 1, max: 500, step: 3, default value: 45",

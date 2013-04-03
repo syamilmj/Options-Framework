@@ -53,15 +53,13 @@ function optionsframework_add_admin() {
 function optionsframework_options_page(){
 	
 	global $options_machine;
+	
 	/*
 	//for debugging
-<<<<<<< HEAD
-	$smof_data = get_option(OPTIONS);
+
+	$smof_data = of_get_options();
 	print_r($smof_data);
-=======
-	$data = of_get_options();
-	print_r($data);
->>>>>>> f144c82675292cb82292414d233bba87dabb51a5
+
 	*/	
 	
 	include_once( ADMIN_PATH . 'front-end/options.php' );
@@ -217,42 +215,30 @@ function of_ajax_callback()
 	{
 			
 		$smof_data = get_option(BACKUPS);
-		
-<<<<<<< HEAD
+
 		update_option(OPTIONS, $smof_data);
-=======
-		of_save_options($data);
->>>>>>> f144c82675292cb82292414d233bba87dabb51a5
+
+		of_save_options($smof_data);
 		
 		die('1'); 
 	}
 	elseif($save_type == 'import_options'){
-			
-<<<<<<< HEAD
-		$smof_data = $_POST['data'];
+
+
 		$smof_data = unserialize(base64_decode($smof_data)); //100% safe - ignore theme check nag
-		update_option(OPTIONS, $smof_data);
-=======
-		$data = $_POST['data'];
-		$data = unserialize(base64_decode($data)); //100% safe - ignore theme check nag
-		of_save_options($data);
->>>>>>> f144c82675292cb82292414d233bba87dabb51a5
+		of_save_options($smof_data);
+
 		
 		die('1'); 
 	}
 	elseif ($save_type == 'save')
 	{
-<<<<<<< HEAD
+
 		wp_parse_str(stripslashes($_POST['data']), $smof_data);
 		unset($smof_data['security']);
 		unset($smof_data['of_save']);
-		update_option(OPTIONS, $smof_data);
-=======
-		wp_parse_str(stripslashes($_POST['data']), $data);
-		unset($data['security']);
-		unset($data['of_save']);
-		of_save_options($data);
->>>>>>> f144c82675292cb82292414d233bba87dabb51a5
+		of_save_options($smof_data);
+		
 		
 		die('1');
 	}

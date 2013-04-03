@@ -37,12 +37,9 @@ class Options_Machine {
 	 * @return array
 	 */
 	public static function optionsframework_machine($options) {
-	
-<<<<<<< HEAD
-	    $smof_data = get_option(OPTIONS);
-=======
+
 	    $data = of_get_options();
->>>>>>> f144c82675292cb82292414d233bba87dabb51a5
+	    $smof_data = of_get_options();
 		
 		$defaults = array();   
 	    $counter = 0;
@@ -602,12 +599,9 @@ class Options_Machine {
 	 * @return string
 	 */
 	public static function optionsframework_uploader_function($id,$std,$mod){
-	
-<<<<<<< HEAD
-	    $smof_data =get_option(OPTIONS);
-=======
+
 	    $data = of_get_options();
->>>>>>> f144c82675292cb82292414d233bba87dabb51a5
+	    $smof_data = of_get_options();
 		
 		$uploader = '';
 	    $upload = $smof_data[$id];
@@ -649,12 +643,9 @@ class Options_Machine {
 	 * @return string
 	 */
 	public static function optionsframework_media_uploader_function($id,$std,$int,$mod){
-	
-<<<<<<< HEAD
-	    $smof_data =get_option(OPTIONS);
-=======
+
 	    $data = of_get_options();
->>>>>>> f144c82675292cb82292414d233bba87dabb51a5
+	    $smof_data = of_get_options();
 		
 		$uploader = '';
 	    $upload = $smof_data[$id];
@@ -695,12 +686,9 @@ class Options_Machine {
 	 * @return string
 	 */
 	public static function optionsframework_slider_function($id,$std,$oldorder,$order,$int){
-	
-<<<<<<< HEAD
-	    $smof_data = get_option(OPTIONS);
-=======
+		
 	    $data = of_get_options();
->>>>>>> f144c82675292cb82292414d233bba87dabb51a5
+	    $smof_data = of_get_options();
 		
 		$slider = '';
 		$slide = array();
