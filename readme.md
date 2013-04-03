@@ -1,5 +1,5 @@
 # [SMOF - Slightly Modded Options Framework](http://aquagraphite.com/2011/09/slightly-modded-options-framework/)
-# Version 1.4.3
+# Version 1.4.4
 
 SMOF is a back-end framework for creating and managing options inside WordPress themes. It cuts off the process of developing your own admin framework and give you more time to actually focus on building your theme. SMOF comes bundled with plentiful of options that should serve most of the needs of any modern theme authors.
 
@@ -12,6 +12,7 @@ Some of these are:
 * Layout Manager
 * Tiles
 * Backup and Restore
+* Keeps the site URL out of the database
 
 ## Credits
 SMOF is heavily based on some of these available frameworks.
@@ -35,6 +36,11 @@ Twitter: http://twitter.com/syamilmj
 Website: http://aquagraphite.com
 
 ### Changelog
+**v1.4.4**
+* Added filter hooks to settings when saving and loading
+* Transparently added pseudo-shortcodes to URLs to avoid storing the site URL in the database so that migrations are easier (no changes to your theme necessary)
+* Changed all options loading to use one function, instead of get_option()
+
 **v1.4.3**
 * Replaced variable `$data` with `$smof_data`. [Click here to read what you have to do to update your themes.](https://github.com/sy4mil/Options-Framework/wiki/Update-to-v1.4.3)
 * class.options_machine.php updated [Details](https://github.com/sy4mil/Options-Framework/pull/196)
