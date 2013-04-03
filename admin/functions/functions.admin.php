@@ -6,7 +6,6 @@
  * @subpackage  SMOF
  * @since       1.4.0
  * @author      Syamil MJ
- * @author      Jonah Dahlquist
  */
  
 
@@ -79,12 +78,13 @@ function of_get_header_classes_array()
  * @since 1.4.0
  * @return array
  */
-function of_get_options($key=OPTIONS)
-{
+function of_get_options($key = OPTIONS) {
+
 	$data = get_option($key);
 	$data = apply_filters('of_options_after_load', $data);
 
 	return $data;
+
 }
 
 /**
@@ -108,4 +108,6 @@ function of_save_options($data, $key=OPTIONS)
  *
  * @since forever
  */
+
+$data = of_get_options();
 $smof_data = of_get_options();
