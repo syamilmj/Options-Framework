@@ -89,7 +89,7 @@ function of_style_only(){
  */
 function of_load_only() 
 {
-	add_action('admin_head', 'of_admin_head');
+	add_action('admin_head', 'smof_admin_head');
 	
 	wp_enqueue_script('jquery-ui-core');
 	wp_enqueue_script('jquery-ui-sortable');
@@ -107,7 +107,7 @@ function of_load_only()
  *
  * @since 1.0.0
  */
-function of_admin_head() { ?>
+function smof_admin_head() { ?>
 		
 	<script type="text/javascript" language="javascript">
 
