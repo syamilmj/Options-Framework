@@ -49,6 +49,8 @@ add_filter('of_options_before_save', 'of_filter_save_media_upload');
  * @return array
  */
 function of_filter_load_media_upload($data) {
+    
+    if(!is_array($data)) return;
 
     foreach ($data as $key => $value) {
         if (is_string($value)) {
