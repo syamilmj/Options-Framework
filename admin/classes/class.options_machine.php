@@ -65,6 +65,9 @@ class Options_Machine {
 				if (isset($value['id'])) $defaults[$value['id']] = $value['std'];
 			}
 			
+			/* condition start */
+			if(!empty($smof_data) || !empty($data)){
+			
 			//Start Heading
 			 if ( $value['type'] != "heading" )
 			 {
@@ -578,6 +581,8 @@ class Options_Machine {
 				$output .= '</div>'.$explain_value."\n";
 				$output .= '<div class="clear"> </div></div></div>'."\n";
 				}
+			
+			} /* condition empty end */
 		   
 		}
 		
