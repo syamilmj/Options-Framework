@@ -60,8 +60,8 @@ if (!function_exists('of_options'))
 
 
 		//Background Images Reader
-		$bg_images_path = STYLESHEETPATH. '/images/bg/'; // change this to where you store your bg images
-		$bg_images_url = get_bloginfo('template_url').'/images/bg/'; // change this to where you store your bg images
+		$bg_images_path = get_stylesheet_directory(). '/images/bg/'; // change this to where you store your bg images
+		$bg_images_url = get_template_directory_uri().'/images/bg/'; // change this to where you store your bg images
 		$bg_images = array();
 		
 		if ( is_dir($bg_images_path) ) {
@@ -115,21 +115,23 @@ $of_options[] = array( 	"name" 		=> "Hello there!",
 						"type" 		=> "info"
 				);
 
-$of_options[] = array( "name" => "Media Uploader",
-					"desc" => "Upload images using the native media uploader, or define the URL directly.  The framework will make sure the actual site URL is not stored in the setting, to make migrating WordPress installations easier.",
-					"id" => "media_upload",
-					// Use the shortcodes [site_url] or [site_url_secure] for setting default URLs
-					"std" => "",
-					"type" => "media");
-					
-$of_options[] = array( "name" => "Media Uploader Min",
-					"desc" => "Upload images using native media uploader. This is a min version, meaning it has no url to copy paste. Perfect for logo.",
-					"id" => "media_upload_2",
-					// Use the shortcodes [site_url] or [site_url_secure] for setting default URLs
-					"std" => "",
-					"mod" => "min",
-					"type" => "media");
-					
+$of_options[] = array( 	"name" 		=> "Media Uploader 3.5",
+						"desc" 		=> "Upload images using native media uploader from Wordpress 3.5+.",
+						"id" 		=> "media_upload_35",
+						// Use the shortcodes [site_url] or [site_url_secure] for setting default URLs
+						"std" 		=> "",
+						"type" 		=> "upload"
+				);
+
+$of_options[] = array( 	"name" 		=> "Media Uploader 3.5 min",
+						"desc" 		=> "Upload images using native media uploader from Wordpress 3.5+. Min mod",
+						"id" 		=> "media_upload_356",
+						// Use the shortcodes [site_url] or [site_url_secure] for setting default URLs
+						"std" 		=> "",
+						"mod"		=> "min",
+						"type" 		=> "media"
+				);
+
 $of_options[] = array( 	"name" 		=> "JQuery UI Slider example 1",
 						"desc" 		=> "JQuery UI slider description.<br /> Min: 1, max: 500, step: 3, default value: 45",
 						"id" 		=> "slider_example_1",
@@ -148,6 +150,16 @@ $of_options[] = array( 	"name" 		=> "JQuery UI Slider example 1 with steps(5)",
 						"step"		=> "5",
 						"max" 		=> "300",
 						"type" 		=> "sliderui" 
+				);
+
+$of_options[] = array( 	"name" 		=> "JQuery UI Spinner",
+						"desc" 		=> "JQuery UI spinner description.<br /> Min: 0, max: 300, step: 5, default value: 75",
+						"id" 		=> "spinner_example_2",
+						"std" 		=> "75",
+						"min" 		=> "0",
+						"step"		=> "5",
+						"max" 		=> "300",
+						"type" 		=> "spinner" 
 				);
 				
 $of_options[] = array( 	"name" 		=> "Switch 1",
@@ -245,13 +257,6 @@ $of_options[] = array( 	"name" 		=> "Main Layout",
 							'3c-r-fixed.css' 	=> $url . '3cr.png'
 						)
 				);
-				
-$of_options[] = array( 	"name" 		=> "Custom Favicon",
-						"desc" 		=> "Upload a 16px x 16px Png/Gif image that will represent your website's favicon.",
-						"id" 		=> "custom_favicon",
-						"std" 		=> "",
-						"type" 		=> "upload"
-				); 
 				
 $of_options[] = array( 	"name" 		=> "Tracking Code",
 						"desc" 		=> "Paste your Google Analytics (or other) tracking code here. This will be added into the footer template of your theme.",
@@ -354,22 +359,7 @@ $of_options[] = array( 	"name" 		=> "Colorpicker (default #2098a8)",
 						"std" 		=> "#2098a8",
 						"type" 		=> "color"
 				);
-				
-$of_options[] = array( 	"name" 		=> "Upload",
-						"desc" 		=> "An image uploader without text input.",
-						"id" 		=> "uploader",
-						"std" 		=> "",
-						"type" 		=> "upload"
-				);
-				
-$of_options[] = array( 	"name" 		=> "Upload Min",
-						"desc" 		=> "An image uploader with text input.",
-						"id" 		=> "uploader2",
-						"std" 		=> "",
-						"mod" 		=> "min",
-						"type" 		=> "upload"
-				);
-				
+
 $of_options[] = array( 	"name" 		=> "Input Text",
 						"desc" 		=> "A text input field.",
 						"id" 		=> "test_text",
@@ -403,8 +393,8 @@ $of_options[] = array( 	"name" 		=> "Mini Select",
 						"desc" 		=> "A mini select box.",
 						"id" 		=> "example_select_2",
 						"std" 		=> "two",
-						"type" 		=> "select2",
-						"class" 	=> "mini", //mini, tiny, small
+						"type" 		=> "select",
+						"mod" 		=> "mini",
 						"options" 	=> $of_options_radio
 				); 
 				
@@ -552,7 +542,8 @@ $of_options[] = array( 	"name" 		=> "Hello there!",
 				
 // Backup Options
 $of_options[] = array( 	"name" 		=> "Backup Options",
-						"type" 		=> "heading"
+						"type" 		=> "heading",
+						"icon"		=> ADMIN_IMAGES . "icon-slider.png"
 				);
 				
 $of_options[] = array( 	"name" 		=> "Backup and Restore Options",

@@ -1,12 +1,19 @@
 /*-----------------------------------------------------------------------------------
 /* Admin styles
-/*-----------------------------------------------------------------------------------*/ 
+/*-----------------------------------------------------------------------------------*/
+.smof_footer_info{
+	width: 785px;
+	margin: 0 15px;
+	font-size: 11px;
+	color: #999;
+	text-align: center;
+}
 
 .updated, .error {
 	display:none!important
 } /* disable the admin notices */
 #of_container {
-	margin: 15px;
+	margin: 15px 15px 5px 15px;
 	width: 785px;
 	position:relative;
 	z-index: 0
@@ -180,6 +187,7 @@ border-radius: 2px;
 	border-bottom: 1px solid #e7e7e7;
 }
 #of_container #content .section .controls {
+	position: relative;
 	float: left;
 	width: 345px;
 	margin: 0 15px 0 0;
@@ -200,12 +208,6 @@ border-radius: 2px;
 
 #of_container #content .section-checkbox .explain {
 	max-width:93%;
-}
-#of_container #content .section-color .controls {
-	width:105px
-}
-#of_container #content .section-color .explain {
-	width:440px
 }
 #of_container #content .section-info h3.heading {
 	display:none;
@@ -356,11 +358,6 @@ label.radio, label.multicheck {
 #of_container .meta-two {
 	margin-right:10px
 }
-#of_container .controls .of-color {
-	float:left;
-	width: 70px;
-	margin-left:5px; /* font-size:20px; height:34px;*/
-}
 #of_container #content .section-typography .controls {
 	width:440px
 }
@@ -407,7 +404,7 @@ label.radio, label.multicheck {
 	float:left;
 }
 #of_container .controls .of-radio-tile-selected {
-	border:3px solid #ccc
+	border:3px solid #DB423D
 }
 #of_container .controls .of-radio-tile-img:hover {
 	opacity:.8;
@@ -522,12 +519,12 @@ color: #464646;
     background:#eee url(../../images/white-grad-active.png) repeat-x scroll left top;
 }
 
-#of_container .image_reset_button, #of_container .mlu_remove_button {
+#of_container .image_reset_button, #of_container .button.remove-image {
 	margin-left:10px;
 	color:#ef521d;
 }
 
-#of_container .image_reset_button:hover, #of_container .mlu_remove_button:hover {
+#of_container .image_reset_button:hover, #of_container .button.remove-image:hover {
 	color:red;
 }
 
@@ -692,8 +689,7 @@ position:relative;
 	padding:10px 10px 10px 11px;
 }
 
-
-#of_container .slider li input,#of_container .slider li textarea,#of_container .slider li .screenshot,#of_container .slider li .of-option-image {
+#of_container .slider li input,#of_container .slider li input.upload,#of_container .slider li textarea,#of_container .slider li .screenshot,#of_container .slider li .of-option-image {
 	width:311px;
 }
 
@@ -862,3 +858,57 @@ p.switch-options{ margin: 0; }
 		-ms-user-select: none;
 		user-select: none;
 	}/*disable text selection*/
+
+
+/*-------------------------------------------------------------------------------------------*/
+/* Color picker overwrite
+/*-------------------------------------------------------------------------------------------*/
+#of_container .controls .wp-picker-container input.button{
+	width: auto;
+	height: auto;
+	line-height: 1.5;
+	padding: 2px 8px;
+	margin: 6px 6px 6px 6px;
+}
+#of_container .controls .of-color {
+	float: left;
+	width: 70px;
+	margin-left: 5px;
+	margin-top: 6px;
+	padding: 3px;
+}
+#of_container .controls .wp-color-result.wp-picker-open {
+top: -3px;
+}
+#of_container #content .section-color .controls {
+width: 345px;
+}
+#of_container #content .section-color .explain {
+width: 225px;
+}
+#of_container #content .iris-picker .iris-strip .ui-slider-handle {
+	position: absolute;
+	background: none!important;
+	right: -3px;
+	left: -3px;
+	border: 4px solid #aaa!important;
+	border-width: 4px 3px;
+	width: auto;
+	height: 6px;
+	border-radius: 4px;
+	box-shadow: 0 1px 2px rgba(0,0,0,.2);
+	opacity: .9;
+	z-index: 5;
+	cursor: ns-resize;
+}
+#of_container #content .iris-picker .iris-slider-offset {
+	position: absolute;
+	top: 3px;
+	left: 0;
+	right: 0;
+	bottom: 6px;
+	width: 28px;
+	background: none!important;
+	border: 0!important;
+	height: auto;
+}

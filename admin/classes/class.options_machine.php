@@ -168,28 +168,25 @@ class Options_Machine {
 						$output .= '<input type="checkbox" class="checkbox of-input" name="'.$value['id'].'['.$key.']'.'" id="'. $of_key_string .'" value="1" '. checked($multi_stored[$key], 1, false) .' /><label class="multicheck" for="'. $of_key_string .'">'. $option .'</label><br />';								
 					}			 
 				break;
-				
-				//ajax image upload option
-				case 'upload':
-					if(!isset($value['mod'])) $value['mod'] = '';
-					$output .= Options_Machine::optionsframework_uploader_function($value['id'],$value['std'],$value['mod']);			
-				break;
-				
-				// native media library uploader - @uses optionsframework_media_uploader_function()
-				case 'media':
-					$_id = strip_tags( strtolower($value['id']) );
-					$int = '';
-					$int = optionsframework_mlu_get_silentpost( $_id );
-					if(!isset($value['mod'])) $value['mod'] = '';
-					$output .= Options_Machine::optionsframework_media_uploader_function( $value['id'], $value['std'], $int, $value['mod'] ); // New AJAX Uploader using Media Library			
-				break;
-				
+				/*
 				//colorpicker option
 				case 'color':		
 					$output .= '<div id="' . $value['id'] . '_picker" class="colorSelector"><div style="background-color: '.$smof_data[$value['id']].'"></div></div>';
 					$output .= '<input class="of-color" name="'.$value['id'].'" id="'. $value['id'] .'" type="text" value="'. $smof_data[$value['id']] .'" />';
 				break;
-				
+				*/
+
+				// Color picker
+				case "color":
+					$default_color = '';
+					if ( isset($value['std']) ) {
+						if ( $smof_data[$value['id']] !=  $value['std'] )
+							$default_color = ' data-default-color="' .$value['std'] . '" ';
+					}
+					$output .= '<input name="' . $value['id'] . '" id="' . $value['id'] . '" class="of-color"  type="text" value="' . $smof_data[$value['id']] . '"' . $default_color .' />';
+		 	
+				break;
+
 				//typography option	
 				case 'typography':
 				
@@ -349,32 +346,34 @@ class Options_Machine {
 					if($counter >= 2){
 					   $output .= '</div>'."\n";
 					}
+					//custom icon
+					$icon = '';
+					if(isset($value['icon'])){
+						$icon = ' style="background: url('. $value['icon'] .') no-repeat 13px 10px;"';
+					}
 					$header_class = str_replace(' ','',strtolower($value['name']));
 					$jquery_click_hook = str_replace(' ', '', strtolower($value['name']) );
 					$jquery_click_hook = "of-option-" . $jquery_click_hook;
-					$menu .= '<li class="'. $header_class .'"><a title="'.  $value['name'] .'" href="#'.  $jquery_click_hook  .'">'.  $value['name'] .'</a></li>';
+					$menu .= '<li class="'. $header_class .'"><a title="'.  $value['name'] .'" href="#'.  $jquery_click_hook  .'"'. $icon .'>'.  $value['name'] .'</a></li>';
 					$output .= '<div class="group" id="'. $jquery_click_hook  .'"><h2>'.$value['name'].'</h2>'."\n";
 				break;
 				
 				//drag & drop slide manager
 				case 'slider':
-					$_id = strip_tags( strtolower($value['id']) );
-					$int = '';
-					$int = optionsframework_mlu_get_silentpost( $_id );
-					$output .= '<div class="slider"><ul id="'.$value['id'].'" rel="'.$int.'">';
+					$output .= '<div class="slider"><ul id="'.$value['id'].'">';
 					$slides = $smof_data[$value['id']];
 					$count = count($slides);
 					if ($count < 2) {
 						$oldorder = 1;
 						$order = 1;
-						$output .= Options_Machine::optionsframework_slider_function($value['id'],$value['std'],$oldorder,$order,$int);
+						$output .= Options_Machine::optionsframework_slider_function($value['id'],$value['std'],$oldorder,$order);
 					} else {
 						$i = 0;
 						foreach ($slides as $slide) {
 							$oldorder = $slide['order'];
 							$i++;
 							$order = $i;
-							$output .= Options_Machine::optionsframework_slider_function($value['id'],$value['std'],$oldorder,$order,$int);
+							$output .= Options_Machine::optionsframework_slider_function($value['id'],$value['std'],$oldorder,$order);
 						}
 					}			
 					$output .= '</ul>';
@@ -570,6 +569,21 @@ class Options_Machine {
 					$output .= '</p>';
 					
 				break;
+
+				// Uploader 3.5
+				case "upload":
+				case "media":
+
+					if(!isset($value['mod'])) $value['mod'] = '';
+					
+					$u_val = '';
+					if($smof_data[$value['id']]){
+						$u_val = stripslashes($smof_data[$value['id']]);
+					}
+
+					$output .= Options_Machine::optionsframework_media_uploader_function($value['id'],$u_val, $value['mod']);
+					
+				break;
 				
 			}
 			
@@ -594,50 +608,6 @@ class Options_Machine {
 
 
 	/**
-	 * Ajax image uploader - supports various types of image types
-	 *
-	 * @uses get_option()
-	 *
-	 * @access public
-	 * @since 1.0.0
-	 *
-	 * @return string
-	 */
-	public static function optionsframework_uploader_function($id,$std,$mod){
-
-	    $data = of_get_options();
-	    $smof_data = of_get_options();
-		
-		$uploader = '';
-	    $upload = $smof_data[$id];
-		$hide = '';
-		
-		if ($mod == "min") {$hide ='hide';}
-		
-	    if ( $upload != "") { $val = $upload; } else {$val = $std;}
-	    
-		$uploader .= '<input class="'.$hide.' upload of-input" name="'. $id .'" id="'. $id .'_upload" value="'. $val .'" />';	
-		
-		$uploader .= '<div class="upload_button_div"><span class="button image_upload_button" id="'.$id.'">'._('Upload').'</span>';
-		
-		if(!empty($upload)) {$hide = '';} else { $hide = 'hide';}
-		$uploader .= '<span class="button image_reset_button '. $hide.'" id="reset_'. $id .'" title="' . $id . '">Remove</span>';
-		$uploader .='</div>' . "\n";
-	    $uploader .= '<div class="clear"></div>' . "\n";
-		if(!empty($upload)){
-			$uploader .= '<div class="screenshot">';
-	    	$uploader .= '<a class="of-uploaded-image" href="'. $upload . '">';
-	    	$uploader .= '<img class="of-option-image" id="image_'.$id.'" src="'.$upload.'" alt="" />';
-	    	$uploader .= '</a>';
-			$uploader .= '</div>';
-			}
-		$uploader .= '<div class="clear"></div>' . "\n"; 
-	
-		return $uploader;
-	
-	}
-
-	/**
 	 * Native media library uploader
 	 *
 	 * @uses get_option()
@@ -647,7 +617,7 @@ class Options_Machine {
 	 *
 	 * @return string
 	 */
-	public static function optionsframework_media_uploader_function($id,$std,$int,$mod){
+	public static function optionsframework_media_uploader_function($id,$std,$mod){
 
 	    $data = of_get_options();
 	    $smof_data = of_get_options();
@@ -662,11 +632,23 @@ class Options_Machine {
 	    
 		$uploader .= '<input class="'.$hide.' upload of-input" name="'. $id .'" id="'. $id .'_upload" value="'. $val .'" />';	
 		
-		$uploader .= '<div class="upload_button_div"><span class="button media_upload_button" id="'.$id.'" rel="' . $int . '">Upload</span>';
-		
-		if(!empty($upload)) {$hide = '';} else { $hide = 'hide';}
-		$uploader .= '<span class="button mlu_remove_button '. $hide.'" id="reset_'. $id .'" title="' . $id . '">Remove</span>';
+		//Upload controls DIV
+		$uploader .= '<div class="upload_button_div">';
+		//If the user has WP3.5+ show upload/remove button
+		if ( function_exists( 'wp_enqueue_media' ) ) {
+			$uploader .= '<span class="button media_upload_button" id="'.$id.'">Upload</span>';
+			
+			if(!empty($upload)) {$hide = '';} else { $hide = 'hide';}
+			$uploader .= '<span class="button remove-image '. $hide.'" id="reset_'. $id .'" title="' . $id . '">Remove</span>';
+		}
+		else 
+		{
+			$output .= '<p class="upload-notice"><i>Upgrade your version of WordPress for full media support.</i></p>';
+		}
+
 		$uploader .='</div>' . "\n";
+
+		//Preview
 		$uploader .= '<div class="screenshot">';
 		if(!empty($upload)){	
 	    	$uploader .= '<a class="of-uploaded-image" href="'. $upload . '">';
@@ -690,7 +672,7 @@ class Options_Machine {
 	 *
 	 * @return string
 	 */
-	public static function optionsframework_slider_function($id,$std,$oldorder,$order,$int){
+	public static function optionsframework_slider_function($id,$std,$oldorder,$order){
 		
 	    $data = of_get_options();
 	    $smof_data = of_get_options();
@@ -727,12 +709,12 @@ class Options_Machine {
 		$slider .= '<input class="slide of-input of-slider-title" name="'. $id .'['.$order.'][title]" id="'. $id .'_'.$order .'_slide_title" value="'. stripslashes($val['title']) .'" />';
 		
 		$slider .= '<label>Image URL</label>';
-		$slider .= '<input class="slide of-input" name="'. $id .'['.$order.'][url]" id="'. $id .'_'.$order .'_slide_url" value="'. $val['url'] .'" />';
+		$slider .= '<input class="upload slide of-input" name="'. $id .'['.$order.'][url]" id="'. $id .'_'.$order .'_slide_url" value="'. $val['url'] .'" />';
 		
-		$slider .= '<div class="upload_button_div"><span class="button media_upload_button" id="'.$id.'_'.$order .'" rel="' . $int . '">Upload</span>';
+		$slider .= '<div class="upload_button_div"><span class="button media_upload_button" id="'.$id.'_'.$order .'">Upload</span>';
 		
 		if(!empty($val['url'])) {$hide = '';} else { $hide = 'hide';}
-		$slider .= '<span class="button mlu_remove_button '. $hide.'" id="reset_'. $id .'_'.$order .'" title="' . $id . '_'.$order .'">Remove</span>';
+		$slider .= '<span class="button remove-image '. $hide.'" id="reset_'. $id .'_'.$order .'" title="' . $id . '_'.$order .'">Remove</span>';
 		$slider .='</div>' . "\n";
 		$slider .= '<div class="screenshot">';
 		if(!empty($val['url'])){
@@ -758,6 +740,89 @@ class Options_Machine {
 		return $slider;
 		
 	}
+
+
+	/**
+	 * Media Uploader Using the WordPress Media Library.
+	 *
+	 * Parameters:
+	 * - string $_id - A token to identify this field (the name).
+	 * - string $_value - The value of the field, if present.
+	 * - string $_desc - An optional description of the field.
+	 *
+	 */
+
+	public static function optionsframework_uploader( $_id, $_value, $_name = '' ) {
+
+		$data = of_get_options();
+	    $smof_data = of_get_options();
+		
+	    $upload = $smof_data[$_id];
+		
+		
+	    if ( $upload != "") { $val = $upload; } else {$val = $_value;}
+	    
+
+		$output = '';
+		$id = '';
+		$class = '';
+		$int = '';
+		$value = '';
+		$name = '';
+		
+		$id = strip_tags( strtolower( $_id ) );
+		
+		// If a value is passed and we don't have a stored value, use the value that's passed through.
+		if ( $_value != '' && $value == '' ) {
+			$value = $_value;
+		}
+		
+		if ( $_name != '' ) {
+			$name = $_name;
+		}
+		else {
+			$name = $upload.'['.$id.']';
+		}
+		
+		if ( $value ) {
+			$class = ' has-file';
+		}
+		$output .= '<input id="' . $id . '" class="upload' . $class . '" type="text" name="'.$name.'" value="' . $value . '" placeholder="' . __('No file chosen', 'options_framework_theme') .'" />' . "\n";
+		if ( function_exists( 'wp_enqueue_media' ) ) {
+			if ( ( $value == '' ) ) {
+				$output .= '<span id="upload-' . $id . '" class="button media_upload_button">Upload</span>' . "\n";
+			} else {
+				$output .= '<span id="remove-' . $id . '" class="button remove-file">Remove</span>' . "\n";
+			}
+		} else {
+			$output .= '<p><i>' . __( 'Upgrade your version of WordPress for full media support.', 'options_framework_theme' ) . '</i></p>';
+		}
+		
+		$output .= '<div class="screenshot" id="' . $id . '-image">' . "\n";
+		
+		if ( $value != '' ) { 
+			$remove = '<a class="remove-image">Remove</a>';
+			$image = preg_match( '/(^.*\.jpg|jpeg|png|gif|ico*)/i', $value );
+			if ( $image ) {
+				$output .= '<img src="' . $value . '" alt="" />'.$remove.'';
+			} else {
+				$parts = explode( "/", $value );
+				for( $i = 0; $i < sizeof( $parts ); ++$i ) {
+					$title = $parts[$i];
+				}
+
+				// No output preview if it's not an image.			
+				$output .= '';
+			
+				// Standard generic output if it's not an image.	
+				$title = __( 'View File', 'options_framework_theme' );
+				$output .= '<div class="no-image"><span class="file_link"><a href="' . $value . '" target="_blank" rel="external">'.$title.'</a></span></div>';
+			}	
+		}
+		$output .= '</div>' . "\n";
+		return $output;
+	}
+
 	
 }//end Options Machine class
 
