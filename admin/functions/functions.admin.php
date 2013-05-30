@@ -79,7 +79,7 @@ function of_get_header_classes_array()
  * @since 1.4.0
  * @return array
  */
-function of_get_options($key = "") {
+function of_get_options($key = null, $data = null) {
 	
 	if ($key != "") { // Get one specific value
 		$data = get_theme_mod($key, $data);

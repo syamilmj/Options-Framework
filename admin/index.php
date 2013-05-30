@@ -90,5 +90,3 @@ require_once ( ADMIN_PATH . 'classes/class.options_machine.php' );
  * @since 1.0.0
  */
 add_action('wp_ajax_of_ajax_post_action', 'of_ajax_callback');
-
-?>
