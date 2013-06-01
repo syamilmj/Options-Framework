@@ -66,18 +66,15 @@ class Options_Machine {
 	 */
 	public static function optionsframework_machine($options) {
 
+	    $data = of_get_options();
 	    $smof_data = of_get_options();
-		$data = $smof_data;
-
+		
 		$defaults = array();   
 	    $counter = 0;
 		$menu = '';
 		$output = '';
 		
-		do_action('optionsframework_machine_before', array(
-				'options'	=> $options,
-				'smof_data'	=> $smof_data,
-			));
+		do_action('optionsframework_machine_before');
 		
 		foreach ($options as $value) {
 			
@@ -624,14 +621,7 @@ class Options_Machine {
 				
 			}
 
-			do_action('optionsframework_machine_loop', array(
-					'options'	=> $options,
-					'smof_data'	=> $smof_data,
-					'defaults'	=> $defaults,
-					'counter'	=> $counter,
-					'menu'		=> $menu,
-					'output'	=> $output
-				));
+			do_action('optionsframework_machine_loop');
 			
 			//description of each option
 			if ( $value['type'] != 'heading') { 
@@ -648,14 +638,7 @@ class Options_Machine {
 		
 	    $output .= '</div>';
 
-	    do_action('optionsframework_machine_after', array(
-					'options'	=> $options,
-					'smof_data'	=> $smof_data,
-					'defaults'	=> $defaults,
-					'counter'	=> $counter,
-					'menu'		=> $menu,
-					'output'	=> $output
-				));
+	    do_action('optionsframework_machine_after');
 	    
 	    return array($output,$menu,$defaults);
 	    
