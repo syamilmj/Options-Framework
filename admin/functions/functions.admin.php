@@ -24,13 +24,18 @@ function of_head() { do_action( 'of_head' ); }
  */
 function of_option_setup()	
 {
-	global $of_options, $options_machine;
+	global $of_options, $options_machine, $smof_data;
+	do_action('of_option_setup_before');
 	$options_machine = new Options_Machine($of_options);
-		
-	if (!of_get_options())
-	{
+
+	if (empty($smof_data) || !isset($smof_data['smof_init'])) { // Let's set the values if the theme's already been active
 		of_save_options($options_machine->Defaults);
+		of_save_options(date('r'), 'smof_init');
+		$smof_data = of_get_options();
+		$data = $smof_data;
 	}
+	do_action('of_option_setup_after');
+
 }
 
 /**
@@ -79,19 +84,15 @@ function of_get_header_classes_array()
  * @since 1.4.0
  * @return array
  */
-function of_get_options($key = "") {
-	
-	if ($key != "") { // Get one specific value
+function of_get_options($key = null, $data = null) {
+	do_action('of_get_options_before');
+	if ($key != null) { // Get one specific value
 		$data = get_theme_mod($key, $data);
 	} else { // Get all values
 		$data = get_theme_mods();		
 	}
-	
-	if (empty($data)) { // Let's check to make sure this isn't empty
-		//$data = of_save_options($options_machine->Defaults);
-	}
 	$data = apply_filters('of_options_after_load', $data);
-
+	do_action('of_get_options_after');
 	return $data;
 
 }
@@ -105,16 +106,24 @@ function of_get_options($key = "") {
  * @uses update_option()
  * @return void
  */
-function of_save_options($data, $key = "")
-{
+function of_save_options($data, $key = null) {
+    if (empty($data))
+        return;	
+    do_action('of_save_options_before');
 	$data = apply_filters('of_options_before_save', $data);
-	if ($key != "") { // Update one specific value
+	if ($key != null) { // Update one specific value
+		if ($key == BACKUPS) {
+			unset($data['smof_init']); // Don't want to change this.
+		}
 		set_theme_mod($key, $data);
 	} else { // Update all values in $data
 		foreach ( $data as $k=>$v ) {
-	    	set_theme_mod($k, $v);
-	  	}		
+			if ($smof_data[$k] != $v) { // Only write to the DB when we need to
+				set_theme_mod($k, $v);
+			}
+	  	}
 	}
+	do_action('of_save_options_after');
 }
 
 
@@ -124,5 +133,6 @@ function of_save_options($data, $key = "")
  * @since forever
  */
 
-$data = of_get_options();
+
 $smof_data = of_get_options();
+$data = $smof_data;
