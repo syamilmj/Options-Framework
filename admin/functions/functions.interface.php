@@ -96,7 +96,6 @@ function of_style_only(){
 		wp_register_style( 'wp-color-picker', ADMIN_DIR . 'assets/css/color-picker.min.css' );
 	}
 	wp_enqueue_style( 'wp-color-picker' );
-	do_action('of_style_only_after');
 
 }	
 
@@ -136,8 +135,6 @@ function of_load_only()
 	
 	if ( function_exists( 'wp_enqueue_media' ) )
 		wp_enqueue_media();
-
-	do_action('of_load_only_after');
 
 }
 
