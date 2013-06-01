@@ -20,17 +20,8 @@
 function optionsframework_admin_init() 
 {
 	// Rev up the Options Machine
-	global $of_options, $options_machine, $smof_data, $data;
+	global $of_options, $options_machine;
 	$options_machine = new Options_Machine($of_options);
-	$smof_data = of_get_options();
-	$data = $smof_data;
-	if (empty($smof_data['smof_init'])) { // Let's set the values if the theme's already been active
-		of_save_options($options_machine->Defaults);
-		of_save_options(date('r'), 'smof_init');
-		$smof_data = of_get_options();
-		$options_machine = new Options_Machine($of_options);
-	}
-
 }
 
 /**
@@ -65,7 +56,11 @@ function optionsframework_options_page(){
 	$smof_data = of_get_options();
 	print_r($smof_data);
 	*/
-
+	
+	if (empty($smof_data)) { // Let's set the values if the theme's already been active
+		of_save_options($options_machine->Defaults);
+		$smof_data = of_get_options();
+	}
 	
 	include_once( ADMIN_PATH . 'front-end/options.php' );
 
@@ -249,10 +244,10 @@ function of_ajax_callback()
 	}
 	elseif($save_type == 'import_options'){
 
+
 		$smof_data = unserialize(base64_decode($_POST['data'])); //100% safe - ignore theme check nag
-		unset($smof_data['smof_init']);
 		of_save_options($smof_data);
-		$smof_data = of_get_options();
+
 		
 		die('1'); 
 	}
@@ -269,9 +264,7 @@ function of_ajax_callback()
 	}
 	elseif ($save_type == 'reset')
 	{
-
 		of_save_options($options_machine->Defaults);
-		of_save_options(date('r'), 'smof_init');	
 		
         die('1'); //options reset
 	}

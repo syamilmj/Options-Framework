@@ -25,34 +25,6 @@ class Options_Machine {
 		
 	}
 
-	/** 
-	 * Sanitize option
-	 *
-	 * Sanitize & returns default values if don't exist
-	 * 
-	 * Notes:
-	 	- For further uses, you can check for the $value['type'] and performs
-	 	  more speficic sanitization on the option
-	 	- The ultimate objective of this function is to prevent the "undefined index"
-	 	  errors some authors are having due to malformed options array
-	 */
-	function sanitize_option( $value ) {
-
-		$defaults = array(
-			"name" 		=> "",
-			"desc" 		=> "",
-			"id" 		=> "",
-			"std" 		=> "",
-			"mod"		=> "",
-			"type" 		=> ""
-		);
-
-		$value = wp_parse_args( $value, $defaults );
-
-		return $value;
-
-	}
-
 
 	/**
 	 * Process options data and build option fields
@@ -74,13 +46,9 @@ class Options_Machine {
 		$menu = '';
 		$output = '';
 		
-		do_action('optionsframework_machine_before');
 		
 		foreach ($options as $value) {
-			
-			// sanitize option
-			$value = self::sanitize_option($value);
-
+		
 			$counter++;
 			$val = '';
 			
@@ -479,9 +447,7 @@ class Options_Machine {
 				
 					$instructions = $value['desc'];
 					$backup = of_get_options(BACKUPS);
-					$init = of_get_options('smof_init');
-
-
+					
 					if(!isset($backup['backup_log'])) {
 						$log = 'No backups yet';
 					} else {
@@ -490,7 +456,7 @@ class Options_Machine {
 					
 					$output .= '<div class="backup-box">';
 					$output .= '<div class="instructions">'.$instructions."\n";
-					$output .= '<p><strong>'. __('Last Backup : ').'<span class="backup-log">'.$log.'</span></strong>'."\n";
+					$output .= '<p><strong>'. __('Last Backup : ').'<span class="backup-log">'.$log.'</span></strong></p></div>'."\n";
 					$output .= '<a href="#" id="of_backup_button" class="button" title="Backup Options">Backup Options</a>';
 					$output .= '<a href="#" id="of_restore_button" class="button" title="Restore Options">Restore Options</a>';
 					$output .= '</div>';
@@ -620,8 +586,6 @@ class Options_Machine {
 				break;
 				
 			}
-
-			do_action('optionsframework_machine_loop');
 			
 			//description of each option
 			if ( $value['type'] != 'heading') { 
@@ -637,8 +601,6 @@ class Options_Machine {
 		}
 		
 	    $output .= '</div>';
-
-	    do_action('optionsframework_machine_after');
 	    
 	    return array($output,$menu,$defaults);
 	    

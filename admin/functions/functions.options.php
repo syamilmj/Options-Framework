@@ -542,7 +542,8 @@ $of_options[] = array( 	"name" 		=> "Hello there!",
 				
 // Backup Options
 $of_options[] = array( 	"name" 		=> "Backup Options",
-						"type" 		=> "heading"
+						"type" 		=> "heading",
+						"icon"		=> ADMIN_IMAGES . "icon-slider.png"
 				);
 				
 $of_options[] = array( 	"name" 		=> "Backup and Restore Options",
