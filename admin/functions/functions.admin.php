@@ -116,6 +116,7 @@ function of_get_options($key = null, $data = null) {
  * @return void
  */
 function of_save_options($data, $key = null) {
+	global $smof_data;
     if (empty($data))
         return;	
     do_action('of_save_options_before', array(

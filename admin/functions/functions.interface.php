@@ -26,7 +26,7 @@ function optionsframework_admin_init()
 	$data = $smof_data;
 	do_action('optionsframework_admin_init_before', array(
 			'of_options'		=> $of_options,
-			'options_machine'	=> $of_options_machine,
+			'options_machine'	=> $options_machine,
 			'smof_data'			=> $smof_data
 		));
 	if (empty($smof_data['smof_init'])) { // Let's set the values if the theme's already been active
@@ -37,7 +37,7 @@ function optionsframework_admin_init()
 	}
 	do_action('optionsframework_admin_init_after', array(
 			'of_options'		=> $of_options,
-			'options_machine'	=> $of_options_machine,
+			'options_machine'	=> $options_machine,
 			'smof_data'			=> $smof_data
 		));
 }
