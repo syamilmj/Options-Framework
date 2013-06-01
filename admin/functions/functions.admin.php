@@ -98,7 +98,7 @@ function of_get_options($key = null, $data = null) {
 	} else { // Get all values
 		$data = get_theme_mods();		
 	}
-	$data = apply_filters('of_get_options_after', $data);
+	$data = apply_filters('of_options_after_load', $data);
 	do_action('of_option_setup_before', array(
 		'key'=>$key, 'data'=>$data
 	));
