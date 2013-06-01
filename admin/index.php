@@ -62,8 +62,7 @@ define( 'THEMEVERSION', $theme_version );
 define( 'THEMEURI', $theme_uri );
 define( 'THEMEAUTHORURI', $author_uri );
 
-define( 'OPTIONS', $theme_name.'_options' );
-define( 'BACKUPS',$theme_name.'_backups' );
+define( 'BACKUPS','backups' );
 
 /**
  * Required action filters
@@ -72,7 +71,7 @@ define( 'BACKUPS',$theme_name.'_backups' );
  *
  * @since 1.0.0
  */
-if (is_admin() && isset($_GET['activated'] ) && $pagenow == "themes.php" ) add_action('admin_head','of_option_setup');
+//if (is_admin() && isset($_GET['activated'] ) && $pagenow == "themes.php" ) add_action('admin_head','of_option_setup');
 add_action('admin_head', 'optionsframework_admin_message');
 add_action('admin_init','optionsframework_admin_init');
 add_action('admin_menu', 'optionsframework_add_admin');
@@ -91,5 +90,3 @@ require_once ( ADMIN_PATH . 'classes/class.options_machine.php' );
  * @since 1.0.0
  */
 add_action('wp_ajax_of_ajax_post_action', 'of_ajax_callback');
-
-?>
