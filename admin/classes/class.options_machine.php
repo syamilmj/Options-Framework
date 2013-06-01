@@ -29,7 +29,7 @@ class Options_Machine {
 	/**
 	 * Process options data and build option fields
 	 *
-	 * @uses get_theme_mod()
+	 * @uses get_option()
 	 *
 	 * @access public
 	 * @since 1.0.0
@@ -446,7 +446,7 @@ class Options_Machine {
 				case 'backup':
 				
 					$instructions = $value['desc'];
-					$backup = of_get_options(BACKUPS);
+					$backup = get_option(BACKUPS);
 					
 					if(!isset($backup['backup_log'])) {
 						$log = 'No backups yet';
@@ -610,7 +610,7 @@ class Options_Machine {
 	/**
 	 * Native media library uploader
 	 *
-	 * @uses get_theme_mod()
+	 * @uses get_option()
 	 *
 	 * @access public
 	 * @since 1.0.0
@@ -665,7 +665,7 @@ class Options_Machine {
 	/**
 	 * Drag and drop slides manager
 	 *
-	 * @uses get_theme_mod()
+	 * @uses get_option()
 	 *
 	 * @access public
 	 * @since 1.0.0

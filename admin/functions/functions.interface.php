@@ -49,18 +49,16 @@ function optionsframework_add_admin() {
  * @since 1.0.0
  */
 function optionsframework_options_page(){
+	
 	global $options_machine;
 	
 	/*
 	//for debugging
+
 	$smof_data = of_get_options();
 	print_r($smof_data);
-	*/
-	
-	if (empty($smof_data)) { // Let's set the values if the theme's already been active
-		of_save_options($options_machine->Defaults);
-		$smof_data = of_get_options();
-	}
+
+	*/	
 	
 	include_once( ADMIN_PATH . 'front-end/options.php' );
 
@@ -168,7 +166,7 @@ function smof_admin_head() { ?>
 /**
  * Ajax Save Options
  *
- * @uses get_theme_mod()
+ * @uses get_option()
  *
  * @since 1.0.0
  */
@@ -236,7 +234,9 @@ function of_ajax_callback()
 	elseif($save_type == 'restore_options')
 	{
 			
-		$smof_data = of_get_options(BACKUPS);
+		$smof_data = get_option(BACKUPS);
+
+		update_option(OPTIONS, $smof_data);
 
 		of_save_options($smof_data);
 		
@@ -245,7 +245,7 @@ function of_ajax_callback()
 	elseif($save_type == 'import_options'){
 
 
-		$smof_data = unserialize(base64_decode($_POST['data'])); //100% safe - ignore theme check nag
+		$smof_data = unserialize(base64_decode($smof_data)); //100% safe - ignore theme check nag
 		of_save_options($smof_data);
 
 		

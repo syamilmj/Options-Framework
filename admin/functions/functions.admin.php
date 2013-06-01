@@ -1,5 +1,4 @@
 <?php
-
 /**
  * SMOF Admin
  *
@@ -79,17 +78,9 @@ function of_get_header_classes_array()
  * @since 1.4.0
  * @return array
  */
-function of_get_options($key = "") {
-	
-	if ($key != "") { // Get one specific value
-		$data = get_theme_mod($key, $data);
-	} else { // Get all values
-		$data = get_theme_mods();		
-	}
-	
-	if (empty($data)) { // Let's check to make sure this isn't empty
-		//$data = of_save_options($options_machine->Defaults);
-	}
+function of_get_options($key = OPTIONS) {
+
+	$data = get_option($key);
 	$data = apply_filters('of_options_after_load', $data);
 
 	return $data;
@@ -105,16 +96,10 @@ function of_get_options($key = "") {
  * @uses update_option()
  * @return void
  */
-function of_save_options($data, $key = "")
+function of_save_options($data, $key=OPTIONS)
 {
 	$data = apply_filters('of_options_before_save', $data);
-	if ($key != "") { // Update one specific value
-		set_theme_mod($key, $data);
-	} else { // Update all values in $data
-		foreach ( $data as $k=>$v ) {
-	    	set_theme_mod($k, $v);
-	  	}		
-	}
+	update_option($key, $data);
 }
 
 

@@ -62,7 +62,8 @@ define( 'THEMEVERSION', $theme_version );
 define( 'THEMEURI', $theme_uri );
 define( 'THEMEAUTHORURI', $author_uri );
 
-define( 'BACKUPS','backups' );
+define( 'OPTIONS', $theme_name.'_options' );
+define( 'BACKUPS',$theme_name.'_backups' );
 
 /**
  * Required action filters
