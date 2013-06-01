@@ -150,8 +150,12 @@ class Options_Machine {
 					if($value['mod'] == 'mini') { $mini = 'mini';}
 					$output .= '<div class="select_wrapper ' . $mini . '">';
 					$output .= '<select class="select of-input" name="'.$value['id'].'" id="'. $value['id'] .'">';
-					foreach ($value['options'] as $select_ID => $option) {			
-						$output .= '<option id="' . $select_ID . '" value="'.$option.'" ' . selected($smof_data[$value['id']], $option, false) . ' />'.$option.'</option>';	 
+
+					foreach ($value['options'] as $select_ID => $option) {
+						$theValue = $option;
+						if (!is_numeric($select_ID))
+							$theValue = $select_ID;
+						$output .= '<option id="' . $select_ID . '" value="'.$theValue.'" ' . selected($smof_data[$value['id']], $option, false) . ' />'.$option.'</option>';	 
 					 } 
 					$output .= '</select></div>';
 				break;
