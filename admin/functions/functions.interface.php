@@ -24,13 +24,22 @@ function optionsframework_admin_init()
 	$options_machine = new Options_Machine($of_options);
 	$smof_data = of_get_options();
 	$data = $smof_data;
+	do_action('optionsframework_admin_init_before', array(
+			'of_options'		=> $of_options,
+			'options_machine'	=> $of_options_machine,
+			'smof_data'			=> $smof_data
+		));
 	if (empty($smof_data['smof_init'])) { // Let's set the values if the theme's already been active
 		of_save_options($options_machine->Defaults);
 		of_save_options(date('r'), 'smof_init');
 		$smof_data = of_get_options();
 		$options_machine = new Options_Machine($of_options);
 	}
-
+	do_action('optionsframework_admin_init_after', array(
+			'of_options'		=> $of_options,
+			'options_machine'	=> $of_options_machine,
+			'smof_data'			=> $smof_data
+		));
 }
 
 /**
