@@ -25,7 +25,9 @@ function of_head() { do_action( 'of_head' ); }
 function of_option_setup()	
 {
 	global $of_options, $options_machine, $smof_data;
-	do_action('of_option_setup_before');
+	do_action('of_option_setup_before', array(
+		'of_options'=>$of_options, 'options_machine'=>$options_machine, 'smof_data'=>$smof_data
+	));
 	$options_machine = new Options_Machine($of_options);
 
 	if (empty($smof_data) || !isset($smof_data['smof_init'])) { // Let's set the values if the theme's already been active
@@ -34,7 +36,10 @@ function of_option_setup()
 		$smof_data = of_get_options();
 		$data = $smof_data;
 	}
-	do_action('of_option_setup_after');
+	do_action('of_option_setup_after', array(
+		'of_options'=>$of_options, 'options_machine'=>$options_machine, 'smof_data'=>$smof_data
+	));
+
 
 }
 
@@ -85,14 +90,18 @@ function of_get_header_classes_array()
  * @return array
  */
 function of_get_options($key = null, $data = null) {
-	do_action('of_get_options_before');
+	do_action('of_get_options_before', array(
+		'key'=>$key, 'data'=>$data
+	));
 	if ($key != null) { // Get one specific value
 		$data = get_theme_mod($key, $data);
 	} else { // Get all values
 		$data = get_theme_mods();		
 	}
-	$data = apply_filters('of_options_after_load', $data);
-	do_action('of_get_options_after');
+	$data = apply_filters('of_get_options_after', $data);
+	do_action('of_option_setup_before', array(
+		'key'=>$key, 'data'=>$data
+	));
 	return $data;
 
 }
@@ -109,7 +118,9 @@ function of_get_options($key = null, $data = null) {
 function of_save_options($data, $key = null) {
     if (empty($data))
         return;	
-    do_action('of_save_options_before');
+    do_action('of_save_options_before', array(
+		'key'=>$key, 'data'=>$data
+	));
 	$data = apply_filters('of_options_before_save', $data);
 	if ($key != null) { // Update one specific value
 		if ($key == BACKUPS) {
@@ -123,7 +134,10 @@ function of_save_options($data, $key = null) {
 			}
 	  	}
 	}
-	do_action('of_save_options_after');
+    do_action('of_save_options_after', array(
+		'key'=>$key, 'data'=>$data
+	));
+
 }
 
 
