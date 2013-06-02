@@ -561,4 +561,3 @@ $of_options[] = array( 	"name" 		=> "Transfer Theme Options Data",
 				
 	}//End function: of_options()
 }//End chack if function exists: of_options()
-?>
