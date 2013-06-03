@@ -462,21 +462,21 @@ class Options_Machine {
 					
 					$i = 0;
 					$select_value = isset($smof_data[$value['id']]) && !empty($smof_data[$value['id']]) ? $smof_data[$value['id']] : '';
-					
-					foreach ($value['options'] as $key => $option) 
-					{ 
-					$i++;
-			
-						$checked = '';
-						$selected = '';
-						if(NULL!=checked($select_value, $option, false)) {
-							$checked = checked($select_value, $option, false);
-							$selected = 'of-radio-tile-selected';  
+					if (is_array($value['options'])) {
+						foreach ($value['options'] as $key => $option) { 
+						$i++;
+				
+							$checked = '';
+							$selected = '';
+							if(NULL!=checked($select_value, $option, false)) {
+								$checked = checked($select_value, $option, false);
+								$selected = 'of-radio-tile-selected';  
+							}
+							$output .= '<span>';
+							$output .= '<input type="radio" id="of-radio-tile-' . $value['id'] . $i . '" class="checkbox of-radio-tile-radio" value="'.$option.'" name="'.$value['id'].'" '.$checked.' />';
+							$output .= '<div class="of-radio-tile-img '. $selected .'" style="background: url('.$option.')" onClick="document.getElementById(\'of-radio-tile-'. $value['id'] . $i.'\').checked = true;"></div>';
+							$output .= '</span>';				
 						}
-						$output .= '<span>';
-						$output .= '<input type="radio" id="of-radio-tile-' . $value['id'] . $i . '" class="checkbox of-radio-tile-radio" value="'.$option.'" name="'.$value['id'].'" '.$checked.' />';
-						$output .= '<div class="of-radio-tile-img '. $selected .'" style="background: url('.$option.')" onClick="document.getElementById(\'of-radio-tile-'. $value['id'] . $i.'\').checked = true;"></div>';
-						$output .= '</span>';				
 					}
 					
 				break;
