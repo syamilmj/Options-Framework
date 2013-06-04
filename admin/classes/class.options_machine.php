@@ -111,7 +111,7 @@ class Options_Machine {
 				//hide items in checkbox group
 				$fold='';
 				if (array_key_exists("fold",$value)) {
-					if ($smof_data[$value['fold']]) {
+					if (isset($smof_data[$value['fold']]) && $smof_data[$value['fold']]) {
 						$fold="f_".$value['fold']." ";
 					} else {
 						$fold="f_".$value['fold']." temphide ";
@@ -127,6 +127,9 @@ class Options_Machine {
 	
 			 } 
 			 //End Heading
+
+			if (!isset($smof_data[$value['id']]) && $value['type'] != "heading")
+				continue;
 			
 			//switch statement to handle various options type                              
 			switch ( $value['type'] ) {
