@@ -7,7 +7,6 @@
  * @since       1.0.0
  * @author      Syamil MJ
  */
-
 class Options_Machine {
 
 	/**
@@ -65,7 +64,7 @@ class Options_Machine {
 	 * @return array
 	 */
 	public static function optionsframework_machine($options) {
-
+		global $smof_output;
 	    $smof_data = of_get_options();
 		$data = $smof_data;
 
@@ -78,6 +77,7 @@ class Options_Machine {
 				'options'	=> $options,
 				'smof_data'	=> $smof_data,
 			));
+		$output .= $smof_output;
 		
 		foreach ($options as $value) {
 			
@@ -634,8 +634,10 @@ class Options_Machine {
 					'defaults'	=> $defaults,
 					'counter'	=> $counter,
 					'menu'		=> $menu,
-					'output'	=> $output
+					'output'	=> $output,
+					'value'		=> $value
 				));
+			$output .= $smof_output;
 			
 			//description of each option
 			if ( $value['type'] != 'heading') { 
@@ -653,13 +655,15 @@ class Options_Machine {
 	    $output .= '</div>';
 
 	    do_action('optionsframework_machine_after', array(
-					'options'	=> $options,
-					'smof_data'	=> $smof_data,
-					'defaults'	=> $defaults,
-					'counter'	=> $counter,
-					'menu'		=> $menu,
-					'output'	=> $output
+					'options'		=> $options,
+					'smof_data'		=> $smof_data,
+					'defaults'		=> $defaults,
+					'counter'		=> $counter,
+					'menu'			=> $menu,
+					'output'		=> $output,
+					'value'			=> $value
 				));
+	    $output .= $smof_output;
 	    
 	    return array($output,$menu,$defaults);
 	    
