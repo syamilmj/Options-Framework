@@ -48,8 +48,9 @@ Website: http://aquagraphite.com
 
 ### Changelog
 **v1.5.1**
-* Change get_option() to get_theme_mod()
+* No more "Undefined index:" notices on theme activation.
 * Fix Import option
+* Change get_option() to get_theme_mod()
 * Fixed the issue where hidden elements are shown when addSlide button is clicked
 * Fix for "select" option [#L61L149](https://github.com/sy4mil/Options-Framework/commit/52fda39586833e5cee39c9cae9d880ddcf6f1214#L61L149)
 * Deleted old color picker assets
