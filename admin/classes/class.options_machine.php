@@ -24,11 +24,39 @@ class Options_Machine {
 		
 	}
 
+	/** 
+	 * Sanitize option
+	 *
+	 * Sanitize & returns default values if don't exist
+	 * 
+	 * Notes:
+	 	- For further uses, you can check for the $value['type'] and performs
+	 	  more speficic sanitization on the option
+	 	- The ultimate objective of this function is to prevent the "undefined index"
+	 	  errors some authors are having due to malformed options array
+	 */
+	function sanitize_option( $value ) {
+
+		$defaults = array(
+			"name" 		=> "",
+			"desc" 		=> "",
+			"id" 		=> "",
+			"std" 		=> "",
+			"mod"		=> "",
+			"type" 		=> ""
+		);
+
+		$value = wp_parse_args( $value, $defaults );
+
+		return $value;
+
+	}
+
 
 	/**
 	 * Process options data and build option fields
 	 *
-	 * @uses get_option()
+	 * @uses get_theme_mod()
 	 *
 	 * @access public
 	 * @since 1.0.0
@@ -36,12 +64,10 @@ class Options_Machine {
 	 * @return array
 	 */
 	public static function optionsframework_machine($options) {
-
 		global $smof_output;
-
 	    $smof_data = of_get_options();
-	    $data = $smof_data;
-		
+		$data = $smof_data;
+
 		$defaults = array();   
 	    $counter = 0;
 		$menu = '';
@@ -54,7 +80,10 @@ class Options_Machine {
 		$output .= $smof_output;
 		
 		foreach ($options as $value) {
-		
+			
+			// sanitize option
+			$value = self::sanitize_option($value);
+
 			$counter++;
 			$val = '';
 			
@@ -181,7 +210,7 @@ class Options_Machine {
 						$output .= '<input type="checkbox" class="checkbox of-input" name="'.$value['id'].'['.$key.']'.'" id="'. $of_key_string .'" value="1" '. checked($multi_stored[$key], 1, false) .' /><label class="multicheck" for="'. $of_key_string .'">'. $option .'</label><br />';								
 					}			 
 				break;
-
+				
 				// Color picker
 				case "color":
 					$default_color = '';
@@ -491,8 +520,10 @@ class Options_Machine {
 				case 'backup':
 				
 					$instructions = $value['desc'];
-					$backup = get_option(BACKUPS);
-					
+					$backup = of_get_options(BACKUPS);
+					$init = of_get_options('smof_init');
+
+
 					if(!isset($backup['backup_log'])) {
 						$log = 'No backups yet';
 					} else {
@@ -668,7 +699,6 @@ class Options_Machine {
 					'value'			=> $value
 				));
 	    $output .= $smof_output;
-
 	    
 	    return array($output,$menu,$defaults);
 	    
@@ -678,7 +708,7 @@ class Options_Machine {
 	/**
 	 * Native media library uploader
 	 *
-	 * @uses get_option()
+	 * @uses get_theme_mod()
 	 *
 	 * @access public
 	 * @since 1.0.0
@@ -733,7 +763,7 @@ class Options_Machine {
 	/**
 	 * Drag and drop slides manager
 	 *
-	 * @uses get_option()
+	 * @uses get_theme_mod()
 	 *
 	 * @access public
 	 * @since 1.0.0
