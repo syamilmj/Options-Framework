@@ -214,9 +214,7 @@ function of_ajax_callback()
 	elseif($save_type == 'restore_options')
 	{
 			
-		$smof_data = get_option(BACKUPS);
-
-		update_option(OPTIONS, $smof_data);
+		$smof_data = of_get_options(BACKUPS);
 
 		of_save_options($smof_data);
 		
@@ -225,7 +223,7 @@ function of_ajax_callback()
 	elseif($save_type == 'import_options'){
 
 
-		$smof_data = unserialize(base64_decode($smof_data)); //100% safe - ignore theme check nag
+		$smof_data = unserialize(base64_decode($_POST['data'])); //100% safe - ignore theme check nag
 		of_save_options($smof_data);
 
 		
