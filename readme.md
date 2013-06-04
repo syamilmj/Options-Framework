@@ -19,11 +19,12 @@ Some of these are:
 * ...and much more(including base elements inputs, textarea, etc.)
 
 ## Contributors: 
-* Syamil MJ - [sy4mil](https://github.com/sy4mil) - [http://aquagraphite.com](http://aquagraphite.com)
-* Andrei Surdu - [Smartik89](https://github.com/Smartik89) - [http://smartik.ws/](http://smartik.ws/)
-* Jonah Dahlquist - [jonahbron](https://github.com/jonahbron) - [http://nucleussystems.com/](http://nucleussystems.com/)
-* [partnuz](https://github.com/partnuz) - [https://github.com/partnuz](https://github.com/partnuz)
-* Alex Poslavsky - [plovs](https://github.com/plovs) - [https://github.com/plovs](https://github.com/plovs)
+* Syamil MJ ------------ [http://aquagraphite.com](http://aquagraphite.com)
+* Andrei Surdu -------- [http://smartik.ws/](http://smartik.ws/)
+* Jonah Dahlquist ---- [http://nucleussystems.com/](http://nucleussystems.com/)
+* [partnuz](https://github.com/partnuz) --------------- [https://github.com/partnuz](https://github.com/partnuz)
+* Alex Poslavsky ------ [https://github.com/plovs](https://github.com/plovs)
+* Dovy Paukstys ------ [http://simplerain.com](http://simplerain.com)
 
 ## Credits
 SMOF is heavily based on some of these available frameworks.
@@ -46,6 +47,15 @@ Twitter: http://twitter.com/syamilmj
 Website: http://aquagraphite.com
 
 ### Changelog
+**v1.5.1**
+* Change get_option() to get_theme_mod()
+* Fix Import option
+* Fixed the issue where hidden elements are shown when addSlide button is clicked
+* Fix for "select" option [#L61L149](https://github.com/sy4mil/Options-Framework/commit/52fda39586833e5cee39c9cae9d880ddcf6f1214#L61L149)
+* Deleted old color picker assets
+* Normalize line endings
+* Other changes
+
 **v1.5**
 * The new WP 3.5+ "Media Uploader". Combined filed types media and upload(now they are the same, left for themes compatibility).
 * Native WP Color Picker.
