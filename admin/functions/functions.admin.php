@@ -78,11 +78,21 @@ function of_get_header_classes_array()
  * @since 1.4.0
  * @return array
  */
-function of_get_options($key = OPTIONS) {
+function of_get_options($key = null, $data = null) {
 
-	$data = get_option($key);
+	do_action('of_get_options_before', array(
+		'key'=>$key, 'data'=>$data
+	));
+	if ($key != null) { // Get one specific value
+
+		$data = get_theme_mod($key, $data);
+	} else { // Get all values
+		$data = get_theme_mods();		
+	}
 	$data = apply_filters('of_options_after_load', $data);
-
+	do_action('of_option_setup_before', array(
+		'key'=>$key, 'data'=>$data
+	));
 	return $data;
 
 }
@@ -96,10 +106,31 @@ function of_get_options($key = OPTIONS) {
  * @uses update_option()
  * @return void
  */
-function of_save_options($data, $key=OPTIONS)
-{
+
+function of_save_options($data, $key = null) {
+	global $smof_data;
+    if (empty($data))
+        return;	
+    do_action('of_save_options_before', array(
+		'key'=>$key, 'data'=>$data
+	));
 	$data = apply_filters('of_options_before_save', $data);
-	update_option($key, $data);
+	if ($key != null) { // Update one specific value
+		if ($key == BACKUPS) {
+			unset($data['smof_init']); // Don't want to change this.
+		}
+		set_theme_mod($key, $data);
+	} else { // Update all values in $data
+		foreach ( $data as $k=>$v ) {
+			if (!isset($smof_data[$k]) || $smof_data[$k] != $v) { // Only write to the DB when we need to
+				set_theme_mod($k, $v);
+			}
+	  	}
+	}
+    do_action('of_save_options_after', array(
+		'key'=>$key, 'data'=>$data
+	));
+
 }
 
 
@@ -111,3 +142,4 @@ function of_save_options($data, $key=OPTIONS)
 
 $data = of_get_options();
 $smof_data = of_get_options();
+$data = $smof_data;

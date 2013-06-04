@@ -2,7 +2,7 @@
 /*
 Title		: SMOF
 Description	: Slightly Modified Options Framework
-Version		: 1.5
+Version		: 1.5.1
 Author		: Syamil MJ
 Author URI	: http://aquagraphite.com
 License		: GPLv3 - http://www.gnu.org/copyleft/gpl.html
@@ -16,6 +16,7 @@ Contributors: Syamil MJ - http://aquagraphite.com
 			  Jonah Dahlquist - http://nucleussystems.com/
 			  partnuz - https://github.com/partnuz
 			  Alex Poslavsky - https://github.com/plovs
+			  Dovy Paukstys - http://simplerain.com
 */
 
 /**
@@ -24,6 +25,7 @@ Contributors: Syamil MJ - http://aquagraphite.com
  * @since 1.4.0
  */
 $theme_version = '';
+$smof_output = '';
 	    
 if( function_exists( 'wp_get_theme' ) ) {
 	if( is_child_theme() ) {
@@ -46,7 +48,7 @@ if( function_exists( 'wp_get_theme' ) ) {
 }
 
 
-define( 'SMOF_VERSION', '1.5' );
+define( 'SMOF_VERSION', '1.5.1' );
 
 if( !defined('ADMIN_PATH') )
 	define( 'ADMIN_PATH', get_template_directory() . '/admin/' );
@@ -62,8 +64,7 @@ define( 'THEMEVERSION', $theme_version );
 define( 'THEMEURI', $theme_uri );
 define( 'THEMEAUTHORURI', $author_uri );
 
-define( 'OPTIONS', $theme_name.'_options' );
-define( 'BACKUPS',$theme_name.'_backups' );
+define( 'BACKUPS','backups' );
 
 /**
  * Required action filters
@@ -72,7 +73,7 @@ define( 'BACKUPS',$theme_name.'_backups' );
  *
  * @since 1.0.0
  */
-if (is_admin() && isset($_GET['activated'] ) && $pagenow == "themes.php" ) add_action('admin_head','of_option_setup');
+//if (is_admin() && isset($_GET['activated'] ) && $pagenow == "themes.php" ) add_action('admin_head','of_option_setup');
 add_action('admin_head', 'optionsframework_admin_message');
 add_action('admin_init','optionsframework_admin_init');
 add_action('admin_menu', 'optionsframework_add_admin');
@@ -91,5 +92,3 @@ require_once ( ADMIN_PATH . 'classes/class.options_machine.php' );
  * @since 1.0.0
  */
 add_action('wp_ajax_of_ajax_post_action', 'of_ajax_callback');
-
-?>
