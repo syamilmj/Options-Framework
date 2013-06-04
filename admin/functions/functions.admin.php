@@ -90,15 +90,12 @@ function of_get_header_classes_array()
  * @return array
  */
 function of_get_options($key = null, $data = null) {
-<<<<<<< HEAD
-	
-	if ($key != "") { // Get one specific value
-=======
+
 	do_action('of_get_options_before', array(
 		'key'=>$key, 'data'=>$data
 	));
 	if ($key != null) { // Get one specific value
->>>>>>> a2ce9408a41e403d69ca51769c068974e3e4eec6
+
 		$data = get_theme_mod($key, $data);
 	} else { // Get all values
 		$data = get_theme_mods();		
