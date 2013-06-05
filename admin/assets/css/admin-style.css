@@ -912,3 +912,4 @@ width: 225px;
 	border: 0!important;
 	height: auto;
 }
+#of_container .controls .wp-picker-container .wp-color-result { outline: 0; }

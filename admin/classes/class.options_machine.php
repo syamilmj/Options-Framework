@@ -384,7 +384,7 @@ class Options_Machine {
 					//custom icon
 					$icon = '';
 					if(isset($value['icon'])){
-						$icon = ' style="background: url('. $value['icon'] .') no-repeat 13px 10px;"';
+						$icon = ' style="background-image: url('. $value['icon'] .');"';
 					}
 					$header_class = str_replace(' ','',strtolower($value['name']));
 					$jquery_click_hook = str_replace(' ', '', strtolower($value['name']) );
