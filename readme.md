@@ -25,6 +25,7 @@ Some of these are:
 * [partnuz](https://github.com/partnuz) --------------- [https://github.com/partnuz](https://github.com/partnuz)
 * Alex Poslavsky ------ [https://github.com/plovs](https://github.com/plovs)
 * Dovy Paukstys ------ [http://simplerain.com](http://simplerain.com)
+* ... [See all contributors here ->](https://github.com/sy4mil/Options-Framework/contributors)
 
 ## Credits
 SMOF is heavily based on some of these available frameworks.
