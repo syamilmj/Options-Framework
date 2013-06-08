@@ -20,8 +20,6 @@
  */
 function of_filter_save_media_upload($data) {
 
-    if(!is_array($data)) return;
-    
     foreach ($data as $key => $value) {
         if (is_string($value)) {
             $data[$key] = str_replace(
