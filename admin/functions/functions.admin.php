@@ -19,6 +19,8 @@ function of_head() { do_action( 'of_head' ); }
 /**
  * Add default options upon activation else DB does not exist
  *
+ * DEPRECATED, Class_options_machine now does this on load to ensure all values are set
+ *
  * @since 1.0.0
  */
 function of_option_setup()	
