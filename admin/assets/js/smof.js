@@ -591,6 +591,8 @@ jQuery(document).ready(function($){
 		var _previewer = mainID +'_ggf_previewer';
 		
 		if( _selected ){ //if var exists and isset
+
+			$('.'+ _previewer ).fadeIn();
 			
 			//Check if selected is not equal with "Select a font" and execute the script.
 			if ( _selected !== 'none' && _selected !== 'Select a font' ) {
@@ -611,6 +613,7 @@ jQuery(document).ready(function($){
 				
 				//if selected is not a font remove style "font-family" at preview box
 				$('.'+ _previewer ).css('font-family', '' );
+				$('.'+ _previewer ).fadeOut();
 				
 			}
 		

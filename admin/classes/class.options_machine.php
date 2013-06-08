@@ -583,8 +583,11 @@ class Options_Machine {
 					} else { 
 						$g_size = '';
 					}
+					$hide = " hide";
+					if ($smof_data[$value['id']] != "none" && $smof_data[$value['id']] != "")
+						$hide = "";
 					
-					$output .= '<p class="'.$value['id'].'_ggf_previewer google_font_preview" '. $g_size .'>'. $g_text .'</p>';
+					$output .= '<p class="'.$value['id'].'_ggf_previewer hide google_font_preview'.$hide.'" '. $g_size .'>'. $g_text .'</p>';
 				break;
 				
 				//JQuery UI Slider
