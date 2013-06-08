@@ -69,9 +69,11 @@ class Options_Machine {
 			return;
 		$smof_data = of_get_options();
 		foreach($options as $key => $option) {
+			if (!isset($option['id']) || empty($option['id']))
+				continue;
 			$option = self::sanitize_option($option);
 			$smof_details[$option['id']] = $option;
-			if (!array_key_exists($option['id'], $smof_data)) {
+			if (!isset($smof_data[$option['id']])) {
 				of_save_options($option['std'], $option['id']);
 				$options[$key] = $option;
 				$smof_data[$option['id']] = $option['std'];
@@ -740,7 +742,9 @@ class Options_Machine {
 	    $smof_data = of_get_options();
 		
 		$uploader = '';
-	    $upload = $smof_data[$id];
+		$upload = "";
+		if (isset($smof_data[$id]))
+	    	$upload = $smof_data[$id];
 		$hide = '';
 		
 		if ($mod == "min") {$hide ='hide';}
@@ -796,7 +800,8 @@ class Options_Machine {
 		
 		$slider = '';
 		$slide = array();
-	    $slide = $smof_data[$id];
+		if (isset($smof_data[$id]))
+	    	$slide = $smof_data[$id];
 		
 	    if (isset($slide[$oldorder])) { $val = $slide[$oldorder]; } else {$val = $std;}
 		
