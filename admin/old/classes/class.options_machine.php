@@ -64,35 +64,20 @@ class Options_Machine {
 	 * @return array
 	 */
 	public static function optionsframework_machine($options) {
-		global $smof_output, $smof_details;
-		if (empty($options))
-			return;
-		$smof_data = of_get_options();
-		foreach($options as $key => $option) {
-			$option = self::sanitize_option($option);
-			$smof_details[$option['id']] = $option;
-			if (!array_key_exists($option['id'], $smof_data)) {
-				of_save_options($option['std'], $option['id']);
-				$options[$key] = $option;
-				$smof_data[$option['id']] = $option['std'];
-			}
-		}
-	    
+		global $smof_output;
+	    $smof_data = of_get_options();
 		$data = $smof_data;
 
 		$defaults = array();   
 	    $counter = 0;
 		$menu = '';
 		$output = '';
-
-
+		
 		do_action('optionsframework_machine_before', array(
 				'options'	=> $options,
 				'smof_data'	=> $smof_data,
 			));
 		$output .= $smof_output;
-
-
 		
 		foreach ($options as $value) {
 			
@@ -143,8 +128,8 @@ class Options_Machine {
 			 } 
 			 //End Heading
 
-			//if (!isset($smof_data[$value['id']]) && $value['type'] != "heading")
-			//	continue;
+			if (!isset($smof_data[$value['id']]) && $value['type'] != "heading")
+				continue;
 			
 			//switch statement to handle various options type                              
 			switch ( $value['type'] ) {
@@ -399,7 +384,7 @@ class Options_Machine {
 					//custom icon
 					$icon = '';
 					if(isset($value['icon'])){
-						$icon = ' style="background-image: url('. $value['icon'] .');"';
+						$icon = ' style="background: url('. $value['icon'] .') no-repeat 13px 10px;"';
 					}
 					$header_class = str_replace(' ','',strtolower($value['name']));
 					$jquery_click_hook = str_replace(' ', '', strtolower($value['name']) );
