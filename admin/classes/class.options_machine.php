@@ -64,19 +64,22 @@ class Options_Machine {
 	 * @return array
 	 */
 	public static function optionsframework_machine($options) {
-		global $smof_output, $smof_details;
+		global $smof_output, $smof_details, $smof_data;
 		if (empty($options))
 			return;
-		$smof_data = of_get_options();
-		foreach($options as $key => $option) {
-			if (!isset($option['id']) || empty($option['id']))
-				continue;
-			$option = self::sanitize_option($option);
-			$smof_details[$option['id']] = $option;
-			if (!isset($smof_data[$option['id']])) {
-				of_save_options($option['std'], $option['id']);
-				$options[$key] = $option;
-				$smof_data[$option['id']] = $option['std'];
+		if (empty($smof_data))
+			$smof_data = of_get_options();
+		if (empty($smof_details) || count($smof_details) != count($smof_data)) {
+			foreach($options as $key => $option) {
+				if (!isset($option['id']) || empty($option['id']))
+					continue;
+				$option = self::sanitize_option($option);
+				$smof_details[$option['id']] = $option;
+				if (!isset($smof_data[$option['id']])) {
+					of_save_options($option['std'], $option['id']);
+					$options[$key] = $option;
+					$smof_data[$option['id']] = $option['std'];
+				}
 			}
 		}
 	    
