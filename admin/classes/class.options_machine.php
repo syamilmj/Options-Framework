@@ -69,7 +69,6 @@ class Options_Machine {
 			return;
 		if (empty($smof_data))
 			$smof_data = of_get_options();
-
 		$data = $smof_data;
 
 		$defaults = array();   
@@ -85,7 +84,7 @@ class Options_Machine {
 		$output .= $smof_output;
 
 
-		
+		$update_data = false;
 		foreach ($options as $value) {
 			
 			// sanitize option
@@ -111,7 +110,12 @@ class Options_Machine {
 			if(!empty($smof_data) || !empty($data)){
 			
 				if (!isset($smof_data[$value['id']])) {
-					$smof_data[$value['id']] = of_save_options($value['std'], $value['id']);
+					$smof_data[$value['id']] = $value['std'];
+					if ($value['type'] == "checkbox" && $value['std'] == 0) {
+						$smof_data[$value['id']] = 0;
+					} else {
+						$update_data = true;
+					}
 				}
 				if (!isset($smof_details[$value['id']])) {
 					$smof_details[$value['id']] = $smof_data[$value['id']];
@@ -703,6 +707,10 @@ class Options_Machine {
 			
 			} /* condition empty end */
 		   
+		}
+
+		if ($update_data == true) {
+			of_save_options($smof_data);
 		}
 		
 	    $output .= '</div>';
