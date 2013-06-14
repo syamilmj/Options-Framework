@@ -80,7 +80,11 @@ class Options_Machine {
 				'options'	=> $options,
 				'smof_data'	=> $smof_data,
 			));
-		$output .= $smof_output;
+		if ($smof_output != "") {
+			$output .= $smof_output;
+			$smof_output = "";
+		}
+		
 		
 
 		foreach ($options as $value) {
@@ -232,8 +236,7 @@ class Options_Machine {
 				case "color":
 					$default_color = '';
 					if ( isset($value['std']) ) {
-						if ( $smof_data[$value['id']] !=  $value['std'] )
-							$default_color = ' data-default-color="' .$value['std'] . '" ';
+						$default_color = ' data-default-color="' .$value['std'] . '" ';
 					}
 					$output .= '<input name="' . $value['id'] . '" id="' . $value['id'] . '" class="of-color"  type="text" value="' . $smof_data[$value['id']] . '"' . $default_color .' />';
 		 	
@@ -693,7 +696,10 @@ class Options_Machine {
 					'output'	=> $output,
 					'value'		=> $value
 				));
-			$output .= $smof_output;
+			if ($smof_output != "") {
+				$output .= $smof_output;
+				$smof_output = "";
+			}
 			
 			//description of each option
 			if ( $value['type'] != 'heading') { 
@@ -723,7 +729,10 @@ class Options_Machine {
 					'output'		=> $output,
 					'value'			=> $value
 				));
-	    $output .= $smof_output;
+		if ($smof_output != "") {
+			$output .= $smof_output;
+			$smof_output = "";
+		}
 	    
 	    return array($output,$menu,$defaults);
 	    
