@@ -50,6 +50,7 @@ Website: http://aquagraphite.com
 ### Changelog
 
 **v1.5.2**
+* Added the ability to use &tab= in the URL to define the active tab
 * Extra checks for DB saving to reduce server overhead
 * Added default colors to color picker instead of clear option
 * Fixed speed issues, 250% reduction in load time with new class
