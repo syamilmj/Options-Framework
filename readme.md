@@ -48,6 +48,16 @@ Twitter: http://twitter.com/syamilmj
 Website: http://aquagraphite.com
 
 ### Changelog
+
+**v1.5.2**
+* Extra checks for DB saving to reduce server overhead
+* Added default colors to color picker instead of clear option
+* Fixed speed issues, 250% reduction in load time with new class
+* Fixed error in color picker
+* Fixed Checkbox error not updating if all empty
+* Fixed Ordering saving issue
+* Fixed WP_debug, true issue
+
 **v1.5.1**
 * No more "Undefined index:" notices on theme activation.
 * Fix Import option
