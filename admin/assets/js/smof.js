@@ -26,6 +26,18 @@ jQuery(document).ready(function($){
 	//Tabify Options			
 	$('.group').hide();
 	
+	// Get the URL parameter for tab
+	function getURLParameter(name) {
+	    return decodeURI(
+	        (RegExp(name + '=' + '(.+?)(&|$)').exec(location.search)||[,''])[1]
+	    );
+	}
+	
+	// If the $_GET param of tab is set, use that for the tab that should be open
+	if (getURLParameter('tab') != "") {
+		$.cookie('of_current_opt', '#'+getURLParameter('tab'), { expires: 7, path: '/' });
+	}
+
 	// Display last current tab	
 	if ($.cookie("of_current_opt") === null) {
 		$('.group:first').fadeIn('fast');	
