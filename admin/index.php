@@ -2,7 +2,7 @@
 /*
 Title		: SMOF
 Description	: Slightly Modified Options Framework
-Version		: 1.5.1
+Version		: 1.5.2
 Author		: Syamil MJ
 Author URI	: http://aquagraphite.com
 License		: GPLv3 - http://www.gnu.org/copyleft/gpl.html
