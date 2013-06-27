@@ -422,6 +422,12 @@ jQuery(document).ready(function($){
 		
 		//get serialized data from all our option fields			
 		var serializedReturn = $('#of_form :input[name][name!="security"][name!="of_reset"]').serialize();
+
+		$('#of_form :input[type=checkbox]').each(function() {     
+		    if (!this.checked) {
+		        serializedReturn += '&'+this.name+'=0';
+		    }
+		});
 						
 		var data = {
 			type: 'save',
@@ -506,7 +512,7 @@ jQuery(document).ready(function($){
 
 	/**	Tipsy @since v1.3 */
 	if (jQuery().tipsy) {
-		$('.typography-size, .typography-height, .typography-face, .typography-style, .of-typography-color').tipsy({
+		$('.tooltip, .typography-size, .typography-height, .typography-face, .typography-style, .of-typography-color').tipsy({
 			fade: true,
 			gravity: 's',
 			opacity: 0.7,

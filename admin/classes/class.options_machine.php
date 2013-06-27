@@ -35,8 +35,7 @@ class Options_Machine {
 	 	- The ultimate objective of this function is to prevent the "undefined index"
 	 	  errors some authors are having due to malformed options array
 	 */
-	function sanitize_option( $value ) {
-
+	static function sanitize_option( $value ) {
 		$defaults = array(
 			"name" 		=> "",
 			"desc" 		=> "",
@@ -64,42 +63,35 @@ class Options_Machine {
 	 * @return array
 	 */
 	public static function optionsframework_machine($options) {
-		global $smof_output, $smof_details;
+		global $smof_output, $smof_details, $smof_data;
 		if (empty($options))
 			return;
-		$smof_data = of_get_options();
-		foreach($options as $key => $option) {
-			if (!isset($option['id']) || empty($option['id']))
-				continue;
-			$option = self::sanitize_option($option);
-			$smof_details[$option['id']] = $option;
-			if (!isset($smof_data[$option['id']])) {
-				of_save_options($option['std'], $option['id']);
-				$options[$key] = $option;
-				$smof_data[$option['id']] = $option['std'];
-			}
-		}
-	    
+		if (empty($smof_data))
+			$smof_data = of_get_options();
 		$data = $smof_data;
 
 		$defaults = array();   
 	    $counter = 0;
 		$menu = '';
 		$output = '';
-
+		$update_data = false;
 
 		do_action('optionsframework_machine_before', array(
 				'options'	=> $options,
 				'smof_data'	=> $smof_data,
 			));
-		$output .= $smof_output;
-
-
+		if ($smof_output != "") {
+			$output .= $smof_output;
+			$smof_output = "";
+		}
 		
+		
+
 		foreach ($options as $value) {
 			
 			// sanitize option
-			$value = self::sanitize_option($value);
+			if ($value['type'] != "heading")
+				$value = self::sanitize_option($value);
 
 			$counter++;
 			$val = '';
@@ -120,6 +112,18 @@ class Options_Machine {
 			/* condition start */
 			if(!empty($smof_data) || !empty($data)){
 			
+				if (array_key_exists('id', $value) && !isset($smof_data[$value['id']])) {
+					$smof_data[$value['id']] = $value['std'];
+					if ($value['type'] == "checkbox" && $value['std'] == 0) {
+						$smof_data[$value['id']] = 0;
+					} else {
+						$update_data = true;
+					}
+				}
+				if (array_key_exists('id', $value) && !isset($smof_details[$value['id']])) {
+					$smof_details[$value['id']] = $smof_data[$value['id']];
+				}
+
 			//Start Heading
 			 if ( $value['type'] != "heading" )
 			 {
@@ -232,8 +236,7 @@ class Options_Machine {
 				case "color":
 					$default_color = '';
 					if ( isset($value['std']) ) {
-						if ( $smof_data[$value['id']] !=  $value['std'] )
-							$default_color = ' data-default-color="' .$value['std'] . '" ';
+						$default_color = ' data-default-color="' .$value['std'] . '" ';
 					}
 					$output .= '<input name="' . $value['id'] . '" id="' . $value['id'] . '" class="of-color"  type="text" value="' . $smof_data[$value['id']] . '"' . $default_color .' />';
 		 	
@@ -693,7 +696,10 @@ class Options_Machine {
 					'output'	=> $output,
 					'value'		=> $value
 				));
-			$output .= $smof_output;
+			if ($smof_output != "") {
+				$output .= $smof_output;
+				$smof_output = "";
+			}
 			
 			//description of each option
 			if ( $value['type'] != 'heading') { 
@@ -707,6 +713,10 @@ class Options_Machine {
 			} /* condition empty end */
 		   
 		}
+
+		if ($update_data == true) {
+			of_save_options($smof_data);
+		}
 		
 	    $output .= '</div>';
 
@@ -719,7 +729,10 @@ class Options_Machine {
 					'output'		=> $output,
 					'value'			=> $value
 				));
-	    $output .= $smof_output;
+		if ($smof_output != "") {
+			$output .= $smof_output;
+			$smof_output = "";
+		}
 	    
 	    return array($output,$menu,$defaults);
 	    
