@@ -19,6 +19,8 @@ Contributors: Syamil MJ - http://aquagraphite.com
 			  Dovy Paukstys - http://simplerain.com
 */
 
+define( 'SMOF_VERSION', '1.5.2' );
+
 /**
  * Definitions
  *
@@ -48,7 +50,6 @@ if( function_exists( 'wp_get_theme' ) ) {
 }
 
 
-define( 'SMOF_VERSION', '1.5.1' );
 
 if( !defined('ADMIN_PATH') )
 	define( 'ADMIN_PATH', get_template_directory() . '/admin/' );
