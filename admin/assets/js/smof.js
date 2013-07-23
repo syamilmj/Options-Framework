@@ -609,11 +609,31 @@ jQuery(document).ready(function($){
 		var _previewer = mainID +'_ggf_previewer';
 		
 		if( _selected ){ //if var exists and isset
-
 			$('.'+ _previewer ).fadeIn();
 			
 			//Check if selected is not equal with "Select a font" and execute the script.
 			if ( _selected !== 'none' && _selected !== 'Select a font' ) {
+				var selected = _selected.split(':'),
+					fontFamily = selected[0].replace('+', ' '),
+					_italic = _selected.match(/italic/i),
+					fontWeight,
+					fontStyle;
+					
+				console.log(_selected);
+					
+				if(_italic){
+					fontStyle = _italic[0];
+				} else {
+					fontStyle = 'normal';
+				}
+				
+				if(selected[1] && _italic){
+					fontWeight = selected[1].slice(0, -6);
+				} else if(selected[1] && !_italic) {
+					fontWeight = selected[1];
+				} else {
+					fontWeight = '300';
+				}
 				
 				//remove other elements crested in <head>
 				$( '.'+ _linkclass ).remove();
@@ -623,9 +643,14 @@ jQuery(document).ready(function($){
 				
 				//add reference to google font family
 				$('head').append('<link href="http://fonts.googleapis.com/css?family='+ the_font +'" rel="stylesheet" type="text/css" class="'+ _linkclass +'">');
+				console.log('<link href="http://fonts.googleapis.com/css?family='+ the_font +'" rel="stylesheet" type="text/css" class="'+ _linkclass +'">');
 				
 				//show in the preview box the font
-				$('.'+ _previewer ).css('font-family', _selected +', sans-serif' );
+				$('.'+ _previewer ).css({
+					'font-family': fontFamily +', sans-serif', 
+					'font-weight': fontWeight,
+					'font-style': fontStyle 
+				});
 				
 			}else{
 				
