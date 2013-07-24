@@ -614,19 +614,19 @@ jQuery(document).ready(function($){
 			//Check if selected is not equal with "Select a font" and execute the script.
 			if ( _selected !== 'none' && _selected !== 'Select a font' ) {
 				var selected = _selected.split(':'),
-					fontFamily = selected[0].replace('+', ' '),
-					_italic = _selected.match(/italic/i),
+					fontFamily = selected[0].replace('+', ' '), //grab the font family
+					_italic = _selected.match(/italic/i), // do we have italic?
 					fontWeight,
 					fontStyle;
 					
-				console.log(_selected);
-					
+				// If we have italic, use that. Else use normal
 				if(_italic){
 					fontStyle = _italic[0];
 				} else {
 					fontStyle = 'normal';
 				}
 				
+				// if we have a font weight, use that. Else use 300 (default)
 				if(selected[1] && _italic){
 					fontWeight = selected[1].slice(0, -6);
 				} else if(selected[1] && !_italic) {
@@ -643,7 +643,6 @@ jQuery(document).ready(function($){
 				
 				//add reference to google font family
 				$('head').append('<link href="http://fonts.googleapis.com/css?family='+ the_font +'" rel="stylesheet" type="text/css" class="'+ _linkclass +'">');
-				console.log('<link href="http://fonts.googleapis.com/css?family='+ the_font +'" rel="stylesheet" type="text/css" class="'+ _linkclass +'">');
 				
 				//show in the preview box the font
 				$('.'+ _previewer ).css({
