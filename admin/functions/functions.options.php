@@ -68,6 +68,7 @@ if (!function_exists('of_options'))
 		    if ($bg_images_dir = opendir($bg_images_path) ) { 
 		        while ( ($bg_images_file = readdir($bg_images_dir)) !== false ) {
 		            if(stristr($bg_images_file, ".png") !== false || stristr($bg_images_file, ".jpg") !== false) {
+		            	natsort($bg_images); //Sorts the array into a natural order
 		                $bg_images[] = $bg_images_url . $bg_images_file;
 		            }
 		        }    
