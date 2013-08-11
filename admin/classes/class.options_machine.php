@@ -171,8 +171,18 @@ class Options_Machine {
 				case 'select':
 					$mini ='';
 					if(!isset($value['mod'])) $value['mod'] = '';
+					$folds = '';
+					if (array_key_exists("folds",$value)) $folds="fld ";
+					$fold='';
+					if (array_key_exists("fold",$value)) {
+						if (isset($value['fold']) && $value['fold']) {
+							$fold="f_".$value['fold']." temphide ";
+						} else {
+							$fold="f_".$value['fold']." temphide ";
+						}
+					}
 					if($value['mod'] == 'mini') { $mini = 'mini';}
-					$output .= '<div class="select_wrapper ' . $mini . '">';
+					$output .= '<div class="'.$folds . $fold.'select_wrapper ' . $mini . '">';
 					$output .= '<select class="select of-input" name="'.$value['id'].'" id="'. $value['id'] .'">';
 
 					foreach ($value['options'] as $select_ID => $option) {
@@ -574,7 +584,12 @@ class Options_Machine {
 					$output .= '<div class="select_wrapper">';
 					$output .= '<select class="select of-input google_font_select" name="'.$value['id'].'" id="'. $value['id'] .'">';
 					foreach ($value['options'] as $select_key => $option) {
-						$output .= '<option value="'.$select_key.'" ' . selected((isset($smof_data[$value['id']]))? $smof_data[$value['id']] : "", $option, false) . ' />'.$option.'</option>';
+						if($select_key == $smof_data[$value['id']]){
+							$selected = 'selected="selected"';
+						} else {
+							$selected = '';
+						}
+						$output .= '<option value="'.$select_key.'" ' . $selected . ' />'.$option.'</option>';
 					} 
 					$output .= '</select></div>';
 					
