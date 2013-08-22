@@ -49,8 +49,14 @@ Website: http://aquagraphite.com
 
 ### Changelog
 
+**v1.5.3**
+* Added `.scss` for admin styles for Sass lovers
+* Cleaned up code so it's easier to read
+* Fixed spelling and grammar errors across multiple files
+* Removed trailing spaces to reduce overall files sizes
+
 **v1.5.2**
-* Added the ability to use &tab= in the URL to define the active tab
+* Added the ability to use `&tab=` in the URL to define the active tab
 * Extra checks for DB saving to reduce server overhead
 * Added default colors to color picker instead of clear option
 * Fixed speed issues, 250% reduction in load time with new class
@@ -60,9 +66,9 @@ Website: http://aquagraphite.com
 * Fixed WP_debug, true issue
 
 **v1.5.1**
-* No more "Undefined index:" notices on theme activation.
+* No more `"Undefined index:"` notices on theme activation.
 * Fix Import option
-* Change get_option() to get_theme_mod()
+* Change `get_option()` to `get_theme_mod()`
 * Fixed the issue where hidden elements are shown when addSlide button is clicked
 * Fix for "select" option [#L61L149](https://github.com/sy4mil/Options-Framework/commit/52fda39586833e5cee39c9cae9d880ddcf6f1214#L61L149)
 * Deleted old color picker assets
@@ -110,10 +116,10 @@ Website: http://aquagraphite.com
 * add sample grouped options
 * add transfer option
 * fix css quirks on some options
-* single call to admin/admin.php from functions.php
+* single call to `admin/admin.php` from `functions.php`
 * unique database name for options & backup
 * replaced ereg_replace function (deprecated in PHP 5.3)
-* uses add_theme_page() to replace add_submenu_page()
+* uses `add_theme_page()` to replace `add_submenu_page()`
 * reorganized files, paths etc
 * delete background option
 * delete child types
@@ -131,7 +137,7 @@ Website: http://aquagraphite.com
 
 **v1.2.2**
 
-* replace admin-interface.php with current stable
+* replace `admin-interface.php` with current stable
 
 **v1.2.1**
 
