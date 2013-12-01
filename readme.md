@@ -3,7 +3,7 @@
 
 SMOF is a back-end framework for creating and managing options inside WordPress themes. It cuts off the process of developing your own admin framework and give you more time to actually focus on building your theme. SMOF comes bundled with plentiful of options that should serve most of the needs of any modern theme authors.
 
-The main feature of SMOF is its intuitive, user-friendly interface that aims to look as native as possible to WordPress. Additionally, it comes loaded with some awesome features that makes it even more usable to you as a theme author. 
+The main feature of SMOF is its intuitive, user-friendly interface that aims to look as native as possible to WordPress. Additionally, it comes loaded with some awesome features that makes it even more usable to you as a theme author.
 
 Some of these are:
 
@@ -18,7 +18,7 @@ Some of these are:
 * Jquery UI slider
 * ...and much more(including base elements inputs, textarea, etc.)
 
-## Contributors: 
+## Contributors:
 * Syamil MJ ------------ [http://aquagraphite.com](http://aquagraphite.com)
 * Andrei Surdu -------- [http://smartik.ws/](http://smartik.ws/)
 * Jonah Dahlquist ---- [http://nucleussystems.com/](http://nucleussystems.com/)

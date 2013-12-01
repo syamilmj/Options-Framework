@@ -28,13 +28,13 @@ define( 'SMOF_VERSION', '1.5.2' );
  */
 $theme_version = '';
 $smof_output = '';
-	    
+
 if( function_exists( 'wp_get_theme' ) ) {
 	if( is_child_theme() ) {
 		$temp_obj = wp_get_theme();
 		$theme_obj = wp_get_theme( $temp_obj->get('Template') );
 	} else {
-		$theme_obj = wp_get_theme();    
+		$theme_obj = wp_get_theme();
 	}
 
 	$theme_version = $theme_obj->get('Version');
@@ -83,7 +83,7 @@ add_action('admin_menu', 'optionsframework_add_admin');
  * Required Files
  *
  * @since 1.0.0
- */ 
+ */
 require_once ( ADMIN_PATH . 'functions/functions.load.php' );
 require_once ( ADMIN_PATH . 'classes/class.options_machine.php' );
 
