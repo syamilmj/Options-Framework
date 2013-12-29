@@ -831,25 +831,25 @@ class Options_Machine {
 		if (!empty($val['title'])) {
 			$slider .= '<li><div class="slide_header"><strong>'.stripslashes($val['title']).'</strong>';
 		} else {
-			$slider .= '<li><div class="slide_header"><strong>Slide '.$order.'</strong>';
+			$slider .= '<li><div class="slide_header"><strong>'.__("Slide", THEMETEXTDOMAIN).' '.$order.'</strong>';
 		}
 
 		$slider .= '<input type="hidden" class="slide of-input order" name="'. $id .'['.$order.'][order]" id="'. $id.'_'.$order .'_slide_order" value="'.$order.'" />';
 
-		$slider .= '<a class="slide_edit_button" href="#">Edit</a></div>';
+		$slider .= '<a class="slide_edit_button" href="#">'.__("Edit", THEMETEXTDOMAIN).'</a></div>';
 
 		$slider .= '<div class="slide_body">';
 
-		$slider .= '<label>Title</label>';
+		$slider .= '<label>'.__("Title", THEMETEXTDOMAIN).'</label>';
 		$slider .= '<input class="slide of-input of-slider-title" name="'. $id .'['.$order.'][title]" id="'. $id .'_'.$order .'_slide_title" value="'. stripslashes($val['title']) .'" />';
 
-		$slider .= '<label>Image URL</label>';
+		$slider .= '<label>'.__("Image URL", THEMETEXTDOMAIN).'</label>';
 		$slider .= '<input class="upload slide of-input" name="'. $id .'['.$order.'][url]" id="'. $id .'_'.$order .'_slide_url" value="'. $val['url'] .'" />';
 
-		$slider .= '<div class="upload_button_div"><span class="button media_upload_button" id="'.$id.'_'.$order .'">Upload</span>';
+		$slider .= '<div class="upload_button_div"><span class="button media_upload_button" id="'.$id.'_'.$order .'">'.__("Upload", THEMETEXTDOMAIN).'</span>';
 
 		if(!empty($val['url'])) {$hide = '';} else { $hide = 'hide';}
-		$slider .= '<span class="button remove-image '. $hide.'" id="reset_'. $id .'_'.$order .'" title="' . $id . '_'.$order .'">Remove</span>';
+		$slider .= '<span class="button remove-image '. $hide.'" id="reset_'. $id .'_'.$order .'" title="' . $id . '_'.$order .'">'.__("Remove", THEMETEXTDOMAIN).'</span>';
 		$slider .='</div>' . "\n";
 		$slider .= '<div class="screenshot">';
 		if(!empty($val['url'])){
@@ -860,13 +860,13 @@ class Options_Machine {
 
 			}
 		$slider .= '</div>';
-		$slider .= '<label>Link URL (optional)</label>';
+		$slider .= '<label>'.__("Link URL (optional)", THEMETEXTDOMAIN).'</label>';
 		$slider .= '<input class="slide of-input" name="'. $id .'['.$order.'][link]" id="'. $id .'_'.$order .'_slide_link" value="'. $val['link'] .'" />';
 
-		$slider .= '<label>Description (optional)</label>';
+		$slider .= '<label>'.__("Description (optional)", THEMETEXTDOMAIN).'</label>';
 		$slider .= '<textarea class="slide of-input" name="'. $id .'['.$order.'][description]" id="'. $id .'_'.$order .'_slide_description" cols="8" rows="8">'.stripslashes($val['description']).'</textarea>';
 
-		$slider .= '<a class="slide_delete_button" href="#">Delete</a>';
+		$slider .= '<a class="slide_delete_button" href="#">'.__("Delete", THEMETEXTDOMAIN).'</a>';
 	    $slider .= '<div class="clear"></div>' . "\n";
 
 		$slider .= '</div>';
