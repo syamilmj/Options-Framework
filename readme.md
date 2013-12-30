@@ -1,5 +1,5 @@
 # [SMOF - Slightly Modded Options Framework](http://aquagraphite.com/2011/09/slightly-modded-options-framework/)
-# Version 1.5.2
+# Version 1.6.0
 
 SMOF is a back-end framework for creating and managing options inside WordPress themes. It cuts off the process of developing your own admin framework and give you more time to actually focus on building your theme. SMOF comes bundled with plentiful of options that should serve most of the needs of any modern theme authors.
 
@@ -16,6 +16,8 @@ Some of these are:
 * Keeps the site URL out of the database
 * Google fonts with live preview
 * Jquery UI slider
+* WordPress 3.8 compatible
+* Responsive administrative interface that blends seamlessly into the new admin interface
 * ...and much more(including base elements inputs, textarea, etc.)
 
 ## Contributors:
@@ -25,6 +27,7 @@ Some of these are:
 * [partnuz](https://github.com/partnuz) --------------- [https://github.com/partnuz](https://github.com/partnuz)
 * Alex Poslavsky ------ [https://github.com/plovs](https://github.com/plovs)
 * Dovy Paukstys ------ [http://simplerain.com](http://simplerain.com)
+* Dennis Thompson -- [http://atomicpages.net](http://atomicpages.net)
 * ... [See all contributors here ->](https://github.com/sy4mil/Options-Framework/contributors)
 
 ## Credits
@@ -49,13 +52,25 @@ Website: http://aquagraphite.com
 
 ### Changelog
 
+**v.1.6.0**
+
+* Added support for WordPress 3.8
+* Completely redesigned admin interface for WordPress 3.8
+* Responsive admin interface
+* Updated `maskedInput` and `iris`
+* Cleaned up code to improve readability
+* Added `SASS` files in `assets`
+	* Note: this uses compass
+
 **v1.5.3**
+
 * Added `.scss` for admin styles for Sass lovers
 * Cleaned up code so it's easier to read
 * Fixed spelling and grammar errors across multiple files
 * Removed trailing spaces to reduce overall files sizes
 
 **v1.5.2**
+
 * Added the ability to use `&tab=` in the URL to define the active tab
 * Extra checks for DB saving to reduce server overhead
 * Added default colors to color picker instead of clear option
@@ -66,6 +81,7 @@ Website: http://aquagraphite.com
 * Fixed WP_debug, true issue
 
 **v1.5.1**
+
 * No more `"Undefined index:"` notices on theme activation.
 * Fix Import option
 * Change `get_option()` to `get_theme_mod()`
@@ -76,10 +92,12 @@ Website: http://aquagraphite.com
 * Other changes
 
 **v1.5.1**
+
 * Cleaned up spacing and trailing spaces in all files.
 * Added Sass/Compass for all styles for those Sass lovers
 
 **v1.5**
+
 * The new WP 3.5+ "Media Uploader". Combined filed types media and upload(now they are the same, left for themes compatibility).
 * Native WP Color Picker.
 * Restrict slider drag and drop handle. Now the user can change the order, only if he click the title(header).
@@ -91,21 +109,25 @@ Website: http://aquagraphite.com
 * Other minor changes.
 
 **v1.4.4**
+
 * Added filter hooks to settings when saving and loading
 * Transparently added pseudo-shortcodes to URLs to avoid storing the site URL in the database so that migrations are easier (no changes to your theme necessary)
 * Changed all options loading to use one function, instead of get_option()
 
 **v1.4.3**
+
 * Replaced variable `$data` with `$smof_data`. [Click here to read what you have to do to update your themes.](https://github.com/sy4mil/Options-Framework/wiki/Update-to-v1.4.3)
 * class.options_machine.php updated [Details](https://github.com/sy4mil/Options-Framework/pull/196)
 
 **v1.4.2**
+
 * Added JQueryUI Slider option( by [Smartik](https://github.com/Smartik89) ) - [Screenshot](http://i.imgur.com/e9Fh5Ar.jpg)
 * Added Switch option(with "folds" support, see demo options for examples)( by [Smartik](https://github.com/Smartik89) ) - [Screenshot](http://i.imgur.com/LwVQkk1.jpg)
 * Changed Google Fonts option, added some new settings and fixed 400 Bad error( by [Smartik](https://github.com/Smartik89) )
 * Other small changes
 
 **v1.4.1**
+
 * new Google Fonts field was added (by https://github.com/partnuz)
 * removed some ui glitches (by https://github.com/partnuz)
 * added multicheck field to check if db option exists (by https://github.com/partnuz)

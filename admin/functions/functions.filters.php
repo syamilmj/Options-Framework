@@ -22,6 +22,7 @@ function of_filter_save_media_upload($data) {
 	if(!is_array($data)) {
 		return $data;
 	}
+
 	foreach($data as $key => $value) {
 		if(is_string($value)) {
 			$data[$key] = str_replace(
@@ -54,8 +55,9 @@ function of_filter_load_media_upload($data) {
 	if(!is_array($data)) {
 		return $data;
 	}
+
 	foreach($data as $key => $value) {
-		if(is_string($value)) {
+		if(is_string($value) && preg_match("/\[site_url(_url_secure)?\]/", $value)) {
 			$data[$key] = str_replace(
 				array(
 					'[site_url]',

@@ -1,7 +1,6 @@
 <?php
 /**
  * SMOF Admin
- *
  * @package     WordPress
  * @subpackage  SMOF
  * @since       1.4.0
@@ -19,7 +18,7 @@ function of_head() {
 
 /**
  * Add default options upon activation else DB does not exist
- * @deprecated, Class_options_machine now does this on load to ensure all values are set
+ * @deprecated Class_options_machine now does this on load to ensure all values are set
  * @since 1.0.0
  */
 function of_option_setup() {
@@ -54,9 +53,10 @@ function optionsframework_admin_message() {
  */
 function of_get_header_classes_array() {
 	global $of_options;
+
 	foreach($of_options as $value) {
 		if($value['type'] == 'heading') {
-			$hooks[] = str_replace(' ','',strtolower($value['name']));
+			$hooks[] = str_replace(' ', '', strtolower($value['name']));
 		}
 	}
 
@@ -78,12 +78,14 @@ function of_get_options($key = null, $data = null) {
 	} else { // Get all values
 		$data = get_theme_mods();
 	}
+
 	$data = apply_filters('of_options_after_load', $data);
 	if($key == null) {
 		$smof_data = $data;
 	} else {
 		$smof_data[$key] = $data;
 	}
+
 	do_action('of_option_setup_before', array('key' => $key, 'data' => $data));
 
 	return $data;
@@ -100,9 +102,10 @@ function of_get_options($key = null, $data = null) {
 
 function of_save_options($data, $key = null) {
 	global $smof_data;
-	if(empty($data)) {
-		return '';
+	if (empty($data)) {
+		return;
 	}
+
 	do_action('of_save_options_before', array('key' => $key, 'data' => $data));
 	$data = apply_filters('of_options_before_save', $data);
 	if($key != null) { // Update one specific value

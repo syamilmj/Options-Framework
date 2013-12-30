@@ -56,7 +56,7 @@
 .ui-slider .ui-slider-handle.ui-state-focus { border:0 !important; background: url(../images/slider-control.png) no-repeat center center !important;outline: none;}
 .ui-slider .ui-slider-range { position: absolute; z-index: 1; font-size: .7em; display: block; border: 0; background-position: 0 0; }
 
-.ui-slider-horizontal { height: 7px; border-color: #aaa; 
+.ui-slider-horizontal { height: 7px; border-color: #aaa;
 border-radius: 2px;-webkit-border-radius: 2px;-moz-border-radius: 2px;
 box-shadow: inset 0px 1px 2px rgba(0, 0, 0, 0.20), 0px 0px 1px rgba(0, 0, 0, 0.20);
 -moz-box-shadow: inset 0px 1px 2px rgba(0, 0, 0, 0.20), 0px 0px 1px rgba(0, 0, 0, 0.20);
