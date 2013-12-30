@@ -1172,6 +1172,11 @@ p.switch-options { margin: 0; }
 	width: auto;
 	margin: inherit;
 	&.wp-38 {
+		.logo {
+			h2 {
+				span { font-size: 13px; }
+			}
+		}
 		#of-nav {
 			float: none;
 			position: static;
@@ -1209,6 +1214,10 @@ p.switch-options { margin: 0; }
 				.controls { width: auto; }
 			}
 		}
+	}
+	.smof_footer_info {
+		width: auto;
+		font-size: 12px;
 	}
 	input.checkbox,
 	input.of-radio { width: auto; }

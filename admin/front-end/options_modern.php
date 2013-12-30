@@ -10,8 +10,7 @@
 	</div>
 	<span style="display: none;" id="hooks"><?php echo json_encode(of_get_header_classes_array()); ?></span>
 	<div class="logo">
-		<h2><?php echo THEMENAME; ?></h2>
-		<span><?php echo ('v'. THEMEVERSION); ?></span>
+		<h2><?php echo THEMENAME; ?> <span><?php echo ('v'. THEMEVERSION); ?></span></h2>
 	</div>
 	<div id="js-warning">Warning &ndash; This options panel will not work properly without JavaScript enabled!</div>
 	<div class="icon-option"></div>

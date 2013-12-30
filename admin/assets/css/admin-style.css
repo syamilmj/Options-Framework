@@ -1097,6 +1097,8 @@ p.switch-options {
 #of_container {
   width: auto;
   margin: inherit; }
+  #of_container.wp-38 .logo h2 span {
+    font-size: 13px; }
   #of_container.wp-38 #of-nav {
     float: none;
     position: static;
@@ -1137,6 +1139,9 @@ p.switch-options {
       width: 55%; }
     #of_container.wp-38 #content .section-checkbox .controls {
       width: auto; }
+  #of_container .smof_footer_info {
+    width: auto;
+    font-size: 12px; }
   #of_container input.checkbox,
   #of_container input.of-radio {
     width: auto; }
