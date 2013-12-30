@@ -1177,8 +1177,9 @@ p.switch-options { margin: 0; }
 			position: static;
 			z-index: auto;
 			width: auto;
+			background: white;
 			ul {
-				background: white;
+				background: none;
 				li {
 					@include box-shadow(none);
 					border-bottom: 1px solid #f1f1f1;
@@ -1186,10 +1187,7 @@ p.switch-options { margin: 0; }
 					a {
 						@include opacity(1);
 						@include transition(all 0.3s);
-						&:hover {
-							color: #2ea2cc;
-							background-color: darken(white, 2%);
-						}
+						&:hover { color: #2ea2cc; }
 					}
 				}
 			}
@@ -1202,6 +1200,16 @@ p.switch-options { margin: 0; }
 			@include box-shadow(none);
 			font-family: inherit;
 			min-height: auto;
+			padding-top: 1px;
+			.section,
+			.section-color {
+				.explain { width: 55%; }
+			}
+			.section-checkbox {
+				.controls { width: auto; }
+			}
 		}
 	}
-}
+	input.checkbox,
+	input.of-radio { width: auto; }
+} // #of_container

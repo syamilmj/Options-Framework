@@ -65,6 +65,7 @@ function optionsframework_add_admin() {
 /**
  * Build Options page
  * @since 1.0.0
+ * @uses $wp_version
  */
 function optionsframework_options_page() {
 	global $options_machine, $wp_version;

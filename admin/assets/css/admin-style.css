@@ -1101,9 +1101,10 @@ p.switch-options {
     float: none;
     position: static;
     z-index: auto;
-    width: auto; }
+    width: auto;
+    background: white; }
     #of_container.wp-38 #of-nav ul {
-      background: white; }
+      background: none; }
       #of_container.wp-38 #of-nav ul li {
         -moz-box-shadow: none;
         -webkit-box-shadow: none;
@@ -1119,8 +1120,7 @@ p.switch-options {
           -webkit-transition: all 0.3s;
           transition: all 0.3s; }
           #of_container.wp-38 #of-nav ul li a:hover {
-            color: #2ea2cc;
-            background-color: #fafafa; }
+            color: #2ea2cc; }
   #of_container.wp-38 #content {
     float: none;
     border: 0 none;
@@ -1130,4 +1130,13 @@ p.switch-options {
     -webkit-box-shadow: none;
     box-shadow: none;
     font-family: inherit;
-    min-height: auto; }
+    min-height: auto;
+    padding-top: 1px; }
+    #of_container.wp-38 #content .section .explain,
+    #of_container.wp-38 #content .section-color .explain {
+      width: 55%; }
+    #of_container.wp-38 #content .section-checkbox .controls {
+      width: auto; }
+  #of_container input.checkbox,
+  #of_container input.of-radio {
+    width: auto; }
