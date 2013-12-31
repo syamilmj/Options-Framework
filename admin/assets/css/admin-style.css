@@ -889,12 +889,14 @@ p.switch-options {
 /*-------------------------------------------------------------------------------------------*/
 /* Color picker overwrite
 /*-------------------------------------------------------------------------------------------*/
-#of_container .controls .wp-picker-container input.button {
-  width: auto;
-  height: auto;
-  line-height: 1.5;
-  padding: 2px 8px;
-  margin: 6px 6px 6px 6px; }
+#of_container .controls .wp-picker-container {
+  margin-top: 2px; }
+  #of_container .controls .wp-picker-container input.button {
+    width: auto;
+    height: auto;
+    line-height: 1.5;
+    padding: 2px 8px;
+    margin: 6px 6px 6px 6px; }
 #of_container .controls .of-color {
   float: left;
   width: 70px;
@@ -1097,8 +1099,21 @@ p.switch-options {
 #of_container {
   width: auto;
   margin: inherit; }
+  #of_container.wp-38 .icon_option {
+    display: none; }
+  #of_container.wp-38 #expand_options {
+    margin: 0;
+    -moz-border-radius: 0px;
+    -webkit-border-radius: 0px;
+    border-radius: 0px; }
+    #of_container.wp-38 #expand_options.expand {
+      background: url("../images/toggle_tabs.png") no-repeat -2px -1px; }
+    #of_container.wp-38 #expand_options.close {
+      background: url("../images/toggle_tabs.png") no-repeat -2px -26px; }
   #of_container.wp-38 .logo h2 span {
     font-size: 13px; }
+  #of_container.wp-38 #of_save {
+    margin-right: 25px; }
   #of_container.wp-38 #of-nav {
     float: none;
     position: static;
@@ -1139,9 +1154,38 @@ p.switch-options {
       width: 55%; }
     #of_container.wp-38 #content .section-checkbox .controls {
       width: auto; }
+    #of_container.wp-38 #content .section-typography .controls {
+      width: 95%; }
   #of_container .smof_footer_info {
     width: auto;
     font-size: 12px; }
+  #of_container .controls input,
+  #of_container .controls select,
+  #of_container .controls textarea, #of_container .select_wrapper {
+    background-color: white;
+    border: 1px solid #ddd;
+    -moz-box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.07);
+    -webkit-box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.07);
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.07);
+    -moz-border-radius: 0px;
+    -webkit-border-radius: 0px;
+    border-radius: 0px;
+    width: 25em; }
+    #of_container .controls input:hover,
+    #of_container .controls select:hover,
+    #of_container .controls textarea:hover, #of_container .select_wrapper:hover {
+      background-color: white; }
+    #of_container .controls input:focus,
+    #of_container .controls select:focus,
+    #of_container .controls textarea:focus, #of_container .select_wrapper:focus {
+      border-color: #999; }
   #of_container input.checkbox,
   #of_container input.of-radio {
-    width: auto; }
+    width: auto;
+    margin: 8px 8px 0 0; }
+  #of_container input.of-radio {
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    border-radius: 10px; }
+  #of_container #export_data {
+    max-width: 300px; }

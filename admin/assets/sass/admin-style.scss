@@ -931,12 +931,15 @@ p.switch-options { margin: 0; }
 /*-------------------------------------------------------------------------------------------*/
 #of_container {
 	.controls {
-		.wp-picker-container input.button {
-			width: auto;
-			height: auto;
-			line-height: 1.5;
-			padding: 2px 8px;
-			margin: 6px 6px 6px 6px;
+		.wp-picker-container {
+			margin-top: 2px;
+			input.button {
+				width: auto;
+				height: auto;
+				line-height: 1.5;
+				padding: 2px 8px;
+				margin: 6px 6px 6px 6px;
+			}
 		}
 		.of-color {
 			float: left;
@@ -1172,11 +1175,20 @@ p.switch-options { margin: 0; }
 	width: auto;
 	margin: inherit;
 	&.wp-38 {
+		.icon_option { display: none; }
+		#expand_options {
+			margin: 0;
+			@include border-radius(0px);
+			// float: none;
+			&.expand { background: url("../images/toggle_tabs.png") no-repeat -2px -1px; }
+			&.close { background: url("../images/toggle_tabs.png") no-repeat -2px -26px; }
+		}
 		.logo {
 			h2 {
 				span { font-size: 13px; }
 			}
 		}
+		#of_save { margin-right: 25px; }
 		#of-nav {
 			float: none;
 			position: static;
@@ -1213,12 +1225,35 @@ p.switch-options { margin: 0; }
 			.section-checkbox {
 				.controls { width: auto; }
 			}
+			.section-typography {
+				.controls { width: 95%; }
+			}
 		}
 	}
 	.smof_footer_info {
 		width: auto;
 		font-size: 12px;
 	}
+	.controls {
+		input,
+		select,
+		textarea { @extend %input_override; }
+	}
+	.select_wrapper { @extend %input_override; }
+	%input_override {
+		background-color: white;
+		border: 1px solid #ddd;
+		@include box-shadow(inset 0 1px 2px rgba(0, 0, 0, .07));
+		@include border-radius(0px);
+		width: 25em;
+		&:hover { background-color: white; }
+		&:focus { border-color: #999; }
+	}
 	input.checkbox,
-	input.of-radio { width: auto; }
+	input.of-radio {
+		width: auto;
+		margin: 8px 8px 0 0;
+	}
+	input.of-radio { @include border-radius(10px); }
+	#export_data { max-width: 300px; }
 } // #of_container
