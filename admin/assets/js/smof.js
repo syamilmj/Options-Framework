@@ -11,20 +11,44 @@ jQuery.noConflict();
  */
 jQuery(document).ready(function($) {
 
-	//(un)fold options in a checkbox-group
-	jQuery('.fld').click(function() {
-		var $fold = '.f_' + this.id;
-		$($fold).slideToggle('normal', "swing");
+	var css = CodeMirror.fromTextArea(document.getElementById("custom_css"), {
+		mode: "text/css",
+		styleActiveLine: true,
+		lineNumbers: true,
+		lineWrapping: true,
+		showTrailingSpace: true
 	});
 
-	//Color picker
-	$('.of-color').wpColorPicker();
+	var google_analytics = CodeMirror.fromTextArea(document.getElementById("google_analytics"), {
+		mode: "text/html",
+		styleActiveLine: true,
+		lineNumbers: true,
+		lineWrapping: true,
+		showTrailingSpace: true
+	});
 
-	//hides warning if js is enabled
-	$('#js-warning').hide();
+	var footer_text = CodeMirror.fromTextArea(document.getElementById("footer_text"), {
+		mode: "text/html",
+		styleActiveLine: true,
+		lineNumbers: true,
+		lineWrapping: true,
+		showTrailingSpace: true
+	});
 
-	//Tabify Options
-	$('.group').hide();
+	// (un)fold options in a checkbox-group
+	jQuery(".fld").click(function() {
+		var $fold = ".f_" + this.id;
+		$($fold).slideToggle("normal", "swing");
+	});
+
+	// Color picker
+	$(".of-color").wpColorPicker();
+
+	// hides warning if js is enabled
+	$("#js-warning").hide();
+
+	// Tabify Options
+	$(".group").hide();
 
 	// Get the URL parameter for tab
 	function getURLParameter(name) {
@@ -34,121 +58,115 @@ jQuery(document).ready(function($) {
 	}
 
 	// If the $_GET param of tab is set, use that for the tab that should be open
-	if (getURLParameter('tab') !== "") {
-		$.cookie('of_current_opt', '#' + getURLParameter('tab'), { expires: 7, path: '/' });
+	if (getURLParameter("tab") !== "") {
+		$.cookie("of_current_opt", "#" + getURLParameter("tab"), { expires: 7, path: "/" });
 	}
 
 	// Display last current tab
 	if ($.cookie("of_current_opt") === null) {
-		$('.group:first').fadeIn('fast');
-		$('#of-nav li:first').addClass('current');
+		$(".group:first").fadeIn("fast");
+		$("#of-nav li:first").addClass("current");
 	} else {
-		var hooks = $('#hooks').html();
+		var hooks = $("#hooks").html();
 		hooks = jQuery.parseJSON(hooks);
 		$.each(hooks, function(key, value) {
-			if($.cookie("of_current_opt") == '#of-option-' + value) {
-				$('.group#of-option-' + value).fadeIn();
-				$('#of-nav li.' + value).addClass('current');
+			if($.cookie("of_current_opt") == "#of-option-" + value) {
+				$(".group#of-option-" + value).fadeIn();
+				$("#of-nav li." + value).addClass("current");
 			}
 		});
 	}
 
-	//Current Menu Class
-	$('#of-nav li a').click(function(evt){
+	// Current Menu Class
+	$("#of-nav li a").click(function() {
 		// evt.preventDefault();
-		$('#of-nav li').removeClass('current');
-		$(this).parent().addClass('current');
-		var clicked_group = $(this).attr('href');
-		$.cookie('of_current_opt', clicked_group, { expires: 7, path: '/' });
-		$('.group').hide();
-		$(clicked_group).fadeIn('fast');
+		$("#of-nav li").removeClass("current");
+		$(this).parent().addClass("current");
+		var clicked_group = $(this).attr("href");
+		$.cookie("of_current_opt", clicked_group, { expires: 7, path: "/" });
+		$(".group").hide();
+		$(clicked_group).fadeIn("fast");
 
 		return false;
 	});
 
-	//Expand Options
+	// Expand Options
 	var flip = 0;
 
-	$('#expand_options').click(function() {
+	$("#expand_options").click(function() {
 		if(flip === 0) {
 			flip = 1;
-			$('#of_container #of-nav').hide();
-			$('#of_container #content').width(755);
-			$('#of_container .group').add('#of_container .group h2').show();
-
-			$(this).removeClass('expand');
-			$(this).addClass('close');
-			$(this).text('Close');
-
+			$("#of_container #of-nav").hide();
+			// $("#of_container #content").width(755);
+			$("#of_container #content").addClass("expanded");
+			$("#of_container .group").add("#of_container .group h2").show();
+			$(this).removeClass("expand").addClass("close");
+			$(this).text("Close");
 		} else {
 			flip = 0;
-			$('#of_container #of-nav').show();
-			$('#of_container #content').width(595);
-			$('#of_container .group').add('#of_container .group h2').hide();
-			$('#of_container .group:first').show();
-			$('#of_container #of-nav li').removeClass('current');
-			$('#of_container #of-nav li:first').addClass('current');
-
-			$(this).removeClass('close');
-			$(this).addClass('expand');
-			$(this).text('Expand');
-
+			$("#of_container #of-nav").show();
+			// $("#of_container #content").width(595);
+			$("#of_container #content").removeClass("expanded");
+			$("#of_container .group").add("#of_container .group h2").hide();
+			$("#of_container .group:first").show();
+			$("#of_container #of-nav li").removeClass("current");
+			$("#of_container #of-nav li:first").addClass("current");
+			$(this).removeClass("close").addClass("expand");
+			$(this).text("Expand");
 		}
-
 	});
 
-	//Update Message popup
+	// Update Message popup
 	$.fn.center = function() {
 		this.animate({
-			"top":( $(window).height() - this.height() - 200 ) / 2 + $(window).scrollTop() + "px"},
-			100
-		);
+			"top":( $(window).height() - this.height() - 200 ) / 2 + $(window).scrollTop() + "px"
+		}, 100);
 		this.css("left", 250 );
+
 		return this;
 	};
 
 
-	$('#of-popup-save').center();
-	$('#of-popup-reset').center();
-	$('#of-popup-fail').center();
+	$("#of-popup-save").center();
+	$("#of-popup-reset").center();
+	$("#of-popup-fail").center();
 
 	$(window).scroll(function() {
-		$('#of-popup-save').center();
-		$('#of-popup-reset').center();
-		$('#of-popup-fail').center();
+		$("#of-popup-save").center();
+		$("#of-popup-reset").center();
+		$("#of-popup-fail").center();
 	});
 
-
-	//Masked Inputs (images as radio buttons)
-	$('.of-radio-img-img').click(function() {
-		$(this).parent().parent().find('.of-radio-img-img').removeClass('of-radio-img-selected');
-		$(this).addClass('of-radio-img-selected');
+	// Masked Inputs (images as radio buttons)
+	$(".of-radio-img-img").click(function() {
+		$(this).parent().parent().find(".of-radio-img-img").removeClass("of-radio-img-selected");
+		$(this).addClass("of-radio-img-selected");
 	});
-	$('.of-radio-img-label').hide();
-	$('.of-radio-img-img').show();
-	$('.of-radio-img-radio').hide();
+	$(".of-radio-img-label").hide();
+	$(".of-radio-img-img").show();
+	$(".of-radio-img-radio").hide();
 
-	//Masked Inputs (background images as radio buttons)
-	$('.of-radio-tile-img').click(function() {
-		$(this).parent().parent().find('.of-radio-tile-img').removeClass('of-radio-tile-selected');
-		$(this).addClass('of-radio-tile-selected');
+	// Masked Inputs (background images as radio buttons)
+	$(".of-radio-tile-img").click(function() {
+		$(this).parent().parent().find(".of-radio-tile-img").removeClass("of-radio-tile-selected");
+		$(this).addClass("of-radio-tile-selected");
 	});
-	$('.of-radio-tile-label').hide();
-	$('.of-radio-tile-img').show();
-	$('.of-radio-tile-radio').hide();
+	$(".of-radio-tile-label").hide();
+	$(".of-radio-tile-img").show();
+	$(".of-radio-tile-radio").hide();
 
 		// Style Select
 		(function ($) {
 		styleSelect = {
 			init: function () {
-				$('.select_wrapper').each(function () {
-					$(this).prepend('<span>' + $(this).find('.select option:selected').text() + '</span>');
+				$(".select_wrapper").each(function () {
+					$(this).prepend("<span>" + $(this).find(".select option:selected").text() + "</span>");
 				});
-				$('.select').live('change', function () {
-					$(this).prev('span').replaceWith('<span>' + $(this).find('option:selected').text() + '</span>');
+				$(".select").live("change", function () {
+					$(this).prev("span").replaceWith("<span>" + $(this).find("option:selected").text() + "</span>");
 				});
-				$('.select').bind($.browser.msie ? 'click' : 'change', function(event) {
-					$(this).prev('span').replaceWith('<span>' + $(this).find('option:selected').text() + '</span>');
+				$(".select").bind($.browser.msie ? "click" : "change", function(event) {
+					$(this).prev("span").replaceWith("<span>" + $(this).find("option:selected").text() + "</span>");
 				});
 			}
 		};
@@ -160,17 +178,17 @@ jQuery(document).ready(function($) {
 
 	/** Aquagraphite Slider MOD */
 
-	//Hide (Collapse) the toggle containers on load
+	// Hide (Collapse) the toggle containers on load
 	$(".slide_body").hide();
 
-	//Switch the "Open" and "Close" state per click then slide up/down (depending on open/close state)
-	$(".slide_edit_button").live( 'click', function() {
+	// Switch the "Open" and "Close" state per click then slide up/down (depending on open/close state)
+	$(".slide_edit_button").live( "click", function() {
 		/*
-		//display as an accordion
+		// display as an accordion
 		$(".slide_header").removeClass("active");
 		$(".slide_body").slideUp("fast");
 		*/
-		//toggle for each
+		// toggle for each
 		$(this).parent().toggleClass("active").next().slideToggle("fast");
 		return false; //Prevent the browser jump to the link anchor
 	});
@@ -182,41 +200,41 @@ jQuery(document).ready(function($) {
 			clearTimeout( element.timer );
 		}
 		this.timer = setTimeout( function() {
-			$(element).parent().prev().find('strong').text( element.value );
+			$(element).parent().prev().find("strong").text( element.value );
 		}, 100);
 		return true;
 	}
 
-	$('.of-slider-title').live('keyup', function(){
+	$(".of-slider-title").live("keyup", function() {
 		update_slider_title(this);
 	});
 
 
-	//Remove individual slide
-	$('.slide_delete_button').live('click', function(){
+	// Remove individual slide
+	$(".slide_delete_button").live("click", function() {
 	// event.preventDefault();
 	var agree = confirm("Are you sure you wish to delete this slide?");
 		if (agree) {
-			var $trash = $(this).parents('li');
-			//$trash.slideUp('slow', function(){ $trash.remove(); }); //chrome + confirm bug made slideUp not working...
+			var $trash = $(this).parents("li");
+			// $trash.slideUp("slow", function(){ $trash.remove(); }); //chrome + confirm bug made slideUp not working...
 			$trash.animate({
 					opacity: 0.25,
 					height: 0,
 				}, 500, function() {
 					$(this).remove();
 			});
-			return false; //Prevent the browser jump to the link anchor
+			return false; // Prevent the browser jump to the link anchor
 		} else {
 			return false;
 		}
 	});
 
-	//Add new slide
-	$(".slide_add_button").live('click', function() {
+	// Add new slide
+	$(".slide_add_button").live("click", function() {
 		var slidesContainer = $(this).prev();
-		var sliderId = slidesContainer.attr('id');
+		var sliderId = slidesContainer.attr("id");
 
-		var numArr = $('#' + sliderId + ' li').find('.order').map(function() {
+		var numArr = $("#" + sliderId + " li").find(".order").map(function() {
 			var str = this.id;
 			str = str.replace(/\D/g,'');
 			str = parseFloat(str);
@@ -239,10 +257,10 @@ jQuery(document).ready(function($) {
 
 		optionsframework_file_bindings(); // re-initialize upload image..
 
-		return false; //prevent jumps, as always..
+		return false; // prevent jumps, as always..
 	});
 
-	//Sort slides
+	// Sort slides
 	jQuery('.slider').find('ul').each( function() {
 		var id = jQuery(this).attr('id');
 		$('#'+ id).sortable({
@@ -255,21 +273,21 @@ jQuery(document).ready(function($) {
 
 
 	/**	Sorter (Layout Manager) */
-	jQuery('.sorter').each( function() {
-		var id = jQuery(this).attr('id');
-		$('#' + id).find('ul').sortable({
-			items: 'li',
+	jQuery(".sorter").each( function() {
+		var id = jQuery(this).attr("id");
+		$("#" + id).find("ul").sortable({
+			items: "li",
 			placeholder: "placeholder",
-			connectWith: '.sortlist_' + id,
+			connectWith: ".sortlist_" + id,
 			opacity: 0.6,
 			update: function() {
-				$(this).find('.position').each( function() {
+				$(this).find(".position").each( function() {
 
-					var listID = $(this).parent().attr('id');
-					var parentID = $(this).parent().parent().attr('id');
-					parentID = parentID.replace(id + '_', '');
-					var optionID = $(this).parent().parent().parent().attr('id');
-					$(this).prop("name", optionID + '[' + parentID + '][' + listID + ']');
+					var listID = $(this).parent().attr("id");
+					var parentID = $(this).parent().parent().attr("id");
+					parentID = parentID.replace(id + "_", "");
+					var optionID = $(this).parent().parent().parent().attr("id");
+					$(this).prop("name", optionID + "[" + parentID + "][" + listID + "]");
 
 				});
 			}
@@ -278,39 +296,32 @@ jQuery(document).ready(function($) {
 
 
 	/**	Ajax Backup & Restore MOD */
-	//backup button
-	$('#of_backup_button').live('click', function() {
+	// backup button
+	$("#of_backup_button").live("click", function() {
 
 		var answer = confirm("Click OK to backup your current saved options.");
 
-		if (answer) {
-
+		if(answer) {
 			var clickedObject = $(this);
-			var clickedID = $(this).attr('id');
-
-			var nonce = $('#security').val();
-
+			var clickedID = $(this).attr("id");
+			var nonce = $("#security").val();
 			var data = {
-				action: 'of_ajax_post_action',
-				type: 'backup_options',
+				action: "of_ajax_post_action",
+				type: "backup_options",
 				security: nonce
 			};
 
 			$.post(ajaxurl, data, function(response) {
+				// check nonce
+				if(response == -1) { //failed
 
-				//check nonce
-				if(response == -1){ //failed
-
-					var fail_popup = $('#of-popup-fail');
+					var fail_popup = $("#of-popup-fail");
 					fail_popup.fadeIn();
 					window.setTimeout(function(){
 						fail_popup.fadeOut();
 					}, 2000);
-				}
-
-				else {
-
-					var success_popup = $('#of-popup-save');
+				} else {
+					var success_popup = $("#of-popup-save");
 					success_popup.fadeIn();
 					window.setTimeout(function(){
 						location.reload();
@@ -322,7 +333,7 @@ jQuery(document).ready(function($) {
 		return false;
 	});
 
-	//restore button
+	// restore button
 	$('#of_restore_button').live('click', function() {
 		var answer = confirm("'Warning: All of your current options will be replaced with the data from your last backup! Proceed?");
 
@@ -336,9 +347,8 @@ jQuery(document).ready(function($) {
 				security: nonce
 			};
 			$.post(ajaxurl, data, function(response) {
-				//check nonce
-				if(response == -1){ //failed
-
+				// check nonce
+				if(response == -1) { // failed
 					var fail_popup = $('#of-popup-fail');
 					fail_popup.fadeIn();
 					window.setTimeout(function(){
@@ -374,8 +384,8 @@ jQuery(document).ready(function($) {
 			$.post(ajaxurl, data, function(response) {
 				var fail_popup = $('#of-popup-fail');
 				var success_popup = $('#of-popup-save');
-				//check nonce
-				if(response == -1) { //failed
+				// check nonce
+				if(response == -1) { // failed
 					fail_popup.fadeIn();
 					window.setTimeout(function(){
 						fail_popup.fadeOut();
@@ -397,11 +407,11 @@ jQuery(document).ready(function($) {
 		var nonce = $('#security').val();
 		$('.ajax-loading-img').fadeIn();
 
-		//get serialized data from all our option fields
+		// get serialized data from all our option fields
 		var serializedReturn = $('#of_form :input[name][name!="security"][name!="of_reset"]').serialize();
 
 		$('#of_form :input[type=checkbox]').each(function() {
-			if (!this.checked) {
+			if(!this.checked) {
 				serializedReturn += '&' + this.name + '=0';
 			}
 		});
@@ -419,7 +429,7 @@ jQuery(document).ready(function($) {
 			var loading = $('.ajax-loading-img');
 			loading.fadeOut();
 
-			if (response==1) {
+			if(response==1) {
 				success.fadeIn();
 			} else {
 				fail.fadeIn();
@@ -458,7 +468,6 @@ jQuery(document).ready(function($) {
 				var fail = $('#of-popup-fail');
 				var loading = $('.ajax-reset-loading-img');
 				loading.fadeOut();
-
 				if (response == 1) {
 					success.fadeIn();
 					window.setTimeout(function(){
@@ -524,7 +533,7 @@ jQuery(document).ready(function($) {
 		jQuery(this).addClass('selected');
 		jQuery('.main_checkbox',parent).attr('checked', true);
 
-		//fold/unfold related options
+		// fold/unfold related options
 		var obj = jQuery(this);
 		var $fold = '.f_' + obj.data('id');
 		jQuery($fold).slideDown('normal', "swing");
@@ -536,14 +545,14 @@ jQuery(document).ready(function($) {
 		jQuery(this).addClass('selected');
 		jQuery('.main_checkbox',parent).attr('checked', false);
 
-		//fold/unfold related options
+		// fold/unfold related options
 		var obj = jQuery(this);
 		var $fold = '.f_' + obj.data('id');
 		jQuery($fold).slideUp('normal', "swing");
 	});
 
 	// DEPRECATED, USE $.support() INSTEAD
-	//disable text select(for modern chrome, safari and firefox is done via CSS)
+	// disable text select(for modern chrome, safari and firefox is done via CSS)
 	if (($.browser.msie && $.browser.version < 10) || $.browser.opera) {
 		$('.cb-enable span, .cb-disable span').find().attr('unselectable', 'on');
 	}

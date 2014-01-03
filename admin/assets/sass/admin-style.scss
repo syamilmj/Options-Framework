@@ -1,5 +1,22 @@
 @import "compass/css3";
 
+/**
+ * Two possible characters for this font:
+ * U+00C6
+ * U+00E6
+ */
+@font-face {
+	font-family: "ec_font";
+	src: url("../fonts/ec_font.eot");
+	src: url("../fonts/ec_font.eot") format("embedded-opentype"),
+		 url("../fonts/ec_font.woff") format("woff"),
+		 url("../fonts/ec_font.ttf") format("truetype"),
+		 url("../fonts/ec_font.svg#ec_font") format("svg");
+	font-weight: normal;
+	font-style: normal;
+}
+
+
 /*-----------------------------------------------------------------------------------
 /* Admin styles
 /*-----------------------------------------------------------------------------------*/
@@ -211,7 +228,7 @@
 			}
 		}
 		.section-checkbox .controls { width: 25px; }
-		.section-multicheck! .controls input.checkbox {}
+		.section-multicheck! .controls input.checkbox { }
 		.section-checkbox .explain { max-width: 93%; }
 		.section-info {
 			h3.heading { display: none; }
@@ -408,7 +425,7 @@ label {
 		}
 	}
 	.group {
-		display: none;
+		// display: none;
 		padding-bottom: 20px;
 		h2 {
 			display: none;
@@ -932,7 +949,6 @@ p.switch-options { margin: 0; }
 #of_container {
 	.controls {
 		.wp-picker-container {
-			margin-top: 2px;
 			input.button {
 				width: auto;
 				height: auto;
@@ -1226,7 +1242,31 @@ p.switch-options { margin: 0; }
 				.controls { width: auto; }
 			}
 			.section-typography {
-				.controls { width: 95%; }
+				.controls {
+					width: 95%;
+					.wp-picker-container { @extend %wp_color_override; }
+				}
+			}
+			.section-border {
+				.controls {
+					.wp-picker-container { @extend %wp_color_override; }
+				}
+			}
+			.section-checkbox {
+				.controls {
+					input.checkbox { margin-top: 0; }
+				}
+			}
+			.section-slider {
+				.controls {
+					width: 95%;
+					margin: 0;
+					.slider {
+						display: block;
+						ul { float: left; }
+						.slide_add_button { margin-top: 0; }
+					}
+				}
 			}
 		}
 	}
@@ -1249,6 +1289,7 @@ p.switch-options { margin: 0; }
 		&:hover { background-color: white; }
 		&:focus { border-color: #999; }
 	}
+	%wp_color_override { margin-top: 2px; }
 	input.checkbox,
 	input.of-radio {
 		width: auto;
@@ -1257,3 +1298,18 @@ p.switch-options { margin: 0; }
 	input.of-radio { @include border-radius(10px); }
 	#export_data { max-width: 300px; }
 } // #of_container
+
+#custom_css {
+	width: 100%;
+	display: block;
+}
+
+.CodeMirror {
+	height: auto;
+	border: 1px solid #ddd;
+}
+.CodeMirror-scroll { min-height: 100px; }
+.CodeMirror pre {
+	padding-left: 7px;
+	line-height: 1.25;
+}

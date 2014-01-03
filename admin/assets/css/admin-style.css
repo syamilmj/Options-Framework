@@ -1,3 +1,14 @@
+/**
+ * Two possible characters for this font:
+ * U+00C6
+ * U+00E6
+ */
+@font-face {
+  font-family: "ec_font";
+  src: url("../fonts/ec_font.eot");
+  src: url("../fonts/ec_font.eot") format("embedded-opentype"), url("../fonts/ec_font.woff") format("woff"), url("../fonts/ec_font.ttf") format("truetype"), url("../fonts/ec_font.svg#ec_font") format("svg");
+  font-weight: normal;
+  font-style: normal; }
 /*-----------------------------------------------------------------------------------
 /* Admin styles
 /*-----------------------------------------------------------------------------------*/
@@ -381,7 +392,6 @@ label.radio, label.multicheck {
   width: 95px;
   float: left; }
 #of_container .group {
-  display: none;
   padding-bottom: 20px; }
   #of_container .group h2 {
     display: none;
@@ -889,14 +899,12 @@ p.switch-options {
 /*-------------------------------------------------------------------------------------------*/
 /* Color picker overwrite
 /*-------------------------------------------------------------------------------------------*/
-#of_container .controls .wp-picker-container {
-  margin-top: 2px; }
-  #of_container .controls .wp-picker-container input.button {
-    width: auto;
-    height: auto;
-    line-height: 1.5;
-    padding: 2px 8px;
-    margin: 6px 6px 6px 6px; }
+#of_container .controls .wp-picker-container input.button {
+  width: auto;
+  height: auto;
+  line-height: 1.5;
+  padding: 2px 8px;
+  margin: 6px 6px 6px 6px; }
 #of_container .controls .of-color {
   float: left;
   width: 70px;
@@ -1156,6 +1164,17 @@ p.switch-options {
       width: auto; }
     #of_container.wp-38 #content .section-typography .controls {
       width: 95%; }
+    #of_container.wp-38 #content .section-checkbox .controls input.checkbox {
+      margin-top: 0; }
+    #of_container.wp-38 #content .section-slider .controls {
+      width: 95%;
+      margin: 0; }
+      #of_container.wp-38 #content .section-slider .controls .slider {
+        display: block; }
+        #of_container.wp-38 #content .section-slider .controls .slider ul {
+          float: left; }
+        #of_container.wp-38 #content .section-slider .controls .slider .slide_add_button {
+          margin-top: 0; }
   #of_container .smof_footer_info {
     width: auto;
     font-size: 12px; }
@@ -1179,6 +1198,8 @@ p.switch-options {
     #of_container .controls select:focus,
     #of_container .controls textarea:focus, #of_container .select_wrapper:focus {
       border-color: #999; }
+  #of_container.wp-38 #content .section-typography .controls .wp-picker-container, #of_container.wp-38 #content .section-border .controls .wp-picker-container {
+    margin-top: 2px; }
   #of_container input.checkbox,
   #of_container input.of-radio {
     width: auto;
@@ -1189,3 +1210,18 @@ p.switch-options {
     border-radius: 10px; }
   #of_container #export_data {
     max-width: 300px; }
+
+#custom_css {
+  width: 100%;
+  display: block; }
+
+.CodeMirror {
+  height: auto;
+  border: 1px solid #ddd; }
+
+.CodeMirror-scroll {
+  min-height: 100px; }
+
+.CodeMirror pre {
+  padding-left: 7px;
+  line-height: 1.25; }
