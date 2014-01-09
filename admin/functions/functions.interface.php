@@ -94,11 +94,11 @@ function of_style_only() {
 	// wp_enqueue_style('color-picker', ADMIN_DIR . 'assets/css/colorpicker.css');
 	wp_enqueue_style('jquery-ui-custom-admin', ADMIN_DIR .'assets/css/jquery-ui-custom.css');
 
-	if(!wp_style_is( 'wp-color-picker','registered')) {
-		wp_register_style( 'wp-color-picker', ADMIN_DIR . 'assets/css/color-picker.min.css' );
+	if(!wp_style_is('wp-color-picker','registered')) {
+		wp_register_style('wp-color-picker', ADMIN_DIR . 'assets/css/color-picker.min.css');
 	}
 
-	wp_enqueue_style( 'wp-color-picker' );
+	wp_enqueue_style('wp-color-picker');
 	do_action('of_style_only_after');
 }
 

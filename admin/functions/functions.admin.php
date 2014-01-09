@@ -13,7 +13,7 @@
  * @since 1.0.0
  */
 function of_head() {
-	do_action( 'of_head' );
+	do_action('of_head');
 }
 
 /**
@@ -129,7 +129,6 @@ function of_save_options($data, $key = null) {
 	}
 	do_action('of_save_options_after', array('key' => $key, 'data' => $data));
 }
-
 
 /**
  * For use in themes
