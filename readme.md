@@ -19,9 +19,6 @@ Some of these are:
 * ...and much more(including base elements inputs, textarea, etc.)
 
 ## Try the SMOF to Redux Converter
-<style type="text/css">.hasImage{ display: block;text-align: center; }</style>
-<a class="hasImage" href="http://reduxframework.com" style="display: block;text-align: center;"><img src="https://github-camo.global.ssl.fastly.net/4a831b3e731b68cb68a11ffc35a3cdc5fc41aeff/687474703a2f2f662e636c2e6c792f6974656d732f325833513134335231673256317a3362317630582f6c6f676f2e6a7067" alt="Redux Framework" style="max-width:100%;"></a>
-<br />
 For those interested in the SMOF & NHP fork known as [Redux Framework 3.0](http://reduxframework.com) we suggest trying the [Redux Converter](http://wordpress.org/plugins/redux-converter/).  This plugin is a simple solution that provides  the opportunity to experience what Redux has to offer, without the hassle of rewriting your current config file.  Simply install the plugin on a site using SMOF and install the [ReduxFramework plugin](http://wordpress.org/plugins/redux-framework/).  A new menu item titled `SMOF 2 Redux` will appear.  This newly installed panel will take the current SMOF config - along with any stored data - and convert it to a Redux-compatible format for examination and experimentation.
 
 If you've already tested Redux and want to make the switch, open the `Convert to Redux` section.  You'll be provided with a class that not only instantiates the new Redux-powered panel, but will also migrate any existing data with the activation or upgrade of your theme.  
