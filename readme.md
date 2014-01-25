@@ -1,6 +1,8 @@
 # [SMOF - Slightly Modded Options Framework](http://aquagraphite.com/2011/09/slightly-modded-options-framework/)
 # Version 1.5.2
 
+**Important Notice** - SMOF has reached the end of its development life cycle as we are now joining forces with the (Redux Framework)[http://reduxframework.com/]. Cheers - Syamil MJ ;)
+
 SMOF is a back-end framework for creating and managing options inside WordPress themes. It cuts off the process of developing your own admin framework and give you more time to actually focus on building your theme. SMOF comes bundled with plentiful of options that should serve most of the needs of any modern theme authors.
 
 The main feature of SMOF is its intuitive, user-friendly interface that aims to look as native as possible to WordPress. Additionally, it comes loaded with some awesome features that makes it even more usable to you as a theme author. 
