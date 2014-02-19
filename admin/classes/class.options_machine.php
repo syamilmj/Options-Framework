@@ -30,12 +30,13 @@ class Options_Machine {
 	 * Sanitize & returns default values if don't exist
 	 * 
 	 * Notes:
-	 	- For further uses, you can check for the $value['type'] and performs
-	 	  more speficic sanitization on the option
-	 	- The ultimate objective of this function is to prevent the "undefined index"
-	 	  errors some authors are having due to malformed options array
+	 *	- For further uses, you can check for the $value['type'] and performs
+	 *	  more speficic sanitization on the option
+	 *	- The ultimate objective of this function is to prevent the "undefined index"
+	 *	  errors some authors are having due to malformed options array
 	 */
-	static function sanitize_option( $value ) {
+	public static function sanitize_option( $value ) {
+
 		$defaults = array(
 			"name" 		=> "",
 			"desc" 		=> "",
@@ -63,35 +64,25 @@ class Options_Machine {
 	 * @return array
 	 */
 	public static function optionsframework_machine($options) {
-		global $smof_output, $smof_details, $smof_data;
-		if (empty($options))
-			return;
-		if (empty($smof_data))
-			$smof_data = of_get_options();
+		global $smof_output;
+	    $smof_data = of_get_options();
 		$data = $smof_data;
 
 		$defaults = array();   
 	    $counter = 0;
 		$menu = '';
 		$output = '';
-		$update_data = false;
-
+		
 		do_action('optionsframework_machine_before', array(
 				'options'	=> $options,
 				'smof_data'	=> $smof_data,
 			));
-		if ($smof_output != "") {
-			$output .= $smof_output;
-			$smof_output = "";
-		}
+		$output .= $smof_output;
 		
-		
-
 		foreach ($options as $value) {
 			
 			// sanitize option
-			if ($value['type'] != "heading")
-				$value = self::sanitize_option($value);
+			$value = self::sanitize_option($value);
 
 			$counter++;
 			$val = '';
@@ -112,18 +103,6 @@ class Options_Machine {
 			/* condition start */
 			if(!empty($smof_data) || !empty($data)){
 			
-				if (array_key_exists('id', $value) && !isset($smof_data[$value['id']])) {
-					$smof_data[$value['id']] = $value['std'];
-					if ($value['type'] == "checkbox" && $value['std'] == 0) {
-						$smof_data[$value['id']] = 0;
-					} else {
-						$update_data = true;
-					}
-				}
-				if (array_key_exists('id', $value) && !isset($smof_details[$value['id']])) {
-					$smof_details[$value['id']] = $smof_data[$value['id']];
-				}
-
 			//Start Heading
 			 if ( $value['type'] != "heading" )
 			 {
@@ -149,8 +128,8 @@ class Options_Machine {
 			 } 
 			 //End Heading
 
-			//if (!isset($smof_data[$value['id']]) && $value['type'] != "heading")
-			//	continue;
+			if (!isset($smof_data[$value['id']]) && $value['type'] != "heading")
+				continue;
 			
 			//switch statement to handle various options type                              
 			switch ( $value['type'] ) {
@@ -179,7 +158,7 @@ class Options_Machine {
 						$theValue = $option;
 						if (!is_numeric($select_ID))
 							$theValue = $select_ID;
-						$output .= '<option id="' . $select_ID . '" value="'.$theValue.'" ' . selected($smof_data[$value['id']], $theValue, false) . ' />'.$option.'</option>';	 
+						$output .= '<option id="' . $select_ID . '" value="'.$theValue.'" ' . selected($smof_data[$value['id']], $option, false) . ' />'.$option.'</option>';	 
 					 } 
 					$output .= '</select></div>';
 				break;
@@ -236,7 +215,8 @@ class Options_Machine {
 				case "color":
 					$default_color = '';
 					if ( isset($value['std']) ) {
-						$default_color = ' data-default-color="' .$value['std'] . '" ';
+						if ( $smof_data[$value['id']] !=  $value['std'] )
+							$default_color = ' data-default-color="' .$value['std'] . '" ';
 					}
 					$output .= '<input name="' . $value['id'] . '" id="' . $value['id'] . '" class="of-color"  type="text" value="' . $smof_data[$value['id']] . '"' . $default_color .' />';
 		 	
@@ -408,8 +388,7 @@ class Options_Machine {
 					}
 					$header_class = str_replace(' ','',strtolower($value['name']));
 					$jquery_click_hook = str_replace(' ', '', strtolower($value['name']) );
-					$jquery_click_hook = "of-option-" . trim(preg_replace('/ +/', '', preg_replace('/[^A-Za-z0-9 ]/', '', urldecode(html_entity_decode(strip_tags($jquery_click_hook))))));
-					
+					$jquery_click_hook = "of-option-" . $jquery_click_hook;
 					$menu .= '<li class="'. $header_class .'"><a title="'.  $value['name'] .'" href="#'.  $jquery_click_hook  .'"'. $icon .'>'.  $value['name'] .'</a></li>';
 					$output .= '<div class="group" id="'. $jquery_click_hook  .'"><h2>'.$value['name'].'</h2>'."\n";
 				break;
@@ -588,11 +567,8 @@ class Options_Machine {
 					} else { 
 						$g_size = '';
 					}
-					$hide = " hide";
-					if ($smof_data[$value['id']] != "none" && $smof_data[$value['id']] != "")
-						$hide = "";
 					
-					$output .= '<p class="'.$value['id'].'_ggf_previewer google_font_preview'.$hide.'" '. $g_size .'>'. $g_text .'</p>';
+					$output .= '<p class="'.$value['id'].'_ggf_previewer google_font_preview" '. $g_size .'>'. $g_text .'</p>';
 				break;
 				
 				//JQuery UI Slider
@@ -696,10 +672,7 @@ class Options_Machine {
 					'output'	=> $output,
 					'value'		=> $value
 				));
-			if ($smof_output != "") {
-				$output .= $smof_output;
-				$smof_output = "";
-			}
+			$output .= $smof_output;
 			
 			//description of each option
 			if ( $value['type'] != 'heading') { 
@@ -713,10 +686,6 @@ class Options_Machine {
 			} /* condition empty end */
 		   
 		}
-
-		if ($update_data == true) {
-			of_save_options($smof_data);
-		}
 		
 	    $output .= '</div>';
 
@@ -729,10 +698,7 @@ class Options_Machine {
 					'output'		=> $output,
 					'value'			=> $value
 				));
-		if ($smof_output != "") {
-			$output .= $smof_output;
-			$smof_output = "";
-		}
+	    $output .= $smof_output;
 	    
 	    return array($output,$menu,$defaults);
 	    
@@ -755,9 +721,7 @@ class Options_Machine {
 	    $smof_data = of_get_options();
 		
 		$uploader = '';
-		$upload = "";
-		if (isset($smof_data[$id]))
-	    	$upload = $smof_data[$id];
+	    $upload = $smof_data[$id];
 		$hide = '';
 		
 		if ($mod == "min") {$hide ='hide';}
@@ -813,8 +777,7 @@ class Options_Machine {
 		
 		$slider = '';
 		$slide = array();
-		if (isset($smof_data[$id]))
-	    	$slide = $smof_data[$id];
+	    $slide = $smof_data[$id];
 		
 	    if (isset($slide[$oldorder])) { $val = $slide[$oldorder]; } else {$val = $std;}
 		

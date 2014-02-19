@@ -20,23 +20,22 @@
 function optionsframework_admin_init() 
 {
 	// Rev up the Options Machine
-	global $of_options, $options_machine, $smof_data, $smof_details;
-	if (!isset($options_machine))
-		$options_machine = new Options_Machine($of_options);
+	global $of_options, $options_machine;
+	$options_machine = new Options_Machine($of_options);
 
+	$smof_data = of_get_options();
+	$data = $smof_data;
 	do_action('optionsframework_admin_init_before', array(
 			'of_options'		=> $of_options,
 			'options_machine'	=> $options_machine,
 			'smof_data'			=> $smof_data
 		));
-	
 	if (empty($smof_data['smof_init'])) { // Let's set the values if the theme's already been active
 		of_save_options($options_machine->Defaults);
 		of_save_options(date('r'), 'smof_init');
 		$smof_data = of_get_options();
 		$options_machine = new Options_Machine($of_options);
 	}
-
 	do_action('optionsframework_admin_init_after', array(
 			'of_options'		=> $of_options,
 			'options_machine'	=> $options_machine,
@@ -101,7 +100,7 @@ function of_style_only(){
 		wp_register_style( 'wp-color-picker', ADMIN_DIR . 'assets/css/color-picker.min.css' );
 	}
 	wp_enqueue_style( 'wp-color-picker' );
-	do_action('of_style_only_after');
+
 }	
 
 /**
@@ -140,8 +139,6 @@ function of_load_only()
 	
 	if ( function_exists( 'wp_enqueue_media' ) )
 		wp_enqueue_media();
-
-	do_action('of_load_only_after');
 
 }
 
@@ -217,7 +214,9 @@ function of_ajax_callback()
 	elseif($save_type == 'restore_options')
 	{
 			
-		$smof_data = of_get_options(BACKUPS);
+		$smof_data = get_option(BACKUPS);
+
+		update_option(OPTIONS, $smof_data);
 
 		of_save_options($smof_data);
 		
@@ -226,7 +225,7 @@ function of_ajax_callback()
 	elseif($save_type == 'import_options'){
 
 
-		$smof_data = unserialize(base64_decode($_POST['data'])); //100% safe - ignore theme check nag
+		$smof_data = unserialize(base64_decode($smof_data)); //100% safe - ignore theme check nag
 		of_save_options($smof_data);
 
 		

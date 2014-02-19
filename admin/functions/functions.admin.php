@@ -19,8 +19,6 @@ function of_head() { do_action( 'of_head' ); }
 /**
  * Add default options upon activation else DB does not exist
  *
- * DEPRECATED, Class_options_machine now does this on load to ensure all values are set
- *
  * @since 1.0.0
  */
 function of_option_setup()	
@@ -81,22 +79,17 @@ function of_get_header_classes_array()
  * @return array
  */
 function of_get_options($key = null, $data = null) {
-	global $smof_data;
 
 	do_action('of_get_options_before', array(
 		'key'=>$key, 'data'=>$data
 	));
 	if ($key != null) { // Get one specific value
+
 		$data = get_theme_mod($key, $data);
 	} else { // Get all values
-		$data = get_theme_mods();	
+		$data = get_theme_mods();		
 	}
 	$data = apply_filters('of_options_after_load', $data);
-	if ($key == null) {
-		$smof_data = $data;
-	} else {
-		$smof_data[$key] = $data;
-	}
 	do_action('of_option_setup_before', array(
 		'key'=>$key, 'data'=>$data
 	));
@@ -131,13 +124,6 @@ function of_save_options($data, $key = null) {
 		foreach ( $data as $k=>$v ) {
 			if (!isset($smof_data[$k]) || $smof_data[$k] != $v) { // Only write to the DB when we need to
 				set_theme_mod($k, $v);
-			} else if (is_array($v)) {
-				foreach ($v as $key=>$val) {
-					if ($key != $k && $v[$key] == $val) {
-						set_theme_mod($k, $v);
-						break;
-					}
-				}
 			}
 	  	}
 	}
@@ -154,8 +140,6 @@ function of_save_options($data, $key = null) {
  * @since forever
  */
 
-
-
 $data = of_get_options();
-if (!isset($smof_details))
-	$smof_details = array();
+$smof_data = of_get_options();
+$data = $smof_data;
