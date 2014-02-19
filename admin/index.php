@@ -2,7 +2,7 @@
 /*
 Title		: SMOF
 Description	: Slightly Modified Options Framework
-Version		: 1.5.2
+Version		: 1.5.1
 Author		: Syamil MJ
 Author URI	: http://aquagraphite.com
 License		: GPLv3 - http://www.gnu.org/copyleft/gpl.html
@@ -18,8 +18,6 @@ Contributors: Syamil MJ - http://aquagraphite.com
 			  Alex Poslavsky - https://github.com/plovs
 			  Dovy Paukstys - http://simplerain.com
 */
-
-define( 'SMOF_VERSION', '1.5.2' );
 
 /**
  * Definitions
@@ -50,6 +48,7 @@ if( function_exists( 'wp_get_theme' ) ) {
 }
 
 
+define( 'SMOF_VERSION', '1.5.1' );
 
 if( !defined('ADMIN_PATH') )
 	define( 'ADMIN_PATH', get_template_directory() . '/admin/' );

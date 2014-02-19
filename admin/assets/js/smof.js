@@ -26,18 +26,6 @@ jQuery(document).ready(function($){
 	//Tabify Options			
 	$('.group').hide();
 	
-	// Get the URL parameter for tab
-	function getURLParameter(name) {
-	    return decodeURI(
-	        (RegExp(name + '=' + '(.+?)(&|$)').exec(location.search)||[,''])[1]
-	    );
-	}
-	
-	// If the $_GET param of tab is set, use that for the tab that should be open
-	if (getURLParameter('tab') != "") {
-		$.cookie('of_current_opt', '#'+getURLParameter('tab'), { expires: 7, path: '/' });
-	}
-
 	// Display last current tab	
 	if ($.cookie("of_current_opt") === null) {
 		$('.group:first').fadeIn('fast');	
@@ -434,12 +422,6 @@ jQuery(document).ready(function($){
 		
 		//get serialized data from all our option fields			
 		var serializedReturn = $('#of_form :input[name][name!="security"][name!="of_reset"]').serialize();
-
-		$('#of_form :input[type=checkbox]').each(function() {     
-		    if (!this.checked) {
-		        serializedReturn += '&'+this.name+'=0';
-		    }
-		});
 						
 		var data = {
 			type: 'save',
@@ -524,7 +506,7 @@ jQuery(document).ready(function($){
 
 	/**	Tipsy @since v1.3 */
 	if (jQuery().tipsy) {
-		$('.tooltip, .typography-size, .typography-height, .typography-face, .typography-style, .of-typography-color').tipsy({
+		$('.typography-size, .typography-height, .typography-face, .typography-style, .of-typography-color').tipsy({
 			fade: true,
 			gravity: 's',
 			opacity: 0.7,
@@ -609,8 +591,6 @@ jQuery(document).ready(function($){
 		var _previewer = mainID +'_ggf_previewer';
 		
 		if( _selected ){ //if var exists and isset
-
-			$('.'+ _previewer ).fadeIn();
 			
 			//Check if selected is not equal with "Select a font" and execute the script.
 			if ( _selected !== 'none' && _selected !== 'Select a font' ) {
@@ -631,7 +611,6 @@ jQuery(document).ready(function($){
 				
 				//if selected is not a font remove style "font-family" at preview box
 				$('.'+ _previewer ).css('font-family', '' );
-				$('.'+ _previewer ).fadeOut();
 				
 			}
 		
