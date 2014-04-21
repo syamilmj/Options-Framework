@@ -181,8 +181,7 @@ class Options_Machine {
 				
 				//radiobox option
 				case "radio":
-					$checked = (isset($smof_data[$value['id']])) ? checked($smof_data[$value['id']], $option, false) : '';
-					 foreach($value['options'] as $option=>$name) {
+					foreach($value['options'] as $option=>$name) {
 						$output .= '<input class="of-input of-radio" name="'.$value['id'].'" type="radio" value="'.$option.'" ' . checked($smof_data[$value['id']], $option, false) . ' /><label class="radio">'.$name.'</label><br/>';				
 					}
 				break;
