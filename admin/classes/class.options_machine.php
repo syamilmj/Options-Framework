@@ -137,7 +137,7 @@ class Options_Machine {
 				//text input
 				case 'text':
 					$t_value = '';
-					$t_value = stripslashes($smof_data[$value['id']]);
+					$t_value = htmlentities($smof_data[$value['id']], ENT_QUOTES);
 					
 					$mini ='';
 					if(!isset($value['mod'])) $value['mod'] = '';
