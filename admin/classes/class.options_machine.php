@@ -600,6 +600,24 @@ class Options_Machine {
 					
 				break;
 				
+				//Spinner
+				case 'spinner':
+    					$sp_val = $sp_min = $sp_max = $sp_step = '';//no errors, please 
+    					$sp_val = stripslashes( $smof_data[$value['id']] );
+
+    					if( !isset( $value['min']) ){ $sp_min  = '0';  } else {  $sp_min  = $value['min'];  }
+   					if( !isset( $value['max']) ){ $sp_max  = $sp_min + 1; } else { $sp_max  = $value['max'];  }
+    					if( !isset($value['step'] ) ){ $sp_step = '1';  } else { $sp_step = $value['step']; }  
+    					if ($sp_val == '') $sp_val  = $sp_min; 
+
+    					//values
+    					$sp_data = 'data-id="'.$value['id'].'" data-val="'.$sp_val.'" data-min="'.$sp_min.'" data-max="'.$sp_max.'" data-step="'.$sp_step.'"';
+
+   					 //html output
+    					$output .= '<input type="text" name="'.$value['id'].'" id="'.$value['id'].'" value="'. $sp_val .'" class="smof-spinnerui" '. $sp_data .' />';
+
+				break;
+				
 				
 				//Switch option
 				case 'switch':
